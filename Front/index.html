@@ -20,16 +20,21 @@
             <button href="#" class="nav-icon" id="buscar-icon"><img src="IMG/img-iconos/img-iconos-lupa.png"></button>
         </nav>
         <div class="profile-icon" id="profile-button">
-            <img id="profile-img" src="" onclick="toggleProfileMenu()">
+            <img id="profile-img" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" alt="Imagen de perfil">
             <div id="profile-name-container">
-                <span id="profile-name"></span>
+                <span id="profile-name">Invitado</span>
             </div>
-            <div id="profile-menu" class="profile-menu">
-                <button id="login-button" onclick="login()">Iniciar sesión</button>
-                <button id="logout-button" onclick="logout()">Cerrar sesión</button>
-                <button id="panel-peliculas-button" onclick="irAlPanelPeliculas()" style="display: none;">Panel de Películas</button>
-            </div>
+            <!-- Menú de perfil tipo nav -->
+            <nav id="profile-menu" class="profile-menu">
+                <a href="cuenta.html" id="account-button" onclick="verCuenta()">Mi cuenta</a>
+                <a href="perfiles.html" id="perfil-button">Cambiar Perfil</a>
+                <a href="#" id="login-button" onclick="login()">Iniciar sesión</a>
+                <a href="#" id="panel-peliculas-button" onclick="irAlPanelPeliculas()" style="display: none;">Panel de Películas</a>
+                <a href="#" id="logout-button" onclick="logout()">Cerrar sesión</a>
+            </nav>
         </div>
+                             
+        
     </header>
     <main>
         <div class="carousel" id="carousel">

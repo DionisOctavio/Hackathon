@@ -68,7 +68,45 @@ app.post("/login", async (req, res) => {
     }
 });
 
+app.get("/cuenta/:userId", async (req, res) => {
+    const { userId } = req.params;
+    try {
+        // Consultar los datos del usuario usando el ID de cuenta
+        const { rows } = await pool.query(
+            `SELECT * FROM CUENTA WHERE id_cuenta = $1`, 
+            [userId]
+        );
 
+        if (rows.length > 0) {
+            const user = rows[0];
+            
+            // Obtener el perfil asociado a este usuario
+            const { rows: profileRows } = await pool.query(
+                `SELECT * FROM PERFIL WHERE id_cuenta = $1`, 
+                [userId]
+            );
+
+            // Si hay perfil asociado, lo añadimos a la respuesta
+            const profile = profileRows.length > 0 ? profileRows[0] : null;
+
+            // Enviar la respuesta con los datos del usuario y perfil
+            res.json({
+                id_cuenta: user.id_cuenta,
+                usuario: user.usuario,
+                email: user.email,
+                nombre_usuario: user.nombre_usuario,
+                apellido_usuario: user.apellido_usuario,
+                rol_cuenta: user.rol_cuenta,
+                perfil: profile || {}  // Incluir el perfil, si existe
+            });
+        } else {
+            res.status(404).json({ success: false, message: "Usuario no encontrado" });
+        }
+    } catch (error) {
+        console.error("Error al obtener los datos del usuario:", error);
+        res.status(500).json({ success: false, message: "Error interno del servidor" });
+    }
+});
 
 app.get("/cuentas", async (req, res)=>{
     const {rows} = await pool.query(
@@ -205,5 +243,29 @@ app.post("/visto/actualizar", async (req, res) => {
     } catch (error) {
         console.error('Error al actualizar el estado de la película:', error);
         res.status(500).json({ error: 'Hubo un error al actualizar el estado de la película.' });
+    }
+});
+
+
+app.get('/favoritos/:idPerfil', async (req, res) => {
+    const idPerfil = req.params.idPerfil;
+    try {
+        const query = `
+            SELECT P.id_pelicula, P.titulo, P.url_cartel, P.anyo
+            FROM PELICULA P
+            JOIN VISTO V ON P.id_pelicula = V.id_pelicula
+            WHERE V.id_perfil = $1 AND V.favorito = TRUE;
+        `;
+        
+        const result = await pool.query(query, [idPerfil]);
+        
+        if (result.rows.length > 0) {
+            res.json(result.rows);
+        } else {
+            res.status(404).json({ message: "No tienes películas favoritas." });
+        }
+    } catch (err) {
+        console.error("Error al obtener películas favoritas:", err);
+        res.status(500).json({ error: "Hubo un error al obtener las películas favoritas." });
     }
 });

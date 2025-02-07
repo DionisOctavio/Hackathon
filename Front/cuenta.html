@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Disney</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='CSS/cuenta.css'>
+    <script src='JS/main.js' defer></script>
+</head>
+<body>
+    <header>
+        <img src="IMG/disney-logo-w.png">
+        <nav>
+            <button href="#" id="home">HOME</button>
+            <button href="peliculas.html" id="generos">PELICULAS</button>
+            <button href="#" id="buscar">BUSCAR</button>
+            <button href="#" class="nav-icon" id="home-icon"><img src="IMG/img-iconos/img-iconos-casa.png"></button>
+            <button href="#" class="nav-icon" id="peliculas-icon"><img src="IMG/img-iconos/img-iconos-peliculas.png"></button>
+            <button href="#" class="nav-icon" id="buscar-icon"><img src="IMG/img-iconos/img-iconos-lupa.png"></button>
+        </nav>
+        <div class="profile-icon" id="profile-button">
+            <img id="profile-img" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" alt="Imagen de perfil">
+            <div id="profile-name-container">
+                <span id="profile-name">Invitado</span>
+            </div>
+            <!-- Menú de perfil tipo nav -->
+            <nav id="profile-menu" class="profile-menu">
+                <a href="#" id="account-button" onclick="verCuenta()">Mi cuenta</a>
+                <a href="perfiles.html" id="perfil-button">Cambiar Perfil</a>
+                <a href="#" id="login-button" onclick="login()">Iniciar sesión</a>
+                <a href="#" id="panel-peliculas-button" onclick="irAlPanelPeliculas()" style="display: none;">Panel de Películas</a>
+                <a href="#" id="logout-button" onclick="logout()">Cerrar sesión</a>
+            </nav>
+        </div>
+                             
+        
+    </header>
+    <main>
+        <form id="form-ver-cuenta" class="form-container">
+            <div id="datos-cuenta"></div>
+            <div class="form-group">
+                <label for="usuario">Nombre de Usuario:</label>
+                <input type="text" id="usuario" name="usuario" disabled value="JuanPerez">
+            </div>
+    
+            <div class="form-group">
+                <label for="email">Correo Electrónico:</label>
+                <input type="email" id="email" name="email" disabled value="juan.perez@email.com">
+            </div>
+    
+            <div class="form-group">
+                <label for="nombre_usuario">Nombre:</label>
+                <input type="text" id="nombre_usuario" name="nombre_usuario" disabled value="Juan">
+            </div>
+    
+            <div class="form-group">
+                <label for="apellido_usuario">Apellido:</label>
+                <input type="text" id="apellido_usuario" name="apellido_usuario" disabled value="Pérez">
+            </div>
+    
+            <div class="form-group">
+                <label for="rol_cuenta">Rol de la Cuenta:</label>
+                <input type="text" id="rol_cuenta" name="rol_cuenta" disabled value="Usuario">
+            </div>
+        </form>
+        <script src="JS/cuenta.js"></script>
+    </main>
+    
+    <footer>
+        <div class="footer-container">
+            <div class="footer-logo">
+                <img src="IMG/disney-logo-w.png" alt="Logo">
+            </div>
+            <div class="footer-links">
+                <a href="#">Cuenta</a>
+                <a href="#">Política de Cookies</a>
+                <a href="#">Términos y Condiciones</a>
+                <a href="#">Aviso Legal</a>
+                <a href="#">Contacto</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2024 Tenkai, Lab. Todos los derechos reservados.
+        </div>
+    </footer>
+</body>
+</html>

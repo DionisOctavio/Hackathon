@@ -71,6 +71,7 @@ header .profile-icon {
     position: relative;
     padding: 5px;
     padding-left: 20px;
+    margin-left: 100px;
 }
 
 #profile-name {
@@ -238,7 +239,10 @@ footer {
     background-color: #222;
     color: #fff;
     padding: 20px 10%;
+    position: relative; /* Añadido */
+    margin-top: auto; /* Añadido */
 }
+
 
 .footer-container {
     display: flex;

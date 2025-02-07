@@ -79,7 +79,6 @@ header .profile-icon {
 }
 
 header .profile-icon:hover {
-    background-color: #131313;
     border-radius: 10px 10px 0px 0px;
 }
 
@@ -93,35 +92,71 @@ header .profile-icon img {
 
 .profile-icon {
     position: relative;
-}
-
-.profile-menu {
-    display: none;
-    position: absolute;
-    top: 100%; 
-    right: 0;
-    background-color: #131313;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-}
-
-.profile-menu button {
-    display: block;
-    width: 100%;
-    padding: 15px;
-    text-align: left;
-    border: none;
-    background: none;
+    display: inline-block;
     cursor: pointer;
-    color: white;
 }
 
-.profile-icon:hover .profile-menu {
+#profile-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+.profile-icon:hover #profile-img {
+    transform: scale(1.1);
+}
+
+#profile-name-container {
+    display: inline-block;
+    font-size: 16px;
+    color: #333;
+    font-weight: 600;
+}
+
+#profile-menu {
+    display: none; 
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.1); 
+    backdrop-filter: blur(10px); 
+    border: 2px solid #007bff3b; 
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    z-index: 100;
+    padding: 15px;
+    width: 200px;
+    transform: translateY(10px);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.profile-icon:hover #profile-menu {
     display: block;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
 }
 
+#profile-menu a {
+    display: block;
+    padding: 12px 20px;
+    text-decoration: none;
+    color: #000000; 
+    margin-bottom: 8px;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
 
-
+#profile-menu a:hover {
+    background-color: #007bffc0;
+    color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
 
 @media (max-width: 1000px) {
     nav {
@@ -149,216 +184,77 @@ header .profile-icon img {
     }
 }
 
+
+/* ------------------------------------------------------------ */
+/* -------------------- STYLOS PARA EL MAIN ------------------- */
+/* ------------------------------------------------------------ */
+
 main {
-    padding: 20px;
-    color: white;
+    padding: 50px;
+    padding-bottom: 100px;
 }
 
-.contenedor-botones {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
     margin-bottom: 20px;
 }
 
-#generos-select {
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #fff;
-    color: #000;
-}
-
-#ordenar-ano {
-    padding: 10px 20px;
-    background-color: #1f1f1f;
-    border: none;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-#ordenar-ano:hover {
-    background-color: #333;
-}
-
-#orden-indicador {
-    margin-left: 10px;
-}
-
-#peliculas {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
-}
-
-.pelicula-card {
-    background-color: #2c2c2c;
-    border-radius: 10px;
-    padding: 15px;
-    text-align: center;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.pelicula-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
-}
-
-.pelicula-card img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-}
-
-.pelicula-card h3 {
-    color: white;
-    margin-top: 10px;
-}
-
-.pelicula-card p {
-    color: #aaa;
-    font-size: 14px;
-    margin: 10px 0;
-}
-
-.pelicula-card a {
-    color: #f4a261;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 16px;
-}
-
-.pelicula-card a:hover {
-    color: #e76f51;
-}
-
-#detalle-pelicula {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 20px;
-    background-color: #2c2c2c;
-    border-radius: 10px;
-    padding: 20px;
-    color: white;
-    max-width: 900px;
-    margin: auto;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-}
-
-#pelicula-imagen {
-    width: 280px; 
-    height: auto;
-    border-radius: 8px;
-}
-
-
-#informacion-pelicula {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-}
-
-#pelicula-titulo {
-    font-size: 24px;
-    margin-bottom: 10px;
-}
-
-#pelicula-sinopsis {
-    font-size: 16px;
-    margin-bottom: 10px;
-}
-
-#pelicula-año, #pelicula-director {
-    font-size: 16px;
-    margin-bottom: 5px;
-}
-
-#pelicula-trailer {
-    margin-top: 10px;
-    padding: 10px 20px;
-    background-color: #1f1f1f;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    text-align: center;
-    font-weight: bold;
-    width: fit-content;
-    transition: background-color 0.3s ease;
-    margin-bottom: 10px;
-}
-
-#pelicula-trailer:hover {
-    background-color: #333;
-}
-
-/* Estilos para el botón Favorito */
-#favorito {
-    padding: 10px 20px;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    background-color: #6c757d; /* Color inicial (gris) */
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-#favorito:hover {
-    background-color: #f4a261; /* Color al pasar el mouse (amarillo) */
-    transform: scale(1.05); /* Leve aumento de tamaño en hover */
-}
-
-/* Cuando el botón está marcado como Favorito */
-#favorito.favorito {
-    background-color: #f4a261; /* Color amarillo cuando es favorito */
-}
-
-#favorito.favorito:hover {
-    background-color: #e76f51; /* Amarillo oscuro en hover si es favorito */
-}
-
-
-/* Estilos para el campo de Estado Pendiente */
-label[for="pendiente"] {
-    color: white;
-    font-size: 16px;
-    margin-bottom: 5px;
+label {
     display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 18px;
 }
 
-#pendiente {
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #333;
-    color: white;
+input[type="text"], input[type="email"], input[type="password"], select {
     width: 100%;
-    max-width: 200px;
-    cursor: pointer;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
 }
 
-#pendiente:focus {
-    outline: none;
-    box-shadow: 0 0 5px rgba(244, 166, 97, 0.8);
+input[disabled] {
+    background-color: #f0f0f0;
+    cursor: not-allowed;
+    color: #333;
 }
 
-#pendiente option {
-    background-color: #333;
+button.submit-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #5cb85c;
     color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
 }
 
-#pendiente option:hover {
-    background-color: #444;
+button.submit-btn:hover {
+    background-color: #4cae4c;
 }
+
+#datos-cuenta {
+    font-size: 28px;
+    margin-bottom: 80px;
+    text-align: center;
+}
+
+
+
+
+
+
+
 
 
 
