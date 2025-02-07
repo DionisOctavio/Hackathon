@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Disney</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='CSS/main.css'>
+    <script src='JS/main.js' defer></script>
+</head>
+<body>
+    <header>
+        <img src="IMG/disney-logo-w.png">
+        <nav>
+            <button href="#" id="home">HOME</button>
+            <button href="peliculas.html" id="generos">PELICULAS</button>
+            <button href="#" id="buscar">BUSCAR</button>
+            <button href="#" class="nav-icon" id="home-icon"><img src="IMG/img-iconos/img-iconos-casa.png"></button>
+            <button href="#" class="nav-icon" id="peliculas-icon"><img src="IMG/img-iconos/img-iconos-peliculas.png"></button>
+            <button href="#" class="nav-icon" id="buscar-icon"><img src="IMG/img-iconos/img-iconos-lupa.png"></button>
+        </nav>
+        <div class="profile-icon" id="profile-button">
+            <img id="profile-img" src="" onclick="toggleProfileMenu()">
+            <div id="profile-name-container">
+                <span id="profile-name"></span>
+            </div>
+            <div id="profile-menu" class="profile-menu">
+                <button id="login-button" onclick="login()">Iniciar sesión</button>
+                <button id="logout-button" onclick="logout()">Cerrar sesión</button>
+                <button id="panel-peliculas-button" onclick="irAlPanelPeliculas()" style="display: none;">Panel de Películas</button>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="carousel" id="carousel">
+            <div class="carousel-track">
+                <div class="carousel-item">
+                    <img src="Diseño sin título.png">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://disney.images.edge.bamgrid.com/ripcut-delivery/v2/variant/disney/b17f5b77-1096-467b-b297-0f0840aa03c8/compose?format=webp&label=hero_carousel_none_300&width=2880">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://disney.images.edge.bamgrid.com/ripcut-delivery/v2/variant/disney/fdf9ec88-068f-4ee7-9f26-01c9f00a6caa/compose?format=webp&label=hero_carousel_none_300&width=2880">
+                </div>
+            </div>
+            <div class="carousel-controls">
+                <button class="carousel-button prev">&#10094;</button>
+                <button class="carousel-button next">&#10095;</button>
+            </div>
+        </div>
+        <div class="carousel-indicators"></div>
+            <script src="JS/carusel.js"></script>
+        
+        <div id="demografias">
+            
+        </div>
+
+
+
+
+        
+
+        <h5>Animación</h5>
+        <div id="animacion" class="genero-container">
+            <div class="carousel">
+                <button class="carousel-button prev" onclick="moveCarousel('animacion', -1)">&#10094;</button>
+                <div class="carousel-track" id="animacion-track">
+                    <!-- Aquí irán las tarjetas de las películas -->
+                </div>
+                <button class="carousel-button next" onclick="moveCarousel('animacion', 1)">&#10095;</button>
+            </div>
+        </div>
+
+        <h5>Acción</h5>
+        <div id="accion" class="genero-container">
+            <div class="carousel">
+                <button class="carousel-button prev" onclick="moveCarousel('accion', -1)">&#10094;</button>
+                <div class="carousel-track" id="accion-track">
+                    <!-- Aquí irán las tarjetas de las películas -->
+                </div>
+                <button class="carousel-button next" onclick="moveCarousel('accion', 1)">&#10095;</button>
+            </div>
+        </div>
+
+        <h5>Ciencia Ficción</h5>
+        <div id="ciencia-ficcion" class="genero-container">
+            <div class="carousel">
+                <button class="carousel-button prev" onclick="moveCarousel('ciencia-ficcion', -1)">&#10094;</button>
+                <div class="carousel-track" id="ciencia-ficcion-track">
+                    <!-- Aquí irán las tarjetas de las películas -->
+                </div>
+                <button class="carousel-button next" onclick="moveCarousel('ciencia-ficcion', 1)">&#10095;</button>
+            </div>
+        </div>
+
+        <script src="JS/scroll.js"></script>
+
+    </main>
+</body>
+</html>

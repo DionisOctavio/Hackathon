@@ -1,0 +1,227 @@
+body{
+    background-color: rgb(19, 19, 46);
+    margin: 0px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background: linear-gradient(to bottom, rgb(11, 11, 77) 70%, rgba(19, 19, 46) 100%);
+    padding: 10px;
+}
+
+header img {
+    margin-left: 50px;
+    width: 110px;
+    height: 63px;
+}
+
+header nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+nav .nav-icon {
+    display: none;
+}
+
+nav button {
+    display: inline-block;
+}
+
+header nav button#home, header nav button#generos, header nav button#buscar, header nav button#home-icon, header nav button#peliculas-icon, header nav button#buscar-icon {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    border: none;
+    background: none;
+}
+
+header nav button#home::before, header nav button#generos::before, header nav button#buscar::before, header nav button#home-icon::before, header nav button#peliculas-icon::before, header nav button#buscar-icon::before {
+    margin-left: auto;
+}
+
+header nav button#home::after, header nav button#generos::after, header nav button#buscar::after, header nav button#home-icon::after, header nav button#peliculas-icon::after, header nav button#buscar-icon::after {
+    content: '';
+    width: 0%;
+    height: 3px;
+    background: #ffffff;
+    display: block;
+    transition: 0.5s;
+}
+
+header nav button#home:hover::after, header nav button#generos:hover::after, header nav button#buscar:hover::after, header nav button#home-icon:hover:after, header nav button#peliculas-icon:hover::after, header nav button#buscar-icon:hover::after {
+    width: 100%;
+}
+
+header .profile-icon {
+    margin: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center; 
+    position: relative;
+    padding: 5px;
+    padding-left: 20px;
+}
+
+#profile-name {
+    color: white;
+}
+
+header .profile-icon:hover {
+    background-color: #131313;
+    border-radius: 10px 10px 0px 0px;
+}
+
+header .profile-icon img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: block; 
+    margin: 0 auto; 
+}
+
+.profile-icon {
+    position: relative;
+}
+
+.profile-menu {
+    display: none;
+    position: absolute;
+    top: 100%; 
+    right: 0;
+    background-color: #131313;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.profile-menu button {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    text-align: left;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: white;
+}
+
+.profile-icon:hover .profile-menu {
+    display: block;
+}
+
+
+
+
+@media (max-width: 1000px) {
+    nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    }
+
+    nav button {
+        display: none;
+    }
+
+    nav .nav-icon {
+        display: inline-block;
+        width: 40px;
+        height: 30px;
+        margin: 0 10px;
+    }
+
+    nav .nav-icon img {
+        width: 100%;
+        height: 100%;
+        filter: invert(1);
+        margin-left: 0;
+    }
+}
+
+main {
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+.contenedor-botones {
+    display: flex;
+    justify-content: center; 
+    gap: 10px; 
+    margin-bottom: 20px;
+}
+
+#generos-select {
+    display: block;
+    padding: 10px 20px; 
+    font-size: 16px;
+    border: 2px solid #ffffff; 
+    border-radius: 5px; 
+    background-color: #131313; 
+    color: white; 
+    cursor: pointer; 
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#generos-select:hover {
+    background-color: #ffffff; 
+    color: #131313; 
+}
+
+#ordenar-ano {
+    display: block;
+    padding: 10px 20px; /* Añade relleno para hacerlo más grande */
+    font-size: 16px;
+    border: 2px solid #ffffff; /* Añade un borde blanco */
+    border-radius: 5px; /* Bordes redondeados */
+    background-color: #131313; /* Fondo oscuro */
+    color: white; /* Texto blanco */
+    cursor: pointer; /* Cambia el cursor al pasar por encima */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Transiciones suaves */
+}
+
+#ordenar-ano:hover {
+    background-color: #ffffff; /* Cambia el fondo al pasar por encima */
+    color: #131313; /* Cambia el color del texto al pasar por encima */
+}
+
+#orden-indicador {
+    margin-left: 10px;
+}
+
+#peliculas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* Espacio entre las tarjetas */
+    justify-content: center;
+}
+
+.peliculas_targeta {
+    width: 200px; 
+    margin: 0 10px;
+    flex-shrink: 0;  
+    transition: transform 0.3s ease;
+    padding: 5px;
+}
+
+.peliculas_targeta img {
+    width: 100%;
+    height: 80%;
+}
+
+.peliculas_targeta p {
+    margin-left: 10px;
+    color: white;
+}
+
+
+

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Películas</title>
+    <link rel="stylesheet" href="CSS/administracion.css">
+    <script src='JS/main.js' defer></script>
+</head>
+<body>
+    <header>
+        <h1>Panel de Administración de Películas</h1>
+    </header>
+    
+    <main>
+        <form id="form-agregar-pelicula" class="form-container">
+            <div class="form-group">
+                <label for="titulo">Título:</label>
+                <input type="text" id="titulo" required placeholder="Introduce el título de la película">
+            </div>
+
+            <div class="form-group">
+                <label for="sinopsis">Sinopsis:</label>
+                <textarea id="sinopsis" placeholder="Escribe una breve descripción de la película"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="anio">Año:</label>
+                <input type="number" id="anio" required placeholder="Introduce el año de estreno">
+            </div>
+
+            <div class="form-group">
+                <label for="genero">Género:</label>
+                <select id="genero" required>
+                    <option value="">Seleccionar género</option>
+                    <!-- Agregar más géneros según sea necesario -->
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="url_cartel">URL del Cartel:</label>
+                <input type="text" id="url_cartel" placeholder="Introduce la URL del cartel">
+            </div>
+
+            <div class="form-group">
+                <label for="url_trailer">URL del Trailer:</label>
+                <input type="text" id="url_trailer" placeholder="Introduce la URL del trailer (opcional)">
+            </div>
+
+            <div class="form-group">
+                <label for="url_carrusel">URL del Carrusel:</label>
+                <input type="text" id="url_carrusel" placeholder="Introduce la URL del carrusel (opcional)">
+            </div>
+
+            <div class="form-group">
+                <label for="demografia">Demografía:</label>
+                <select id="demografia" required>
+                    <option value="">Seleccionar demografía</option>
+                    <!-- Agregar más demografías según lo necesario -->
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="pegi">PEGI:</label>
+                <select id="pegi" required>
+                    <option value="">Seleccionar PEGI</option>
+                    <!-- Agregar más PEGI conforme sea necesario -->
+                </select>
+            </div>
+
+            <button type="submit" class="submit-btn">Agregar Película</button>
+        </form>
+    </main>
+
+    <script src="JS/administracion.js"></script>
+</body>
+</html>
