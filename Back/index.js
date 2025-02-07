@@ -161,7 +161,6 @@ app.get("/pegi", async (req, res) => {
 // Endpoint para obtener todas las películas con su estado de visto/favorito
 app.get("/visto", async (req, res) => {
     try {
-        // Obtener las películas con su estado de favorito y estado
         const { rows } = await pool.query(`
             SELECT P.id_pelicula, P.titulo, P.sinopsis, P.año, V.favorito, V.estado
             FROM PELICULA P
@@ -178,19 +177,16 @@ app.get("/visto", async (req, res) => {
 app.post("/visto/actualizar", async (req, res) => {
     const { id_perfil, id_pelicula, favorito, estado } = req.body;
 
-    // Verifica que todos los parámetros estén presentes
     if (id_perfil === undefined || id_pelicula === undefined || favorito === undefined || estado === undefined) {
         return res.status(400).json({ error: 'Faltan parámetros en la solicitud.' });
     }
 
     try {
-        // Verifica si ya existe un registro en la tabla VISTO para este perfil y película
         const { rows } = await pool.query(`
             SELECT * FROM VISTO WHERE id_perfil = $1 AND id_pelicula = $2
         `, [id_perfil, id_pelicula]);
 
         if (rows.length > 0) {
-            // Si ya existe un registro, lo actualizamos
             await pool.query(`
                 UPDATE VISTO
                 SET favorito = $1, estado = $2
@@ -199,7 +195,6 @@ app.post("/visto/actualizar", async (req, res) => {
 
             res.json({ message: 'Estado de la película actualizado correctamente.' });
         } else {
-            // Si no existe el registro, lo insertamos
             await pool.query(`
                 INSERT INTO VISTO (id_perfil, id_pelicula, favorito, estado)
                 VALUES ($1, $2, $3, $4)

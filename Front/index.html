@@ -53,15 +53,20 @@
             <script src="JS/carusel.js"></script>
         
         <div id="demografias">
-            
+            <!-- Aquí irán las tarjetas de las demografias -->
         </div>
-
-
-
-
-        
-
-        <h5>Animación</h5>
+        <div id="para-ti">
+            <h5>Mis Favoritos</h5>
+            <div id="favoritos" class="genero-container">
+                <div class="carousel">
+                    <button class="carousel-button prev" onclick="moveCarousel('favoritos', -1)">&#10094;</button>
+                    <div class="carousel-track" id="favoritos-track">
+                        <!-- Aquí irán las tarjetas de las películas -->
+                    </div>
+                    <button class="carousel-button next" onclick="moveCarousel('favoritos', 1)">&#10095;</button>
+                </div>
+            </div>
+            <h5>Animación</h5>
         <div id="animacion" class="genero-container">
             <div class="carousel">
                 <button class="carousel-button prev" onclick="moveCarousel('animacion', -1)">&#10094;</button>
@@ -95,7 +100,24 @@
         </div>
 
         <script src="JS/scroll.js"></script>
-
+        </div>
     </main>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-logo">
+                <img src="IMG/disney-logo-w.png" alt="Logo">
+            </div>
+            <div class="footer-links">
+                <a href="#">Cuenta</a>
+                <a href="#">Política de Cookies</a>
+                <a href="#">Términos y Condiciones</a>
+                <a href="#">Aviso Legal</a>
+                <a href="#">Contacto</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2024 Tenkai, Lab. Todos los derechos reservados.
+        </div>
+    </footer>
 </body>
 </html>

@@ -43,7 +43,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 profileDiv.innerHTML = `
                     <img src="${profile.url_fotoperfil}" alt="${profile.nombre_perfil}">
                     <p>${profile.nombre_perfil}</p>
-                    <p>Profile ID: ${profile.id_perfil}</p>
                 `;
 
                 // Agregar un event listener al hacer clic en un perfil

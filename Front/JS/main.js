@@ -5,6 +5,7 @@ const GET_PELICULAS = API_URL + "/peliculas";
 const GET_DEMOGRAFIAS = API_URL + "/demografia";
 const GET_GENEROS = API_URL + "/genero";
 const GET_PEGI = API_URL + "/pegi";
+const GET_VISTOS = API_URL + "/visto";
 // const GET_PROFILE = API_URL + "/profile";
 
 // RUTAS ELEMENTOS CRUZADOS
@@ -20,6 +21,15 @@ let botonOrdenar;
 let botonBuscar;
 let profileImg;
 
+// Mostrar el loader al iniciar la carga de la página
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("loader").style.display = "flex";
+});
+
+// Ocultar el loader cuando la página esté completamente cargada
+window.onload = function () {
+    document.getElementById("loader").style.display = "none";
+};
 
 document.getElementById('home').addEventListener('click', function() {
     window.location.href = 'index.html';
@@ -87,6 +97,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     getGenero();
     getPeliculas();
     getPegi();
+    mostrarFavoritos();
 
     const profileRole = localStorage.getItem('profileRole');  // Verifica si profileRole está correctamente guardado
     console.log("profileRole:", profileRole);  // Para verificar si el valor está bien guardado
@@ -99,6 +110,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
     } else {
         panelPeliculasButton.style.display = 'none';  // No mostrar si no es admin
     }
+
+    const generos = ["Animación", "Acción", "Ciencia Ficción", "Comedia", "Drama"]; // Puedes añadir más géneros aquí
+    crearGeneros(generos); 
 });
 
 
@@ -346,4 +360,62 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+
+
+function mostrarFavoritos() {
+    const profileID = localStorage.getItem('profileId'); // Obtener el ID del perfil desde localStorage
+    if (!profileID) {
+        console.error('No se ha encontrado el perfil');
+        return;
+    }
+
+    // Supongamos que la lista de películas favoritas del perfil se obtiene desde una API o localStorage
+    fetch(GET_FAVORITOS) // URL que devolvería las películas favoritas de un perfil
+        .then(response => response.json())
+        .then(favoritos => {
+            const contenedorFavoritos = document.getElementById("favoritos-track");
+            console.log(favoritos);
+            // Limpiamos el contenedor para evitar que se repitan las películas
+            contenedorFavoritos.innerHTML = "";
+
+            // Verificamos que tenemos las películas favoritas
+            if (favoritos && favoritos.length > 0) {
+                favoritos.forEach(pelicula => {
+                    // Creamos la tarjeta de cada película favorita
+                    const div = document.createElement("div");
+                    div.classList.add("pelicula-favorita"); // Asigna la clase para estilo
+
+                    const imagen = document.createElement("img");
+                    imagen.src = pelicula.url_cartel;
+                    imagen.alt = pelicula.titulo;
+
+                    const titulo = document.createElement("p");
+                    titulo.textContent = pelicula.titulo;
+
+                    const anio = document.createElement("p");
+                    anio.textContent = pelicula.anyo;
+
+                    div.appendChild(imagen);
+                    div.appendChild(titulo);
+                    div.appendChild(anio);
+
+                    // Añadimos un evento de clic para mostrar el detalle de la película
+                    div.addEventListener("click", function () {
+                        const idPelicula = pelicula.id_pelicula;
+                        window.location.href = `detalle.html?id_pelicula=${idPelicula}`;
+                    });
+
+                    // Insertamos la tarjeta de película en el contenedor
+                    contenedorFavoritos.appendChild(div);
+                });
+            } else {
+                // Si no hay películas favoritas, mostramos un mensaje
+                contenedorFavoritos.innerHTML = "<p>No tienes películas favoritas.</p>";
+            }
+        })
+        .catch(error => {
+            console.error('Error al cargar las películas favoritas:', error);
+        });
+}
+
 
