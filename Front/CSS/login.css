@@ -1,3 +1,8 @@
+/* Añadimos box-sizing global para que el padding no afecte al tamaño */
+* {
+    box-sizing: border-box;
+}
+
 body {
     display: flex;
     justify-content: center;
@@ -5,46 +10,78 @@ body {
     height: 100vh;
     background-color: #f0f0f0;
     font-family: Arial, sans-serif;
+    background-image: url(https://cnbl-cdn.bamgrid.com/assets/760258e607dd2dda3d8a3dc0457f5b85f92aff48f3028be0cabbdbd4a2b82c28/original);
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    flex-direction: column;
+    overflow-x: hidden; 
+}
+
+.logo {
+    width: 150px;
+    margin-bottom: 30px;
+    overflow: hidden; 
+}
+
+.logo img {
+    width: 100%;
+    height: auto; 
 }
 
 .login-container {
-    background-color: #fff;
-    padding: 20px;
+    background-color: #ffffff;
+    padding: 50px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
+    width: 100%;
+    max-width: 450px; 
 }
 
 .login-container h2 {
     margin-bottom: 20px;
-    color: #333;
+    color: #000000;
+}
+
+h3,h5,h6 {
+    color: #33333369;
+    text-align: left;
+    font-size: 12px;
 }
 
 .login-container label {
     display: block;
     margin-bottom: 5px;
-    color: #555;
+    color: #000000;
 }
 
 .login-container input {
-    width: 90%;
+    width: 100%;
     padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    margin-bottom: 30px;
+    border-radius: 5px 5px 0 0;
+    border: none;
+    border-bottom: 2px solid #000000;
+    background-color: #f3f3f3;
+    font-size: 16px;
+}
+
+.login-container input:focus {
+    outline: none;
+    border-color: #007bff;
 }
 
 .login-container button {
     width: 100%;
     padding: 10px;
-    background-color: #007BFF;
+    background-color: #000000;
     border: none;
-    border-radius: 4px;
+    border-radius: 20px;
     color: #fff;
     font-size: 16px;
     cursor: pointer;
 }
 
 .login-container button:hover {
-    background-color: #0056b3;
+    background-color: #1d1d1d;
 }

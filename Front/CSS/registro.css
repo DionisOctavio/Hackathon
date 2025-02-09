@@ -1,0 +1,90 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    background: linear-gradient(to top right, #056877, #051828);
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; /* Asegura que el logo y el formulario estén uno debajo del otro */
+}
+
+.logo {
+    width: 150px; /* Tamaño adecuado para el logo */
+    margin-bottom: 30px; /* Separación entre el logo y el formulario */
+    overflow: hidden; /* Evita que la imagen se salga de su contenedor */
+}
+
+.logo img {
+    width: 100%; /* Ajusta la imagen al ancho del contenedor */
+    height: auto; /* Mantiene la proporción de la imagen */
+}
+
+.container {
+    background-color: #fff;
+    padding: 50px;
+    border-radius: 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px; /* Máxima anchura del formulario */
+}
+
+.container h3,h5,h6 {
+    color: #33333369;
+    text-align: left;
+    font-size: 12px;
+}
+
+.container h2 {
+    font-size: 30px;
+    color: #333;
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+
+.container input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 30px;
+    border-radius: 5px 5px 0 0;
+    border: none;
+    border-bottom: 2px solid #000000;
+    background-color: #f3f3f3;
+    font-size: 16px;
+}
+
+.container input:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+
+.container button {
+    width: 100%;
+    padding: 10px;
+    background-color: #000000;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.container button:hover {
+    background-color: #141414;
+}

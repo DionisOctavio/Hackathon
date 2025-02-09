@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     getPeliculas();
     getPegi();
     mostrarFavoritos();
-    mostrarFavoritos(profileID);
+    mostrarFavoritos(profileID)
 
     // Acceso a panel de administracion
     const profileRole = localStorage.getItem('profileRole'); 
@@ -253,43 +253,6 @@ function pintarPeliculas(peliculas) {
     });
 }
 
-
-// FUNCION QUE PINTA LAS PELICULAS EN EL HTML DEPENDIENDO DEL GENERO
-function pintarPeliculasPorGenero(peliculas, containerId) {
-    const container = document.getElementById(containerId);
-    container.innerHTML = "";
-    peliculas.forEach(pelicula => {
-        const div = document.createElement("div");
-        div.classList.add("peliculas_targeta");
-        div.setAttribute("data-id", pelicula.id_pelicula);
-
-        const imagen = document.createElement("img");
-        imagen.src = pelicula.url_cartel;
-        imagen.alt = pelicula.titulo;
-
-        const titulo = document.createElement("p");
-        titulo.textContent = pelicula.titulo;
-
-        const anio = document.createElement("p")
-        anio.textContent = pelicula.anio;
-
-        const id = document.createElement("p");
-
-        div.appendChild(imagen);
-        div.appendChild(titulo);
-        div.appendChild(anio);
-        div.appendChild(id);
-
-        div.addEventListener("click", function () {
-            const idPelicula = this.getAttribute("data-id");
-            window.location.href = `detalle.html?id_pelicula=${idPelicula}`;
-        });
-
-        container.appendChild(div);
-    });
-}
-
-
 // FUNCION QUE FILTRA LAS PELICULAS POR GENERO
 function getPeliculasByGenero(genero, containerId) {
     const url = GET_PELICULAS_BY_GENERO.replace(':genero', genero);
@@ -375,34 +338,90 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-
+// FUNCION QUE MUESTRA LAS PELICULAS FAVORITAS DE UN PERFIL EN EL PARA TI
 async function mostrarFavoritos(idPerfil) {
     try {
         const response = await fetch(API_URL + `/favoritos/${idPerfil}`);
+        console.log(response);
 
         if (response.ok) {
             const peliculasFavoritas = await response.json();
+            console.log(peliculasFavoritas);
+
+            let paraTiContainer = document.getElementById('para-ti');
+            
+            if (!paraTiContainer) {
+                console.error('El contenedor #para-ti no se encuentra en el DOM.');
+                return; 
+            }
+
+            let favoritosContainer = document.getElementById('favoritos');
+            if (peliculasFavoritas.length === 0) {
+                if (favoritosContainer) {
+                    paraTiContainer.removeChild(favoritosContainer);
+                }
+                return; 
+            }
+
+            if (!favoritosContainer) {
+                favoritosContainer = document.createElement('div');
+                favoritosContainer.id = 'favoritos';
+                favoritosContainer.classList.add('genero-container');
+
+                const h5 = document.createElement('h5');
+                h5.innerText = 'Tus Favoritos';
+                favoritosContainer.appendChild(h5);
+
+                const carousel = document.createElement('div');
+                carousel.classList.add('carousel');
+
+                const prevButton = document.createElement('button');
+                prevButton.classList.add('carousel-button', 'prev');
+                prevButton.innerHTML = '&#10094;';
+                prevButton.onclick = () => moveCarousel('favoritos', -1);
+
+                const track = document.createElement('div');
+                track.id = 'favoritos-track';
+                track.classList.add('carousel-track');
+
+                const nextButton = document.createElement('button');
+                nextButton.classList.add('carousel-button', 'next');
+                nextButton.innerHTML = '&#10095;';
+                nextButton.onclick = () => moveCarousel('favoritos', 1);
+
+                carousel.appendChild(prevButton);
+                carousel.appendChild(track);
+                carousel.appendChild(nextButton);
+
+                favoritosContainer.appendChild(carousel);
+
+                paraTiContainer.appendChild(favoritosContainer);
+                console.log(favoritosContainer);
+            }
+
+            const track = document.getElementById('favoritos-track');
+            track.innerHTML = ''; 
 
             if (peliculasFavoritas.length > 0) {
-                const track = document.getElementById('favoritos-track');
-                track.innerHTML = ''; 
+                track.innerHTML = '<p>Loading...</p>';
 
-                peliculasFavoritas.forEach(pelicula => {
-                    const peliculaDiv = document.createElement('div');
-                    peliculaDiv.classList.add('pelicula-favorita');
+                setTimeout(() => {
+                    track.innerHTML = '';  
 
-                    peliculaDiv.innerHTML = `
-                        <div class="peliculas_targeta">
-                            <img src="${pelicula.url_cartel}" alt="${pelicula.titulo}" class="cartel">
-                            <p>${pelicula.titulo}</p>
-                        </div>
-                    `;
+                    peliculasFavoritas.forEach(pelicula => {
+                        const peliculaDiv = document.createElement('div');
+                        peliculaDiv.classList.add('pelicula-favorita');
 
-                    track.appendChild(peliculaDiv);
-                });
-            } else {
-                const track = document.getElementById('favoritos-track');
-                track.innerHTML = '<p>No tienes películas favoritas.</p>';
+                        peliculaDiv.innerHTML = `
+                            <div class="peliculas_targeta">
+                                <img src="${pelicula.url_cartel}" alt="${pelicula.titulo}" class="cartel">
+                                <p>${pelicula.titulo}</p>
+                            </div>
+                        `;
+
+                        track.appendChild(peliculaDiv);
+                    });
+                }, 500); 
             }
         } else {
             console.error('Error al obtener las películas favoritas:', response.statusText);
@@ -411,3 +430,39 @@ async function mostrarFavoritos(idPerfil) {
         console.error('Hubo un problema al hacer la solicitud:', error);
     }
 };
+
+// FUNCION QUE PINTA LAS PELICULAS EN EL HTML DEPENDIENDO DEL GENERO
+function pintarPeliculasPorGenero(peliculas, containerId) {
+    const container = document.getElementById(containerId);
+    container.innerHTML = "";
+    peliculas.forEach(pelicula => {
+        const div = document.createElement("div");
+        div.classList.add("peliculas_targeta");
+        div.setAttribute("data-id", pelicula.id_pelicula);
+
+        const imagen = document.createElement("img");
+        imagen.src = pelicula.url_cartel;
+        imagen.alt = pelicula.titulo;
+
+        const titulo = document.createElement("p");
+        titulo.textContent = pelicula.titulo;
+
+        const anio = document.createElement("p")
+        anio.textContent = pelicula.anio;
+
+        const id = document.createElement("p");
+
+        div.appendChild(imagen);
+        div.appendChild(titulo);
+        div.appendChild(anio);
+        div.appendChild(id);
+
+        div.addEventListener("click", function () {
+            const idPelicula = this.getAttribute("data-id");
+            window.location.href = `detalle.html?id_pelicula=${idPelicula}`;
+        });
+
+        container.appendChild(div);
+    });
+}
+
