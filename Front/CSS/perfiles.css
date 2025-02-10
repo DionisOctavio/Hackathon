@@ -7,7 +7,8 @@ body {
     height: 100vh;
     overflow: hidden;
     font-family: Arial, sans-serif;
-    background: url('https://wallpapers.com/images/hd/1366x768-disney-background-897iz7ui4fkwmk3h.jpg') no-repeat center center fixed;
+    background: radial-gradient(circle, #056877, #051828);
+
     background-size: cover;
 }
 
@@ -30,8 +31,23 @@ body::before {
 
 .profiles-container h2 {
     margin-bottom: 30px;
-    color: #000000;
+    color: #ffffff;
     font-size: 35px;
+}
+
+.profiles-container button {
+    background-color: transparent;
+    backdrop-filter: blur(10px); 
+    border: 2px solid #c5c5c5;
+    color: #c5c5c5;
+    font-weight: bold;
+    padding: 10px;
+    transition: 0.3s ease-in-out;
+}
+
+.profiles-container button:hover {
+    border: 2px solid #ffffff;
+    color: #ffffff;
 }
 
 #profiles {
@@ -71,10 +87,9 @@ body::before {
 
 .profile:hover img {
     transform: scale(1.1);
-    border: 4px solid #0d60c0;
+    border: 4px solid #051828;
 }
 
 .profile:hover p {
-    color: #0d60c0;
     font-weight: bold;
 }

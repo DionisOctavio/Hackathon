@@ -35,3 +35,32 @@ document.getElementById('login-form').addEventListener('submit', function(event)
     })
     .catch(error => console.error('Error:', error));
 });
+
+
+// LOADER 
+document.addEventListener("DOMContentLoaded", () => {
+    const loadingScreen = document.getElementById("loading-screen");
+
+    // Ocultar la pantalla de carga cuando la página termine de cargar
+    window.addEventListener("load", () => {
+        loadingScreen.style.opacity = "0";
+        setTimeout(() => {
+            loadingScreen.style.display = "none";
+        }, 500);
+    });
+
+    // Agregar efecto de carga al cambiar de página
+    document.querySelectorAll("a").forEach(link => {
+        link.addEventListener("click", function(event) {
+            event.preventDefault();
+            const href = this.href;
+            
+            // Mostrar pantalla de carga
+            loadingScreen.style.display = "flex";
+            loadingScreen.style.opacity = "1";
+
+            // Redirigir a la nueva página cuando esta termine de cargar
+            window.location.href = href;
+        });
+    });
+});

@@ -1,5 +1,5 @@
 body{
-    background-color: rgb(19, 19, 46);
+    background-color: #051828;
     margin: 0px;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
@@ -8,7 +8,7 @@ header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    background: linear-gradient(to bottom, rgb(11, 11, 77) 70%, rgba(19, 19, 46) 100%);
+    background: linear-gradient(to bottom, #000000 10%, #051828 100%);
     padding: 10px;
 }
 
@@ -236,7 +236,7 @@ main {
 /* -------------------------------------------------------------- */
 
 footer {
-    background-color: #222;
+    background-color: #1A1D29;
     color: #fff;
     padding: 20px 10%;
     position: relative; /* Añadido */

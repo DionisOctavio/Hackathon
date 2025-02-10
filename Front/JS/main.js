@@ -81,14 +81,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     // Llamamos a las funciones
     getDemografias();
+    mostrarFavoritos();
+    mostrarFavoritos(profileID)
     getPeliculasByGenero('Animación', 'animacion-track');
     getPeliculasByGenero('Acción', 'accion-track');
     getPeliculasByGenero('Ciencia Ficción', 'ciencia-ficcion-track');
     getGenero();
     getPeliculas();
     getPegi();
-    mostrarFavoritos();
-    mostrarFavoritos(profileID)
 
     // Acceso a panel de administracion
     const profileRole = localStorage.getItem('profileRole'); 
@@ -338,31 +338,33 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-// FUNCION QUE MUESTRA LAS PELICULAS FAVORITAS DE UN PERFIL EN EL PARA TI
+// FUNCIÓN QUE MUESTRA LAS PELÍCULAS FAVORITAS DE UN PERFIL EN "PARA TI"
 async function mostrarFavoritos(idPerfil) {
     try {
         const response = await fetch(API_URL + `/favoritos/${idPerfil}`);
-        console.log(response);
 
         if (response.ok) {
             const peliculasFavoritas = await response.json();
-            console.log(peliculasFavoritas);
+            console.log('Películas favoritas:', peliculasFavoritas);
 
             let paraTiContainer = document.getElementById('para-ti');
-            
+
             if (!paraTiContainer) {
                 console.error('El contenedor #para-ti no se encuentra en el DOM.');
-                return; 
+                return;
             }
 
             let favoritosContainer = document.getElementById('favoritos');
+
+            // Si no hay películas favoritas, eliminamos la sección si existe
             if (peliculasFavoritas.length === 0) {
                 if (favoritosContainer) {
                     paraTiContainer.removeChild(favoritosContainer);
                 }
-                return; 
+                return;
             }
 
+            // Si el contenedor no existe, crearlo
             if (!favoritosContainer) {
                 favoritosContainer = document.createElement('div');
                 favoritosContainer.id = 'favoritos';
@@ -392,37 +394,34 @@ async function mostrarFavoritos(idPerfil) {
                 carousel.appendChild(prevButton);
                 carousel.appendChild(track);
                 carousel.appendChild(nextButton);
-
                 favoritosContainer.appendChild(carousel);
-
                 paraTiContainer.appendChild(favoritosContainer);
-                console.log(favoritosContainer);
             }
 
+            // Limpiamos el track antes de añadir las películas
             const track = document.getElementById('favoritos-track');
-            track.innerHTML = ''; 
+            track.innerHTML = '';
 
-            if (peliculasFavoritas.length > 0) {
-                track.innerHTML = '<p>Loading...</p>';
+            peliculasFavoritas.forEach(pelicula => {
+                const peliculaDiv = document.createElement('div');
+                peliculaDiv.classList.add('pelicula-favorita');
+                peliculaDiv.setAttribute("data-id", pelicula.id_pelicula);
 
-                setTimeout(() => {
-                    track.innerHTML = '';  
+                peliculaDiv.innerHTML = `
+                    <div class="peliculas_targeta">
+                        <img src="${pelicula.url_cartel}" alt="${pelicula.titulo}" class="cartel">
+                        <p>${pelicula.titulo}</p>
+                    </div>
+                `;
 
-                    peliculasFavoritas.forEach(pelicula => {
-                        const peliculaDiv = document.createElement('div');
-                        peliculaDiv.classList.add('pelicula-favorita');
+                peliculaDiv.addEventListener("click", function () {
+                    const idPelicula = this.getAttribute("data-id");
+                    window.location.href = `detalle.html?id_pelicula=${idPelicula}`;
+                });
 
-                        peliculaDiv.innerHTML = `
-                            <div class="peliculas_targeta">
-                                <img src="${pelicula.url_cartel}" alt="${pelicula.titulo}" class="cartel">
-                                <p>${pelicula.titulo}</p>
-                            </div>
-                        `;
+                track.appendChild(peliculaDiv);
+            });
 
-                        track.appendChild(peliculaDiv);
-                    });
-                }, 500); 
-            }
         } else {
             console.error('Error al obtener las películas favoritas:', response.statusText);
         }
