@@ -1,4 +1,4 @@
-/* Añadimos box-sizing global para que el padding no afecte al tamaño */
+/* Estilos originales */
 * {
     box-sizing: border-box;
 }
@@ -43,7 +43,7 @@ body {
     color: #000000;
 }
 
-h3,h5,h6 {
+h3, h5, h6 {
     color: #33333369;
     text-align: left;
     font-size: 12px;
@@ -113,4 +113,49 @@ h3,h5,h6 {
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+/* ===================== */
+/* Responsividad */
+/* ===================== */
+
+/* Pantallas pequeñas (celulares) */
+@media (max-width: 480px) {
+    .login-container {
+        padding: 30px;
+        max-width: 90%;
+    }
+
+    .logo {
+        width: 100px;
+    }
+
+    .login-container h2 {
+        font-size: 18px;
+    }
+
+    .login-container input {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .login-container button {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
+
+/* Pantallas medianas (tablets) */
+@media (max-width: 768px) {
+    .login-container {
+        max-width: 80%;
+        padding: 40px;
+    }
+}
+
+/* Pantallas grandes (escritorio) */
+@media (min-width: 1024px) {
+    .login-container {
+        max-width: 450px;
+    }
 }

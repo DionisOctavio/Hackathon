@@ -34,13 +34,13 @@ body {
 .container {
     background-color: #fff;
     padding: 50px;
-    border-radius: 30px;
+    border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 500px; /* Máxima anchura del formulario */
+    max-width: 450px; /* Máxima anchura del formulario */
 }
 
-.container h3,h5,h6 {
+.container h3, h5, h6 {
     color: #33333369;
     text-align: left;
     font-size: 12px;
@@ -52,7 +52,6 @@ body {
     text-align: left;
     margin-bottom: 20px;
 }
-
 
 .container input {
     width: 100%;
@@ -70,7 +69,6 @@ body {
     border-color: #007bff;
 }
 
-
 .container button {
     width: 100%;
     padding: 10px;
@@ -87,4 +85,49 @@ body {
 
 .container button:hover {
     background-color: #141414;
+}
+
+/* ===================== */
+/* Responsividad */
+/* ===================== */
+
+/* Pantallas pequeñas (celulares) */
+@media (max-width: 480px) {
+    .container {
+        padding: 30px;
+        max-width: 90%;
+    }
+
+    .logo {
+        width: 100px;
+    }
+
+    .container h2 {
+        font-size: 24px;
+    }
+
+    .container input {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .container button {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
+
+/* Pantallas medianas (tablets) */
+@media (max-width: 768px) {
+    .container {
+        max-width: 80%;
+        padding: 40px;
+    }
+}
+
+/* Pantallas grandes (escritorio) */
+@media (min-width: 1024px) {
+    .container {
+        max-width: 450px;
+    }
 }
