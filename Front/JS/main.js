@@ -268,16 +268,7 @@ function getPeliculasByGenero(genero, containerId) {
         });
 }
 
-// EVENTO QUE SE ACTIVA AL SELECIONAR UN GENERO EN EL SELECT
-document.getElementById('generos-select').addEventListener('change', function() {
-    const generoSeleccionado = this.value;
 
-    if (generoSeleccionado) {
-        getPeliculasByGenero(generoSeleccionado, 'peliculas');
-    } else {
-        getPeliculas();
-    }
-});
 
 
 // FUNCION QUE PINTA LAS DEMOGRAFIA EN EL HTML
@@ -297,45 +288,7 @@ function pintarDemografias(demografias) {
 }
 
 
-// FUNCION QUE ORDENA LAS PELICULAS POR AÑO EN ORDEN ASCENDENTE 
-let ordenAscendente = true;
-function ordenarPeliculas() {
-    const peliculasContainer = document.getElementById('peliculas');
-    const peliculas = Array.from(peliculasContainer.children);
-    
-    peliculas.sort((a, b) => {
-        const anioA = parseInt(a.querySelector('p:nth-child(3)').textContent);
-        const anioB = parseInt(b.querySelector('p:nth-child(3)').textContent);
-        return ordenAscendente ? anioA - anioB : anioB - anioA;
-    });
 
-    peliculas.forEach(pelicula => peliculasContainer.appendChild(pelicula));
-
-    ordenAscendente = !ordenAscendente;
-    document.getElementById('orden-indicador').textContent = ordenAscendente ? '⬆️' : '⬇️';
-}
-
-document.addEventListener('DOMContentLoaded', (event) => {
-    document.getElementById('ordenar-ano').addEventListener('click', ordenarPeliculas);
-});
-
-document.getElementById('generos-select').addEventListener('change', function() {
-    const generoSeleccionado = this.value;
-    if (generoSeleccionado) {
-        getPeliculasByGenero(generoSeleccionado); 
-    } else {
-        getPeliculas(); 
-    }
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll(".pelicula-targeta").forEach((tarjeta) => {
-        tarjeta.addEventListener("click", function () {
-            const idPelicula = this.getAttribute("data-id"); 
-            window.location.href = `detalle.html?id=${id_pelicula}`;
-        });
-    });
-});
 
 
 // FUNCIÓN QUE MUESTRA LAS PELÍCULAS FAVORITAS DE UN PERFIL EN "PARA TI"
