@@ -30,6 +30,7 @@ function asignarRedireccion(idElemento, urlDestino) {
         window.location.href = urlDestino;
     });
 }
+
 asignarRedireccion('home', 'index.html');
 asignarRedireccion('home-icon', 'index.html');
 asignarRedireccion('generos', 'peliculas.html');
@@ -124,7 +125,6 @@ function logout() {
     localStorage.removeItem('profileId');
     window.location.href = 'index.html';
 }
-
 
 
 // FUNCION DE ACCESO AL PANEL DE ADMINISTRACION
