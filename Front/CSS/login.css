@@ -1,8 +1,40 @@
-/* Estilos originales */
 * {
     box-sizing: border-box;
 }
 
+/* LOADING */
+
+
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+    z-index: 9999;
+}
+
+.spinner {
+    border: 5px solid rgba(255, 255, 255, 0.3);
+    border-top: 5px solid white;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* STYLOS HTML */
 body {
     display: flex;
     justify-content: center;
@@ -86,40 +118,8 @@ h3, h5, h6 {
     background-color: #1d1d1d;
 }
 
-#loading-screen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 1;
-    transition: opacity 0.5s ease-in-out;
-    z-index: 9999;
-}
+/* RESPONSIVE HTML */
 
-.spinner {
-    border: 5px solid rgba(255, 255, 255, 0.3);
-    border-top: 5px solid white;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-/* ===================== */
-/* Responsividad */
-/* ===================== */
-
-/* Pantallas pequeñas (celulares) */
 @media (max-width: 480px) {
     .login-container {
         padding: 30px;
@@ -145,7 +145,6 @@ h3, h5, h6 {
     }
 }
 
-/* Pantallas medianas (tablets) */
 @media (max-width: 768px) {
     .login-container {
         max-width: 80%;
@@ -153,7 +152,6 @@ h3, h5, h6 {
     }
 }
 
-/* Pantallas grandes (escritorio) */
 @media (min-width: 1024px) {
     .login-container {
         max-width: 450px;
