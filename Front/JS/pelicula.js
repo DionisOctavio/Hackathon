@@ -10,6 +10,12 @@ const perfilImg = document.getElementById("profile-img");
 const generosSelect = document.getElementById('generos-select');
 const ordenarAnoButton = document.getElementById('ordenar-ano');
 
+
+let peliculasGuardadas = []; 
+let paginaActual = 1;
+const peliculasPorPagina = 15;
+
+
 // Cargar datos de perfil desde localStorage
 document.addEventListener('DOMContentLoaded', () => {
     const profileImgUrl = localStorage.getItem('profileImg');
@@ -67,9 +73,23 @@ function filtrarPeliculasPorGenero(genero) {
 function getPeliculas() {
     fetch(GET_PELICULAS)
         .then(response => response.json())
-        .then(peliculas => pintarPeliculas(peliculas))
+        .then(peliculas => {
+            peliculasGuardadas = peliculas; // Guardar todas las películas
+            paginaActual = 1; // Reiniciar a la primera página
+            mostrarPeliculasPaginadas();
+        })
         .catch(error => console.error('Error al obtener las películas:', error));
 }
+
+function mostrarPeliculasPaginadas() {
+    const inicio = (paginaActual - 1) * peliculasPorPagina;
+    const fin = inicio + peliculasPorPagina;
+    const peliculasPaginadas = peliculasGuardadas.slice(inicio, fin);
+    
+    pintarPeliculas(peliculasPaginadas);
+    actualizarBotones();
+}
+
 
 // FUNCION PARA PINTAR LAS PELICULAS EN EL DOM
 function pintarPeliculas(peliculas) {
@@ -132,6 +152,29 @@ function ordenarPeliculas() {
 
 // Event Listeners
 ordenarAnoButton.addEventListener('click', ordenarPeliculas);
+
+// Actualizar estado de botones de paginación
+function actualizarBotones() {
+    document.getElementById("pagina-anterior").disabled = paginaActual === 1;
+    document.getElementById("pagina-siguiente").disabled = 
+        paginaActual * peliculasPorPagina >= peliculasGuardadas.length;
+}
+
+document.getElementById("pagina-anterior").addEventListener("click", () => {
+    if (paginaActual > 1) {
+        paginaActual--;
+        mostrarPeliculasPaginadas();
+        window.scrollTo(0, 0); // Mover al inicio de la página
+    }
+});
+
+document.getElementById("pagina-siguiente").addEventListener("click", () => {
+    if (paginaActual * peliculasPorPagina < peliculasGuardadas.length) {
+        paginaActual++;
+        mostrarPeliculasPaginadas();
+        window.scrollTo(0, 0); // Mover al inicio de la página
+    }
+});
 
 // Iniciar con todas las películas
 getPeliculas();
