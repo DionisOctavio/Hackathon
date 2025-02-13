@@ -33,23 +33,33 @@
     </header>
     <main>
         <div id="detalle-pelicula">
-            <img id="pelicula-imagen" src="" alt="Imagen de la película">
-            <div id="informacion-pelicula">
-                <h1 id="pelicula-titulo"></h1>
-                <p id="pelicula-sinopsis"></p>
-                <p><strong>Año:</strong> <span id="pelicula-año"></span></p>
-                <p><strong>Genero:</strong> <span id="pelicula-genero"></span></p>
-                <a id="pelicula-trailer" href="" target="_blank">🎬 Ver tráiler</a>
-    
-                <button id="favorito" class="boton-interaccion">Favorito</button>
-
-                <label for="pendiente">Estado Pendiente</label>
-                <select id="pendiente" class="boton-interaccion">
+            <div id="pelicula-izquierda">
+                <img id="pelicula-imagen" src="" alt="Imagen de la película">
+                <button id="favorito" class="favorito-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                      <path d="M6 2C4.9 2 4 2.9 4 4v16l8-3 8 3V4c0-1.1-.9-2-2-2H6z"/>
+                    </svg>
+                    <p>Añadir a favoritos</p>
+                  </button>                                                                                      
+                <label for="pendiente">Estado:</label>
+                <select id="pendiente" class="estado-select">
                     <option value="pendiente">Pendiente</option>
                     <option value="sin-terminar">Sin Terminar</option>
                     <option value="terminado">Terminado</option>
                 </select>
-
+            </div>
+            <div id="pelicula-derecha">
+                <h1 id="pelicula-titulo">Título de la película</h1>
+                <p id="pelicula-sinopsis">Aquí va la sinopsis de la película.</p>
+                <div id="info-trailer">
+                    <div id="informacion-pelicula">
+                        <p><strong>Año:</strong> <span id="pelicula-año">2023</span></p>
+                        <p><strong>Género:</strong> <span id="pelicula-genero">Acción</span></p>
+                    </div>
+                    <div id="pelicula-trailer">
+                        <iframe width="300" height="169" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
