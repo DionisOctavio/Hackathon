@@ -1,10 +1,9 @@
 // Rutas de la API
 const API_URL = "http://localhost:3000";
 const GET_PELICULAS = API_URL + "/peliculas";
-const GET_GENEROS = API_URL + "/genero"; // Ruta correcta para los géneros
-const GET_PELICULAS_BY_GENERO = API_URL + "/peliculas/genero"; // Ruta para filtrar películas por género
+const GET_GENEROS = API_URL + "/genero"; 
+const GET_PELICULAS_BY_GENERO = API_URL + "/peliculas/genero"; 
 
-// Selección de elementos del DOM
 const espaciosPeliculas = document.getElementById("peliculas");
 const perfilImg = document.getElementById("profile-img");
 const generosSelect = document.getElementById('generos-select');
@@ -105,6 +104,7 @@ function pintarPeliculas(peliculas) {
         const imagen = document.createElement("img");
         imagen.src = pelicula.url_cartel;
         imagen.alt = pelicula.titulo;
+        imagen.loading = "lazy";
 
         const titulo = document.createElement("p");
         titulo.textContent = pelicula.titulo;

@@ -4,8 +4,8 @@ const cors = require("cors");
 const app = express();
 const port = 3000;
 
-app.use(express.json());
 app.use(cors());
+app.use(express.json());
 
 const pool = new Pool({
     user: "postgres",
@@ -22,6 +22,9 @@ app.listen(port, () => {
     console.log(`Servidor corriendo en http://localhost:${port}`);
 });
 
+
+
+// LOGIN    
 app.post("/login", async (req, res) => {
     const { usuario, contrasenia } = req.body;
     try {
@@ -33,7 +36,6 @@ app.post("/login", async (req, res) => {
         if (rows.length > 0) {
             const user = rows[0];
             
-            // Obtener los datos del perfil asociado al usuario
             const { rows: profileRows } = await pool.query(
                 `SELECT PERFIL.* 
                  FROM PERFIL 
@@ -41,23 +43,20 @@ app.post("/login", async (req, res) => {
                 [user.id_cuenta]
             );
 
-            // Si hay perfil asociado, lo incluimos en la respuesta
             const profile = profileRows.length > 0 ? profileRows[0] : null;
 
-            // Log para verificar qué datos estamos enviando
             console.log('User data being sent:', {
                 success: true,
                 userId: user.id_cuenta,
-                role: user.rol_cuenta,   // Verifica que 'rol_cuenta' esté correctamente
-                profile: profile || {}    // Perfil, si existe
+                role: user.rol_cuenta,   
+                profile: profile || {}   
             });
 
-            // Enviar respuesta con datos completos (userId, rol, perfil)
             res.json({
                 success: true,
                 userId: user.id_cuenta,
-                rol_cuenta: user.rol_cuenta,   // Asegúrate de enviar 'rol_cuenta'
-                profile: profile || {}    // Incluimos el perfil, si existe
+                rol_cuenta: user.rol_cuenta,  
+                profile: profile || {} 
             });
         } else {
             res.json({ success: false, message: "Invalid username or password" });
@@ -135,8 +134,9 @@ app.get("/perfiles/:userId", async (req, res) => {
 // DEVUELVE TODAS LAS PELICULAS
 app.get("/peliculas", async (req, res)=>{
     const {rows} = await pool.query(
-        "SELECT * FROM PELICULA;"
+        "SELECT * FROM pelicula;"
     );
+    console.log(rows);
     res.json(rows);
 });
 
