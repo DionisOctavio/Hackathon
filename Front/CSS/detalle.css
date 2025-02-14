@@ -84,7 +84,6 @@ header .profile-icon {
 }
 
 header .profile-icon:hover {
-    background-color: #131313;
     border-radius: 10px 10px 0px 0px;
 }
 
@@ -98,35 +97,71 @@ header .profile-icon img {
 
 .profile-icon {
     position: relative;
-}
-
-.profile-menu {
-    display: none;
-    position: absolute;
-    top: 100%; 
-    right: 0;
-    background-color: #131313;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-}
-
-.profile-menu button {
-    display: block;
-    width: 100%;
-    padding: 15px;
-    text-align: left;
-    border: none;
-    background: none;
+    display: inline-block;
     cursor: pointer;
-    color: white;
 }
 
-.profile-icon:hover .profile-menu {
+#profile-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+.profile-icon:hover #profile-img {
+    transform: scale(1.1);
+}
+
+#profile-name-container {
+    display: inline-block;
+    font-size: 16px;
+    color: #333;
+    font-weight: 600;
+}
+
+#profile-menu {
+    display: none; 
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.1); 
+    backdrop-filter: blur(10px); 
+    border: 2px solid #007bff3b; 
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    z-index: 100;
+    padding: 15px;
+    width: 200px;
+    transform: translateY(10px);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.profile-icon:hover #profile-menu {
     display: block;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
 }
 
+#profile-menu a {
+    display: block;
+    padding: 12px 20px;
+    text-decoration: none;
+    color: #000000; 
+    margin-bottom: 8px;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
 
-
+#profile-menu a:hover {
+    background-color: #007bffc0;
+    color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
 
 @media (max-width: 1000px) {
     nav {
@@ -155,18 +190,19 @@ header .profile-icon img {
 }
 
 
+
 /* CONTENEDOR PRINCIPAL */
 main {
     flex: 1;  /* Esto empuja el footer hacia abajo */
     max-width: 1000px;
     margin: 40px auto;
     padding: 20px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
+    background: transparent;
+    backdrop-filter: blur(20px); 
+    border: 1px solid#00aaff;
+    border-radius: 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
-
-
 
 /* DETALLE PELÍCULA */
 #detalle-pelicula {
@@ -210,7 +246,6 @@ main {
     color: #000000;
 }
 
-
 .favorito-btn:hover {
     background: #bea200;
 }
@@ -243,7 +278,6 @@ main {
     background-color: #f1f1f1; /* Color cuando pasas el ratón por encima de una opción */
 }
 
-
 /* DERECHA - INFORMACIÓN */
 #pelicula-derecha {
     flex: 1;
@@ -251,7 +285,7 @@ main {
 }
 
 h1 {
-    font-size: 28px;
+    font-size: 32px;
     font-weight: bold;
     margin-bottom: 10px;
 }
@@ -262,11 +296,10 @@ h1 {
 }
 
 /* INFO + TRAILER */
-#info-trailer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
+#pelicula-trailer {
+    width: 100%;
+    height: 400px;
+    border-radius: 10px;
 }
 
 #informacion-pelicula {
@@ -274,11 +307,11 @@ h1 {
 }
 
 #pelicula-trailer iframe {
-    width: 100%; /* Ajusta el tamaño automáticamente */
-    max-width: 300px;
-    height: 169px;
+    width: 100%; 
+    height: 100%;
     border-radius: 10px;
 }
+
 
 /* FOOTER */
 footer {

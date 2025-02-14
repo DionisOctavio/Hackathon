@@ -20,27 +20,31 @@
             <button href="#" class="nav-icon" id="buscar-icon"><img src="IMG/img-iconos/img-iconos-lupa.png"></button>
         </nav>
         <div class="profile-icon" id="profile-button">
-            <img id="profile-img" src="" onclick="toggleProfileMenu()">
+            <img id="profile-img" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" alt="Imagen de perfil">
             <div id="profile-name-container">
-                <span id="profile-name"></span>
+                <span id="profile-name">Invitado</span>
             </div>
-            <div id="profile-menu" class="profile-menu">
-                <button id="login-button" onclick="login()">Iniciar sesión</button>
-                <button id="logout-button" onclick="logout()">Cerrar sesión</button>
-                <button id="panel-peliculas-button" onclick="irAlPanelPeliculas()" style="display: none;">Panel de Películas</button>
-            </div>
+            <!-- Menú de perfil tipo nav -->
+            <nav id="profile-menu" class="profile-menu">
+                <a href="cuenta.html" id="account-button" onclick="verCuenta()">Mi cuenta</a>
+                <a href="perfiles.html" id="perfil-button">Cambiar Perfil</a>
+                <a href="#" id="login-button" onclick="login()">Iniciar sesión</a>
+                <a href="#" id="panel-peliculas-button" onclick="irAlPanelPeliculas()" style="display: none;">Panel de Películas</a>
+                <a href="#" id="logout-button" onclick="logout()">Cerrar sesión</a>
+            </nav>
         </div>
     </header>
     <main>
+        <h1 id="pelicula-titulo">Título de la película</h1>
         <div id="detalle-pelicula">
             <div id="pelicula-izquierda">
                 <img id="pelicula-imagen" src="" alt="Imagen de la película">
                 <button id="favorito" class="favorito-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-                      <path d="M6 2C4.9 2 4 2.9 4 4v16l8-3 8 3V4c0-1.1-.9-2-2-2H6z"/>
+                        <path d="M6 2C4.9 2 4 2.9 4 4v16l8-3 8 3V4c0-1.1-.9-2-2-2H6z"/>
                     </svg>
-                    <p>Añadir a favoritos</p>
-                  </button>                                                                                      
+                    <p>Añadir a favoritos</p>
+                </button>
                 <label for="pendiente">Estado:</label>
                 <select id="pendiente" class="estado-select">
                     <option value="pendiente">Pendiente</option>
@@ -49,16 +53,15 @@
                 </select>
             </div>
             <div id="pelicula-derecha">
-                <h1 id="pelicula-titulo">Título de la película</h1>
-                <p id="pelicula-sinopsis">Aquí va la sinopsis de la película.</p>
-                <div id="info-trailer">
-                    <div id="informacion-pelicula">
-                        <p><strong>Año:</strong> <span id="pelicula-año">2023</span></p>
-                        <p><strong>Género:</strong> <span id="pelicula-genero">Acción</span></p>
-                    </div>
-                    <div id="pelicula-trailer">
-                        <iframe width="300" height="169" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
-                    </div>
+                <div id="pelicula-trailer">
+                    
+                </div>
+                <p id="pelicula-sinopsis">Sinopsis</p>
+                <div id="informacion-pelicula">
+                    <p><strong>Año:</strong> <span id="pelicula-año"></span></p>
+                    <p><strong>Género:</strong> <span id="pelicula-genero"></span></p>
+                    <p><strong>Categoria:</strong> <span id="pelicula-categoria"></span></p>
+                    <p><strong>Pegi:</strong> <span id="pelicula-pegi"></span></p>
                 </div>
             </div>
         </div>

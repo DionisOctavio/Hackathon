@@ -131,14 +131,19 @@ app.get("/perfiles/:userId", async (req, res) => {
     }
 });
 
-// DEVUELVE TODAS LAS PELICULAS
-app.get("/peliculas", async (req, res)=>{
-    const {rows} = await pool.query(
-        "SELECT * FROM pelicula;"
+app.get("/peliculas", async (req, res) => {
+    const { rows } = await pool.query(
+        `SELECT id_pelicula, titulo, sinopsis, anyo, url_portada, url_cartel, url_trailer, url_carrusel, 
+                demografia.nombre_demografia, genero.nombre_genero, pegi.edad
+         FROM pelicula
+         JOIN demografia ON pelicula.id_demografia = demografia.id_demografia
+         JOIN genero ON pelicula.id_genero = genero.id_genero
+         JOIN pegi ON pelicula.id_pegi = pegi.id_pegi`
     );
     console.log(rows);
     res.json(rows);
 });
+
 
 // DEVUELVE TODAS LAS PELICULAS DE UN GENERO CONCRETO
 app.get("/peliculas/genero/:genero", async (req, res) => {

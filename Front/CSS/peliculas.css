@@ -4,8 +4,6 @@ body{
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
-/* HEADER */
-
 header {
     display: flex;
     flex-direction: row;
@@ -185,6 +183,7 @@ header .profile-icon img {
         margin-left: 0;
     }
 }
+
 
 
 

@@ -1,9 +1,26 @@
 
+// FUNCION que redirecciona a otra pagina
+function asignarRedireccion(idElemento, urlDestino) {
+    document.getElementById(idElemento).addEventListener('click', function() {
+        window.location.href = urlDestino;
+    });
+}
+
+asignarRedireccion('home', 'index.html');
+asignarRedireccion('home-icon', 'index.html');
+asignarRedireccion('generos', 'peliculas.html');
+asignarRedireccion('peliculas-icon', 'peliculas.html');
+asignarRedireccion('buscar', '');
+asignarRedireccion('buscar-icon', '');
+
+
+// FUNCION para obtener el ID de la pelicula de la URL
+
 document.addEventListener("DOMContentLoaded", function () {
     const params = new URLSearchParams(window.location.search);
-    const idPelicula = params.get("id_pelicula"); // ✅ Debe coincidir con el parámetro en la URL
+    const idPelicula = params.get("id_pelicula"); 
 
-    console.log("ID de la película obtenida:", idPelicula); // ✅ Verificar si el ID se pasa bien
+    console.log("ID de la película obtenida:", idPelicula); 
 
     if (!idPelicula) {
         alert("Película no encontrada.");
@@ -14,10 +31,10 @@ document.addEventListener("DOMContentLoaded", function () {
     fetch("http://localhost:3000/peliculas")
         .then(response => response.json())
         .then(peliculas => {
-            console.log("Datos de películas cargados:", peliculas); // ✅ Verifica si carga bien el JSON
+            console.log("Datos de películas cargados:", peliculas);
 
             const pelicula = peliculas.find(p => p.id_pelicula == idPelicula);
-            console.log("Película encontrada:", pelicula); // ✅ Verifica si encuentra la película correcta
+            console.log("Película encontrada:", pelicula); 
 
             if (!pelicula) {
                 alert("Película no encontrada.");
@@ -29,12 +46,20 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById("pelicula-titulo").textContent = pelicula.titulo;
             document.getElementById("pelicula-imagen").src = pelicula.url_cartel;
             document.getElementById("pelicula-sinopsis").textContent = pelicula.sinopsis;
-            document.getElementById("pelicula-genero").textContent = pelicula.genero;
+            document.getElementById("pelicula-genero").textContent = pelicula.nombre_genero;
             document.getElementById("pelicula-año").textContent = pelicula.anyo;
-            document.getElementById("pelicula-trailer").href = pelicula.url_trailer;
+            document.getElementById("pelicula-categoria").textContent = pelicula.nombre_demografia;
+            document.getElementById("pelicula-pegi").textContent = pelicula.edad;
+
+
+
+            // Inserta el iframe del trailer en el div
+            const trailerDiv = document.getElementById("pelicula-trailer");
+            trailerDiv.innerHTML = `<iframe width="560" height="315" src="${pelicula.url_trailer}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
         })
         .catch(error => console.error("Error cargando los datos:", error));
 });
+
 
 
 
