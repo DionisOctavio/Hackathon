@@ -14,8 +14,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
     getGenero();
     getDemografias();
     getPegi();
-    pintarFavoritos(profileID);
-    pintarPeliculas(peliculas, generos);
+
+    if (profileID) {
+        pintarFavoritos(profileID);
+    } else {
+        console.log("Usuario no autenticado, no se pueden cargar favoritos.");
+    }
+
     //
     insertarDemografia(demografias);
 });
@@ -112,7 +117,7 @@ function pintarFavoritos(idPerfil) {
                 favoritosContainer.classList.add('genero-container');
 
                 const h5 = document.createElement('h5');
-                h5.innerText = 'Tus Favoritos';
+                h5.innerText = 'Tus Favoritos ' + localStorage.getItem('profileName');
                 favoritosContainer.appendChild(h5);
 
                 const carousel = document.createElement('div');

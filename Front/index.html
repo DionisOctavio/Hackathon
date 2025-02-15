@@ -11,6 +11,7 @@
 </head>
 <body>
     <header>
+        <button id="menu-toggle" class="hamburger-menu">☰</button>
         <img src="IMG/disney-logo-w.png">
         <nav>
             <button href="#" id="home">HOME</button>
@@ -33,6 +34,12 @@
                 <a href="#" id="panel-peliculas-button" onclick="irAlPanelPeliculas()" style="display: none;">Panel de Películas</a>
                 <a href="#" id="logout-button" onclick="logout()">Cerrar sesión</a>
             </nav>
+        </div>
+        <div id="mobile-menu" class="mobile-menu">
+            <button class="close-menu" onclick="toggleMenu()">×</button>
+            <a href="#" id="home">HOME</a>
+            <a href="peliculas.html" id="generos">PELICULAS</a>
+            <a href="#" id="buscar">BUSCAR</a>
         </div>
         <script src="JS/ACCIONES/encabezados.js"></script>
     </header>
@@ -61,9 +68,9 @@
             <!-- Aquí irán las tarjetas de las demografias -->
         </div>
         <div id="para-ti">
-
-        <script src="JS/FUNCIONALIDADES/scroll.js"></script>
+            <!-- Aquí irán las tarjetas de las peliculas para ti -->
         </div>
+        <script src="JS/FUNCIONALIDADES/scroll.js"></script>
     </main>
     <footer>
         <div class="footer-container">

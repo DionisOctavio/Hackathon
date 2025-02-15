@@ -89,3 +89,8 @@ function irAlPanelPeliculas() {
         alert('Acceso denegado. Solo los administradores pueden acceder a este panel.');
     }
 }
+
+function toggleMenu() {
+    document.getElementById("mobile-menu").classList.toggle("open");
+}
+document.getElementById("menu-toggle").addEventListener("click", toggleMenu);
