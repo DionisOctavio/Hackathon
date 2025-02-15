@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     } else {
         console.log("Usuario no autenticado, no se pueden cargar favoritos.");
     }
-
+    pintarPeliculasPorGenero(peliculas);
     //
     insertarDemografia(demografias);
 });
@@ -34,6 +34,7 @@ function getPeliculas(){
         (data) => {
             console.log(data);
             getGenero(data);
+            pintarPeliculasPorGenero(data);
         }
     )
 }
@@ -174,3 +175,62 @@ function pintarFavoritos(idPerfil) {
 }
 
 
+// NUEVA FUNCIÓN: PINTAR PELÍCULAS SEGÚN GÉNERO
+function pintarPeliculasPorGenero(peliculas) {
+    const espacioParaTi = document.getElementById('para-ti');
+
+    // Crear un objeto para almacenar películas por género
+    let peliculasPorGenero = {};
+
+    // Agrupar películas por género
+    peliculas.forEach(pelicula => {
+        if (!peliculasPorGenero[pelicula.nombre_genero]) {
+            peliculasPorGenero[pelicula.nombre_genero] = [];
+        }
+        peliculasPorGenero[pelicula.nombre_genero].push(pelicula);
+    });
+
+    // Limpiar contenido previo
+    espacioParaTi.innerHTML = '';
+
+    // Recorrer los géneros y crear un contenedor para cada uno
+    Object.keys(peliculasPorGenero).forEach(genero => {
+        const generoContainer = document.createElement('div');
+        generoContainer.classList.add('genero-container');
+        generoContainer.id = `carousel-${genero.replace(/\s+/g, '-')}`;
+
+        // Título del género
+        const title = document.createElement('h2');
+        title.textContent = genero;
+        generoContainer.appendChild(title);
+
+        // Contenedor para las películas de este género
+        const peliculasContainer = document.createElement('div');
+        peliculasContainer.classList.add('carousel-track');
+        generoContainer.appendChild(peliculasContainer);
+
+        // Insertar las películas en su contenedor correspondiente
+        peliculasPorGenero[genero].forEach(pelicula => {
+            const peliculaDiv = document.createElement('div');
+            peliculaDiv.classList.add('pelicula-item');
+            peliculaDiv.setAttribute("data-id", pelicula.id_pelicula);
+
+            peliculaDiv.innerHTML = `
+                <div class="peliculas_targeta">
+                    <img src="${pelicula.url_cartel}" alt="${pelicula.titulo}" class="cartel">
+                    <p>${pelicula.titulo}</p>
+                </div>
+            `;
+
+            // Manejar el clic para redirigir al detalle
+            peliculaDiv.addEventListener("click", function () {
+                const idPelicula = this.getAttribute("data-id");
+                window.location.href = `detalle.html?id_pelicula=${idPelicula}`;
+            });
+
+            peliculasContainer.appendChild(peliculaDiv);
+        });
+
+        espacioParaTi.appendChild(generoContainer);
+    });
+}

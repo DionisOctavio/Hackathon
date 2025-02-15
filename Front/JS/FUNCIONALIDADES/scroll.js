@@ -1,8 +1,12 @@
-// Función para mover el carrusel a la siguiente posición
 function moveCarousel(containerId, direction) {
-    const track = document.querySelector(`#${containerId} .carousel-track`);
+    const container = document.getElementById(containerId);
+    const track = container.querySelector('.carousel-track');
     const items = track.querySelectorAll('.peliculas_targeta');
-    const itemsToShow = 5;  // Número de tarjetas visibles
+
+    const itemWidth = items[0].offsetWidth + 20; // Ancho de una tarjeta + margen (20px)
+    const carouselWidth = container.offsetWidth; // Ancho visible del carrusel
+    const itemsToShow = Math.floor(carouselWidth / itemWidth); // Calcula cuántas tarjetas caben completamente
+
     let currentIndex = parseInt(track.dataset.index || 0);
 
     if (direction === 1 && currentIndex < items.length - itemsToShow) {
@@ -10,12 +14,12 @@ function moveCarousel(containerId, direction) {
     } else if (direction === -1 && currentIndex > 0) {
         currentIndex--;
     } else if (direction === 1 && currentIndex >= items.length - itemsToShow) {
-        currentIndex = 0;  // Si está al final, volver al principio
+        currentIndex = 0; // Reinicia al inicio
     } else if (direction === -1 && currentIndex <= 0) {
-        currentIndex = items.length - itemsToShow;  // Si está al principio, ir al final
+        currentIndex = Math.max(0, items.length - itemsToShow); // Ir al final
     }
 
-    track.dataset.index = currentIndex;  // Guardamos el índice actual
-    const offset = -(currentIndex * (200 + 20));  // 200px es el ancho de cada tarjeta, 20px el margen
-    track.style.transform = `translateX(${offset}px)`;  // Actualiza la posición
+    track.dataset.index = currentIndex; // Guarda el índice actual
+    const offset = -(currentIndex * itemWidth);
+    track.style.transform = `translateX(${offset}px)`; // Mueve el carrusel
 }
