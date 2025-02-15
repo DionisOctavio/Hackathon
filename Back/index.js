@@ -1,3 +1,8 @@
+let peliculasCache = null;
+let demografiasCache = null;
+let lastCacheTime = 0;
+const CACHE_DURATION = 600000; // 10 min
+
 const express = require("express"); 
 const { Pool } = require("pg"); 
 const cors = require("cors");
@@ -131,7 +136,20 @@ app.get("/perfiles/:userId", async (req, res) => {
     }
 });
 
+
+
+
+
 app.get("/peliculas", async (req, res) => {
+    const now = Date.now();
+    
+    // 1️⃣ Verifica si el caché es válido
+    if (peliculasCache && now - lastCacheTime < CACHE_DURATION) {
+        console.log("🔵 Datos obtenidos de memoria");
+        return res.json(peliculasCache);
+    }
+
+    // 2️⃣ Si el caché expiró, consulta la base de datos
     const { rows } = await pool.query(
         `SELECT id_pelicula, titulo, sinopsis, anyo, url_portada, url_cartel, url_trailer, url_carrusel, 
                 demografia.nombre_demografia, genero.nombre_genero, pegi.edad
@@ -139,6 +157,49 @@ app.get("/peliculas", async (req, res) => {
          JOIN demografia ON pelicula.id_demografia = demografia.id_demografia
          JOIN genero ON pelicula.id_genero = genero.id_genero
          JOIN pegi ON pelicula.id_pegi = pegi.id_pegi`
+    );
+
+    // 3️⃣ Guarda en caché los resultados
+    peliculasCache = rows;
+    lastCacheTime = now;
+    console.log("🟢 Datos guardados en memoria");
+
+    res.json(rows);
+});
+
+
+// DEVUELVE TODOS LOS GENEROS
+app.get("/genero", async (req, res) => {
+    const {rows} = await pool.query(
+        "SELECT * FROM GENERO;"
+    );
+    console.log(rows);
+    res.json(rows);
+});
+
+// DEVUELVE TODAS LAS DEMOGRAFIAS
+app.get("/demografia", async (req, res) => {
+    const now = Date.now();
+
+    if (peliculasCache && now - lastCacheTime < CACHE_DURATION) {
+        console.log("🔵 Datos obtenidos de memoria");
+        return res.json(demografiasCache);
+    }
+
+    const {rows} = await pool.query(
+        "SELECT * FROM DEMOGRAFIA;"
+    );
+
+    demografiasCache = rows;
+    lastCacheTime = now;
+    console.log("🟢 Datos guardados en memoria");
+    res.json(rows);
+});
+
+// DEVUELVE TODOS LOS PEGIS
+app.get("/pegi", async (req, res) => {
+    const {rows} = await pool.query(
+        "SELECT * FROM PEGI;"
     );
     console.log(rows);
     res.json(rows);
@@ -159,61 +220,51 @@ app.get("/peliculas/genero/:genero", async (req, res) => {
 });
 
 
+
 // DEVUELVE TODAS LAS PELICULAS DE UNA DEMOGRAFIA CONCRETA
-app.get("/peliculas/demografia/:demografia", async (req, res)=>{
-    const {demografia} = req.params;
-    const {rows} = await pool.query(
-        "SELECT * FROM PELICULA, DEMOGRAFIA WHERE PELICULA.id_demografia = DEMOGRAFIA.id_demografia AND nombre_demografia = $1;", [demografia]
+app.get("/peliculas/demografia/:demografia", async (req, res) => {
+    const { demografia } = req.params;
+    const { rows } = await pool.query(
+        `SELECT *
+         FROM pelicula
+         JOIN demografia ON pelicula.id_demografia = demografia.id_demografia
+         JOIN genero ON pelicula.id_genero = genero.id_genero
+         JOIN pegi ON pelicula.id_pegi = pegi.id_pegi
+         WHERE demografia.nombre_demografia = $1`, 
+        [demografia]
     );
+    console.log(rows);
     res.json(rows);
 });
+
+
 
 // DEVUELVE TODAS LAS PELICULAS DE UN PEGI CONCRETO
 app.get("/peliculas/pegi/:pegi", async (req, res)=>{
     const {pegi} = req.params;
     const {rows} = await pool.query(
-        "SELECT * FROM PELICULA, PEGI WHERE PELICULA.id_pegi = PEGI.id_pegi AND edad = $1;", [pegi]
+        `SELECT * 
+         FROM PELICULA, PEGI 
+         WHERE PELICULA.id_pegi = PEGI.id_pegi 
+         AND edad = $1;`, 
+        [pegi]
     );
+    console.log(rows);
     res.json(rows);
 });
 
-// DEVUELVE TODOS LOS GENEROS
-app.get("/genero", async (req, res) => {
-    const {rows} = await pool.query(
-        "SELECT * FROM GENERO;"
-    );
-    res.json(rows);
-});
 
-// DEVUELVE TODAS LAS DEMOGRAFIAS
-app.get("/demografia", async (req, res) => {
-    const {rows} = await pool.query(
-        "SELECT * FROM DEMOGRAFIA;"
-    );
-    res.json(rows);
-});
 
-// DEVUELVE TODOS LOS PEGIS
-app.get("/pegi", async (req, res) => {
-    const {rows} = await pool.query(
-        "SELECT * FROM PEGI;"
-    );
-    res.json(rows);
-});
 
 // Endpoint para obtener todas las películas con su estado de visto/favorito
 app.get("/visto", async (req, res) => {
-    try {
-        const { rows } = await pool.query(`
-            SELECT P.id_pelicula, P.titulo, P.sinopsis, P.año, V.favorito, V.estado
-            FROM PELICULA P
-            LEFT JOIN VISTO V ON P.id_pelicula = V.id_pelicula
-        `);
+    const { rows } = await pool.query(
+        `SELECT *
+         FROM pelicula
+         JOIN visto ON pelicula.id_pelicula = visto.id_pelicula;`
+        );
+        console.log(rows);
         res.json(rows);
-    } catch (error) {
-        console.error("Error al obtener las películas:", error);
-        res.status(500).json({ error: 'Hubo un error al obtener las películas.' });
-    }
 });
 
 // Endpoint para actualizar el estado de "Favorito" y "Visto" en la tabla VISTO
@@ -253,24 +304,19 @@ app.post("/visto/actualizar", async (req, res) => {
 
 
 app.get('/favoritos/:idPerfil', async (req, res) => {
-    const idPerfil = req.params.idPerfil;
-    try {
-        const query = `
-            SELECT P.id_pelicula, P.titulo, P.url_cartel, P.anyo
-            FROM PELICULA P
-            JOIN VISTO V ON P.id_pelicula = V.id_pelicula
-            WHERE V.id_perfil = $1 AND V.favorito = TRUE;
-        `;
-        
-        const result = await pool.query(query, [idPerfil]);
-        
-        if (result.rows.length > 0) {
-            res.json(result.rows);
-        } else {
-            res.status(404).json({ message: "No tienes películas favoritas." });
-        }
-    } catch (err) {
-        console.error("Error al obtener películas favoritas:", err);
-        res.status(500).json({ error: "Hubo un error al obtener las películas favoritas." });
-    }
+    const { idPerfil } = req.params;
+    const { rows } = await pool.query(
+        `SELECT pelicula.id_pelicula, titulo, sinopsis, anyo, url_portada, url_cartel, url_trailer, url_carrusel, 
+                demografia.nombre_demografia, genero.nombre_genero, pegi.edad
+        FROM pelicula
+        JOIN visto ON pelicula.id_pelicula = visto.id_pelicula
+        JOIN demografia ON pelicula.id_demografia = demografia.id_demografia
+        JOIN genero ON pelicula.id_genero = genero.id_genero
+        JOIN pegi ON pelicula.id_pegi = pegi.id_pegi
+        WHERE visto.id_perfil = $1
+        AND visto.favorito = TRUE;`,
+        [idPerfil]
+    );
+    console.log(rows);
+    res.json(rows);
 });

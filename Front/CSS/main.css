@@ -1,9 +1,14 @@
 /* STYLOS HTML */
 
-body{
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
     background-color: #051828;
-    margin: 0px;
+    color: white;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    display: flex;
+    flex-direction: column;
 }
 
 /* HEADER */
@@ -194,8 +199,9 @@ header .profile-icon img {
 /* MAIN */
 
 main {
-    margin-left: 50px;
-    margin-right: 50px;
+    flex: 1;
+    margin-left: 40px;
+    margin-right: 40px;
 }
 
 
@@ -383,9 +389,11 @@ h5 {
 /* FOOTER */
 
 footer {
-    background-color: #1A1D29;
+    margin-top: auto;
+    background: #000;
     color: #fff;
-    padding: 20px 10%;
+    padding: 10px;
+    text-align: center;
 }
 
 .footer-container {

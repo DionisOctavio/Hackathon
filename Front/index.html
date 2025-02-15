@@ -6,6 +6,7 @@
     <title>Disney</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='CSS/main.css'>
+    <script src='JS/ACCIONES/api.js' defer></script>
     <script src='JS/main.js' defer></script>
 </head>
 <body>
@@ -33,6 +34,7 @@
                 <a href="#" id="logout-button" onclick="logout()">Cerrar sesión</a>
             </nav>
         </div>
+        <script src="JS/ACCIONES/encabezados.js"></script>
     </header>
     <main>
         <div class="carousel" id="carousel">
@@ -59,39 +61,6 @@
             <!-- Aquí irán las tarjetas de las demografias -->
         </div>
         <div id="para-ti">
-            
-            <h5>Animación</h5>
-        <div id="animacion" class="genero-container">
-            <div class="carousel">
-                <button class="carousel-button prev" onclick="moveCarousel('animacion', -1)">&#10094;</button>
-                <div class="carousel-track" id="animacion-track">
-                    <!-- Aquí irán las tarjetas de las películas -->
-                </div>
-                <button class="carousel-button next" onclick="moveCarousel('animacion', 1)">&#10095;</button>
-            </div>
-        </div>
-
-        <h5>Acción</h5>
-        <div id="accion" class="genero-container">
-            <div class="carousel">
-                <button class="carousel-button prev" onclick="moveCarousel('accion', -1)">&#10094;</button>
-                <div class="carousel-track" id="accion-track">
-                    <!-- Aquí irán las tarjetas de las películas -->
-                </div>
-                <button class="carousel-button next" onclick="moveCarousel('accion', 1)">&#10095;</button>
-            </div>
-        </div>
-
-        <h5>Ciencia Ficción</h5>
-        <div id="ciencia-ficcion" class="genero-container">
-            <div class="carousel">
-                <button class="carousel-button prev" onclick="moveCarousel('ciencia-ficcion', -1)">&#10094;</button>
-                <div class="carousel-track" id="ciencia-ficcion-track">
-                    <!-- Aquí irán las tarjetas de las películas -->
-                </div>
-                <button class="carousel-button next" onclick="moveCarousel('ciencia-ficcion', 1)">&#10095;</button>
-            </div>
-        </div>
 
         <script src="JS/FUNCIONALIDADES/scroll.js"></script>
         </div>
