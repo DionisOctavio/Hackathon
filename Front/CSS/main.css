@@ -344,7 +344,6 @@ h5 {
 }
 
 .genero-container {
-    margin: 20px;
     overflow: hidden;  
 }
 
@@ -420,6 +419,8 @@ footer {
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
+    padding-right: 6vw;
+    padding-left: 6vw;
 }
 
 .footer-logo img {
