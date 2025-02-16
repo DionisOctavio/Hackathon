@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalle de Película</title>
+    <title>Detalle</title>
     <link rel="stylesheet" href="CSS/detalle.css">
-    <script src="JS/main.js" defer></script>
     <script src="JS/detalle.js" defer></script>
 </head>
 <body>
     <header>
-        <img src="IMG/disney-logo-w.png">
+        <button id="menu-toggle" class="hamburger-menu">☰</button>
+        <img src="IMG/disney-logo-w.png" id="logo">
         <nav>
             <button href="#" id="home">HOME</button>
             <button href="peliculas.html" id="generos">PELICULAS</button>
@@ -33,9 +33,17 @@
                 <a href="#" id="logout-button" onclick="logout()">Cerrar sesión</a>
             </nav>
         </div>
+        <div id="mobile-menu" class="mobile-menu">
+            <button class="close-menu" onclick="toggleMenu()">×</button>
+            <a href="#" id="home">HOME</a>
+            <a href="peliculas.html" id="generos">PELICULAS</a>
+            <a href="#" id="buscar">BUSCAR</a>
+        </div>
+        <script src="JS/ACCIONES/encabezados.js"></script>
     </header>
     <main>
-        <h1 id="pelicula-titulo">Título de la película</h1>
+        <div class="cuerpo">
+            <h1 id="pelicula-titulo">Título de la película</h1>
         <div id="detalle-pelicula">
             <div id="pelicula-izquierda">
                 <img id="pelicula-imagen" src="" alt="Imagen de la película">
@@ -64,6 +72,7 @@
                     <p><strong>Pegi:</strong> <span id="pelicula-pegi"></span></p>
                 </div>
             </div>
+        </div>
         </div>
     </main>
 

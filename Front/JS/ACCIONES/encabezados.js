@@ -7,12 +7,13 @@ function asignarRedireccion(idElemento, urlDestino) {
     });
 }
 
+asignarRedireccion('logo', 'index.html');
 asignarRedireccion('home', 'index.html');
 asignarRedireccion('home-icon', 'index.html');
 asignarRedireccion('generos', 'peliculas.html');
 asignarRedireccion('peliculas-icon', 'peliculas.html');
-asignarRedireccion('buscar', '');
-asignarRedireccion('buscar-icon', '');
+asignarRedireccion('buscar', 'buscar.html');
+asignarRedireccion('buscar-icon', 'buscar.html');
 
 document.addEventListener('DOMContentLoaded', (event) => {
 

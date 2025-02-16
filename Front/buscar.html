@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar</title>
+    <link rel="stylesheet" href="CSS/buscar.css">
+    <script src="JS/buscar.js" defer></script>
+</head>
+<body>
+    <header>
+        <button id="menu-toggle" class="hamburger-menu">☰</button>
+        <img src="IMG/disney-logo-w.png" id="logo">
+        <nav>
+            <button href="#" id="home">HOME</button>
+            <button href="peliculas.html" id="generos">PELICULAS</button>
+            <button href="#" id="buscar">BUSCAR</button>
+            <button href="#" class="nav-icon" id="home-icon"><img src="IMG/img-iconos/img-iconos-casa.png"></button>
+            <button href="#" class="nav-icon" id="peliculas-icon"><img src="IMG/img-iconos/img-iconos-peliculas.png"></button>
+            <button href="#" class="nav-icon" id="buscar-icon"><img src="IMG/img-iconos/img-iconos-lupa.png"></button>
+        </nav>
+        <div class="profile-icon" id="profile-button">
+            <img id="profile-img" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" alt="Imagen de perfil">
+            <div id="profile-name-container">
+                <span id="profile-name">Invitado</span>
+            </div>
+            <!-- Menú de perfil tipo nav -->
+            <nav id="profile-menu" class="profile-menu">
+                <a href="cuenta.html" id="account-button" onclick="verCuenta()">Mi cuenta</a>
+                <a href="perfiles.html" id="perfil-button">Cambiar Perfil</a>
+                <a href="#" id="login-button" onclick="login()">Iniciar sesión</a>
+                <a href="#" id="panel-peliculas-button" onclick="irAlPanelPeliculas()" style="display: none;">Panel de Películas</a>
+                <a href="#" id="logout-button" onclick="logout()">Cerrar sesión</a>
+            </nav>
+        </div>
+        <div id="mobile-menu" class="mobile-menu">
+            <button class="close-menu" onclick="toggleMenu()">×</button>
+            <a href="#" id="home">HOME</a>
+            <a href="peliculas.html" id="generos">PELICULAS</a>
+            <a href="#" id="buscar">BUSCAR</a>
+        </div>
+        <script src="JS/ACCIONES/encabezados.js"></script>
+    </header>
+    <main>
+        <div class="buscador-container">
+            <input type="text" id="buscador-input" placeholder="Buscar...">
+        </div>
+        <div id="peliculas">
+            
+        </div>
+    </main>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-logo">
+                <img src="IMG/disney-logo-w.png" alt="Logo">
+            </div>
+            <div class="footer-links">
+                <a href="#">Cuenta</a>
+                <a href="#">Política de Cookies</a>
+                <a href="#">Términos y Condiciones</a>
+                <a href="#">Aviso Legal</a>
+                <a href="#">Contacto</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2024 Tenkai, Lab. Todos los derechos reservados.
+        </div>
+    </footer>
+</body>
+</html>

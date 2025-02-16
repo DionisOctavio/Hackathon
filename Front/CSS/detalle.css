@@ -1,3 +1,5 @@
+/* STYLOS HTML ====================================================================*/
+
 html, body {
     height: 100%;
     margin: 0;
@@ -9,20 +11,23 @@ html, body {
     flex-direction: column;
 }
 
+/* HEADER ==================================================================== */
 header {
     display: flex;
-    flex-direction: row;
+    align-items: center;
     justify-content: space-between;
     background: linear-gradient(to bottom, #000000 10%, #051828 100%);
-    padding: 10px;
+    padding: 10px 20px;
+    position: relative;
 }
 
+/* Logo */
 header img {
-    margin-left: 50px;
     width: 110px;
     height: 63px;
 }
 
+/* Menú de navegación */
 header nav {
     display: flex;
     flex-direction: row;
@@ -31,27 +36,21 @@ header nav {
     gap: 20px;
 }
 
-nav .nav-icon {
+header nav .nav-icon {
     display: none;
 }
 
-nav button {
+header nav button {
     display: inline-block;
-}
-
-header nav button#home, header nav button#generos, header nav button#buscar, header nav button#home-icon, header nav button#peliculas-icon, header nav button#buscar-icon {
     color: white;
     text-decoration: none;
     font-size: 18px;
     border: none;
     background: none;
+    cursor: pointer;
 }
 
-header nav button#home::before, header nav button#generos::before, header nav button#buscar::before, header nav button#home-icon::before, header nav button#peliculas-icon::before, header nav button#buscar-icon::before {
-    margin-left: auto;
-}
-
-header nav button#home::after, header nav button#generos::after, header nav button#buscar::after, header nav button#home-icon::after, header nav button#peliculas-icon::after, header nav button#buscar-icon::after {
+header nav button::after {
     content: '';
     width: 0%;
     height: 3px;
@@ -60,73 +59,50 @@ header nav button#home::after, header nav button#generos::after, header nav butt
     transition: 0.5s;
 }
 
-header nav button#home:hover::after, header nav button#generos:hover::after, header nav button#buscar:hover::after, header nav button#home-icon:hover:after, header nav button#peliculas-icon:hover::after, header nav button#buscar-icon:hover::after {
+header nav button:hover::after {
     width: 100%;
 }
 
+/* Perfil */
 header .profile-icon {
-    margin: 0;
-    background: none;
-    border: none;
-    cursor: pointer;
     display: flex;
-    flex-direction: column;
+    flex-direction: column; 
     align-items: center; 
-    justify-content: center; 
+    gap: 5px;
     position: relative;
     padding: 5px;
     padding-left: 20px;
-    margin-left: 90px;
-}
-
-#profile-name {
-    color: white;
-}
-
-header .profile-icon:hover {
-    border-radius: 10px 10px 0px 0px;
+    cursor: pointer;
 }
 
 header .profile-icon img {
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    display: block; 
-    margin: 0 auto; 
-}
-
-.profile-icon {
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
-}
-
-#profile-img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
     transition: transform 0.3s ease;
 }
 
-.profile-icon:hover #profile-img {
+header .profile-icon:hover img {
     transform: scale(1.1);
 }
 
-#profile-name-container {
-    display: inline-block;
+header #profile-name {
+    color: white;
     font-size: 16px;
-    color: #333;
     font-weight: 600;
+    text-align: center; 
 }
 
-#profile-menu {
-    display: none; 
+
+/* Menú desplegable del perfil */
+header #profile-menu {
+    display: none;
     position: absolute;
     top: 100%;
     right: 0;
-    background-color: rgba(255, 255, 255, 0.1); 
-    backdrop-filter: blur(10px); 
-    border: 2px solid #007bff3b; 
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 2px solid #007bff3b;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     z-index: 100;
@@ -138,18 +114,18 @@ header .profile-icon img {
     transition: all 0.3s ease;
 }
 
-.profile-icon:hover #profile-menu {
+header .profile-icon:hover #profile-menu {
     display: block;
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
 }
 
-#profile-menu a {
+header #profile-menu a {
     display: block;
     padding: 12px 20px;
     text-decoration: none;
-    color: #000000; 
+    color: #000000;
     margin-bottom: 8px;
     border-radius: 5px;
     font-size: 18px;
@@ -157,43 +133,111 @@ header .profile-icon img {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-#profile-menu a:hover {
+header #profile-menu a:hover {
     background-color: #007bffc0;
     color: #ffffff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-@media (max-width: 1000px) {
-    nav {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    }
+/* ======== MENÚ RESPONSIVO ======== */
+header .hamburger-menu {
+    display: none;
+    font-size: 30px;
+    color: white;
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 20px;
+    margin-right: 20px;
+}
 
-    nav button {
+header .mobile-menu {
+    z-index: 20;
+    position: fixed;
+    top: 0;
+    left: -250px;
+    width: 250px;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+    transition: left 0.3s ease;
+}
+
+header .mobile-menu.open {
+    left: 0;
+}
+
+header .mobile-menu a {
+    color: white;
+    text-decoration: none;
+    padding: 15px;
+    display: block;
+}
+
+header .close-menu {
+    align-self: flex-end;
+    font-size: 30px;
+    background: none;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+
+/* ======== RESPONSIVE ======== */
+
+@media (max-width: 1000px) and (min-width: 575px) {
+    header nav button {
         display: none;
     }
 
-    nav .nav-icon {
+    header nav .nav-icon {
         display: inline-block;
-        width: 40px;
-        height: 30px;
-        margin: 0 10px;
+        width: 40px; 
+        height: 40px;
+        background: none;
+        border: none;
+        cursor: pointer;
     }
 
-    nav .nav-icon img {
-        width: 100%;
-        height: 100%;
-        filter: invert(1);
-        margin-left: 0;
+    header nav .nav-icon img {
+        width: 24px; 
+        height: 24px;
+        filter: invert(1); 
     }
 }
 
 
+@media (max-width: 575px) {
+    header nav {
+        display: none;
+    }
+    header .hamburger-menu {
+        display: block;
+    }
+}
 
-/* CONTENEDOR PRINCIPAL */
+
+/* MAIN ==================================================================== */
 main {
-    flex: 1;  /* Esto empuja el footer hacia abajo */
+    flex: 1;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+@media (max-width: 575px){
+    main {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+}
+
+/* CUERPO ==================================================================== */
+
+.cuerpo{
     max-width: 1000px;
     margin: 40px auto;
     padding: 20px;
@@ -313,69 +357,71 @@ h1 {
 }
 
 
-/* FOOTER */
+
+/* FOOTER ==================================================================== */
 footer {
-    background: #000000;
-    padding: 20px;
+    margin-top: auto;
+    background: #000;
+    color: #fff;
+    padding: 10px;
     text-align: center;
-    color: white;
-    margin-top: auto;  /* Hace que el footer esté siempre abajo */
 }
 
 .footer-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-bottom: 10px;
-    flex-wrap: wrap;  /* Responsive */
+    flex-wrap: wrap;
+    padding-right: 6vw;
+    padding-left: 6vw;
 }
 
 .footer-logo img {
-    width: 100px;
+    width: 120px; 
+}
+
+.footer-links {
+    display: flex;
+    gap: 15px;
 }
 
 .footer-links a {
-    color: white;
-    margin: 0 10px;
+    color: #fff;
     text-decoration: none;
     font-size: 14px;
+    transition: color 0.3s;
 }
 
 .footer-links a:hover {
-    color: #00aaff;
+    color: #f39c12; 
 }
 
 .footer-bottom {
-    font-size: 12px;
-    opacity: 0.7;
-    width: 100%;
+    text-align: center;
+    margin-top: 15px;
+    font-size: 13px;
+    border-top: 1px solid #444;
+    padding-top: 10px;
 }
 
-@media (max-width: 1040px) {
-    main {
-        margin-left: 10px;
-        margin-right: 10px;
-    }
-}
-
-/* RESPONSIVE */
-@media (max-width: 768px) {
-    #detalle-pelicula {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    #info-trailer {
-        flex-direction: column;
-    }
-
-    footer {
-        text-align: center;
-    }
-
+@media (max-width: 600px) {
     .footer-container {
         flex-direction: column;
         text-align: center;
+        gap: 15px;
+    }
+
+    .footer-logo img {
+        width: 100px;
+        margin-bottom: 10px;
+    }
+
+    .footer-links {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .footer-links a {
+        font-size: 16px;
     }
 }
-

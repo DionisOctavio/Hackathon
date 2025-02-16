@@ -3,14 +3,15 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Disney</title>
+    <title>Peliculas</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='CSS/peliculas.css'>
     <script src='JS/pelicula.js' defer></script>
 </head>
 <body>
     <header>
-        <img src="IMG/disney-logo-w.png">
+        <button id="menu-toggle" class="hamburger-menu">☰</button>
+        <img src="IMG/disney-logo-w.png" id="logo">
         <nav>
             <button href="#" id="home">HOME</button>
             <button href="peliculas.html" id="generos">PELICULAS</button>
@@ -33,7 +34,13 @@
                 <a href="#" id="logout-button" onclick="logout()">Cerrar sesión</a>
             </nav>
         </div>
-        <script src="JS/main.js"></script>
+        <div id="mobile-menu" class="mobile-menu">
+            <button class="close-menu" onclick="toggleMenu()">×</button>
+            <a href="#" id="home">HOME</a>
+            <a href="peliculas.html" id="generos">PELICULAS</a>
+            <a href="#" id="buscar">BUSCAR</a>
+        </div>
+        <script src="JS/ACCIONES/encabezados.js"></script>
     </header>
 
     <main>
