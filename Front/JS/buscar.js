@@ -1,11 +1,10 @@
 const espacioPeliculas = document.getElementById("peliculas");
 const barraBusqueda = document.getElementById("buscador-input");
 
-const GET_PELICULAS = "http://localhost:3000/peliculas"; // Asegúrate de que esta URL sea válida
+const GET_PELICULAS = "http://localhost:3000/peliculas"; 
 
 let peliculas = [];
 
-// 🔄 Obtiene las películas de la API y las almacena en la variable `peliculas`
 function getPeliculas() {
     fetch(GET_PELICULAS)
         .then(response => {
@@ -16,7 +15,7 @@ function getPeliculas() {
         })
         .then(data => {
             peliculas = data;
-            imprimirPeliculas(""); // Muestra todas al inicio
+            imprimirPeliculas(""); 
         })
         .catch(error => {
             console.error("Error al obtener películas:", error);
@@ -24,9 +23,10 @@ function getPeliculas() {
         });
 }
 
-// 🎥 Función para imprimir películas según el filtro de búsqueda
 function imprimirPeliculas(filtro) {
-    espacioPeliculas.innerHTML = ""; // Limpia antes de agregar nuevas películas
+    if (!espacioPeliculas) return;
+
+    espacioPeliculas.innerHTML = "";
 
     const peliculasFiltradas = peliculas.filter(pelicula =>
         pelicula.titulo.toLowerCase().includes(filtro.toLowerCase())
@@ -38,21 +38,37 @@ function imprimirPeliculas(filtro) {
     }
 
     peliculasFiltradas.forEach(pelicula => {
-        const peliculaHTML = `
-            <div class="peliculas_targeta">
-                <img src="${pelicula.url_cartel}" alt="${pelicula.titulo}" class="cartel">
-                <p>${pelicula.titulo}</p>
-            </div>
-        `;
-        espacioPeliculas.innerHTML += peliculaHTML;
+        const div = document.createElement("div");
+        div.classList.add("peliculas_targeta");
+        div.setAttribute("data-id", pelicula.id_pelicula);
+
+        const imagen = document.createElement("img");
+        imagen.src = pelicula.url_cartel;
+        imagen.alt = pelicula.titulo;
+        imagen.loading = "lazy";
+
+        const titulo = document.createElement("p");
+        titulo.textContent = pelicula.titulo;
+
+        const anio = document.createElement("p");
+        anio.textContent = pelicula.anyo;
+
+        div.appendChild(imagen);
+        div.appendChild(titulo);
+        div.appendChild(anio);
+
+        div.addEventListener("click", () => {
+            window.location.href = `detalle.html?id_pelicula=${pelicula.id_pelicula}`;
+        });
+
+        espacioPeliculas.appendChild(div);
     });
 }
 
-// 🎯 Evento de búsqueda activa (cada vez que el usuario escribe)
+
 barraBusqueda.addEventListener("input", () => {
     const textoBusqueda = barraBusqueda.value.trim();
     imprimirPeliculas(textoBusqueda);
 });
 
-// 🔥 Cargar las películas al inicio
 getPeliculas();

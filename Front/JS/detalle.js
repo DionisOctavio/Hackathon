@@ -1,26 +1,8 @@
-
-// FUNCION que redirecciona a otra pagina
-function asignarRedireccion(idElemento, urlDestino) {
-    document.getElementById(idElemento).addEventListener('click', function() {
-        window.location.href = urlDestino;
-    });
-}
-
-asignarRedireccion('home', 'index.html');
-asignarRedireccion('home-icon', 'index.html');
-asignarRedireccion('generos', 'peliculas.html');
-asignarRedireccion('peliculas-icon', 'peliculas.html');
-asignarRedireccion('buscar', '');
-asignarRedireccion('buscar-icon', '');
-
-
-// FUNCION para obtener el ID de la pelicula de la URL
-
 document.addEventListener("DOMContentLoaded", function () {
     const params = new URLSearchParams(window.location.search);
-    const idPelicula = params.get("id_pelicula"); 
+    const idPelicula = params.get("id_pelicula");
 
-    console.log("ID de la película obtenida:", idPelicula); 
+    console.log("ID de la película obtenida:", idPelicula);
 
     if (!idPelicula) {
         alert("Película no encontrada.");
@@ -28,13 +10,14 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
     }
 
+    // Obtener los datos de películas
     fetch("http://localhost:3000/peliculas")
         .then(response => response.json())
         .then(peliculas => {
             console.log("Datos de películas cargados:", peliculas);
 
             const pelicula = peliculas.find(p => p.id_pelicula == idPelicula);
-            console.log("Película encontrada:", pelicula); 
+            console.log("Película encontrada:", pelicula);
 
             if (!pelicula) {
                 alert("Película no encontrada.");
@@ -42,7 +25,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-            // Mostrar los datos en la página
             document.getElementById("pelicula-titulo").textContent = pelicula.titulo;
             document.getElementById("pelicula-imagen").src = pelicula.url_cartel;
             document.getElementById("pelicula-sinopsis").textContent = pelicula.sinopsis;
@@ -51,89 +33,96 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById("pelicula-categoria").textContent = pelicula.nombre_demografia;
             document.getElementById("pelicula-pegi").textContent = pelicula.edad;
 
-
-
-            // Inserta el iframe del trailer en el div
             const trailerDiv = document.getElementById("pelicula-trailer");
             trailerDiv.innerHTML = `<iframe width="560" height="315" src="${pelicula.url_trailer}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
         })
         .catch(error => console.error("Error cargando los datos:", error));
-});
 
-
-
-
-document.addEventListener("DOMContentLoaded", () => {
     const favoritoBtn = document.getElementById("favorito");
-    const pendienteSelect = document.getElementById("pendiente");
+    const pendienteSelect = document.getElementById("visto");
 
-    // Obtener el perfil y la película
-    const idPerfil = localStorage.getItem("idPerfil"); // Asegúrate de que este key sea correcto
-    const idPelicula = getPeliculaIdFromUrl(); // Obtener ID de la URL
+    const idPerfil = localStorage.getItem("profileId");
+    console.log("ID de perfil obtenido desde localStorage:", idPerfil);
 
     if (!idPerfil || !idPelicula) {
         console.error("Faltan datos de perfil o película.");
+        alert("Faltan datos de perfil o película.");
         return;
     }
 
-    // Cargar el estado desde la base de datos
     getEstadoFavorito(idPerfil, idPelicula);
 
-    // Manejar clic en el botón de favorito
-    favoritoBtn.addEventListener("click", () => {
-        const esFavorito = favoritoBtn.classList.contains("favorito-activo");
-        const nuevoEstado = !esFavorito; // Alterna el estado
+favoritoBtn.addEventListener("click", () => {
+    const esFavorito = favoritoBtn.classList.contains("favorito-activo");
 
-        // Actualizar la interfaz: aplica o remueve la clase
-        favoritoBtn.classList.toggle("favorito-activo", nuevoEstado);
+    const nuevoEstado = !esFavorito; 
 
-        // Guardar el nuevo estado en la base de datos
-        actualizarEstadoFavorito(idPerfil, idPelicula, nuevoEstado, pendienteSelect.value);
-    });
+    favoritoBtn.classList.toggle("favorito-activo", nuevoEstado);
+    console.log("Estado del favorito cambiado a:", nuevoEstado ? "Favorito" : "No favorito");
 
-    // Manejar cambio en el select de estado
-    pendienteSelect.addEventListener("change", () => {
-        const esFavorito = favoritoBtn.classList.contains("favorito-activo");
-        actualizarEstadoFavorito(idPerfil, idPelicula, esFavorito, pendienteSelect.value);
-    });
+    actualizarEstadoFavorito(idPerfil, idPelicula, nuevoEstado, pendienteSelect.value);
 });
 
-// Función para obtener el ID de la película de la URL
-function getPeliculaIdFromUrl() {
-    const params = new URLSearchParams(window.location.search);
-    return params.get("id_pelicula");
-}
+// Establecer el estado inicial como 'false' al cargar la página
+favoritoBtn.classList.remove("favorito-activo"); 
 
-// Función para obtener el estado de favorito desde la base de datos
-function getEstadoFavorito(idPerfil, idPelicula) {
-    fetch(`http://localhost:3000/visto?id_perfil=${idPerfil}&id_pelicula=${idPelicula}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data && data.length > 0) {
-                const favorito = data[0].favorito;
-                const estado = data[0].estado || "pendiente";
 
-                // Actualiza la interfaz según el estado obtenido
-                document.getElementById("favorito").classList.toggle("favorito-activo", favorito);
-                document.getElementById("pendiente").value = estado;
-            }
-        })
-        .catch(error => console.error("Error obteniendo estado de favorito:", error));
-}
+    // Evento para manejar el cambio de estado pendiente
+    pendienteSelect.addEventListener("change", () => {
+        const esFavorito = favoritoBtn.classList.contains("favorito-activo");
+        console.log("Estado pendiente cambiado a:", pendienteSelect.value);
 
-// Función para actualizar el estado y favorito en la base de datos
-function actualizarEstadoFavorito(idPerfil, idPelicula, favorito, estado) {
-    fetch("http://localhost:3000/visto/actualizar", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
+        actualizarEstadoFavorito(idPerfil, idPelicula, esFavorito, pendienteSelect.value);
+    });
+
+    // Función para obtener el estado de favorito y pendiente
+    function getEstadoFavorito(idPerfil, idPelicula) {
+        fetch(`http://localhost:3000/visto?id_perfil=${idPerfil}&id_pelicula=${idPelicula}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.length > 0) {
+                    const favorito = data[0].favorito;
+                    const estado = data[0].estado || "No Visto";
+
+                    // Establecer "favorito" en false por defecto si no se encuentra en la base de datos
+                    const estadoFavorito = favorito == undefined ? favorito : false;
+
+                    // Actualizar la UI con los valores obtenidos
+                    document.getElementById("favorito").classList.toggle("favorito-activo", estadoFavorito);
+                    document.getElementById("visto").value = estado;
+                    console.log("Estado de favorito y pendiente cargados:", estadoFavorito, estado);
+                } else {
+                    // Si no hay datos, establecer por defecto como "no favorito"
+                    document.getElementById("favorito").classList.remove("favorito-activo");
+                    document.getElementById("visto").value = "No Visto";
+                    console.log("No se encontró el estado, se establece como 'no favorito'.");
+                }
+            })
+            .catch(error => console.error("Error obteniendo estado de favorito:", error));
+    }
+
+    // Función para actualizar el estado en la base de datos
+    function actualizarEstadoFavorito(idPerfil, idPelicula, favorito, estado) {
+        const dataToUpdate = {
             id_perfil: idPerfil,
             id_pelicula: idPelicula,
             favorito: favorito,
             estado: estado
+        };
+
+        console.log("Actualizando estado favorito en la base de datos:", dataToUpdate);
+
+        fetch("http://localhost:3000/visto/actualizar", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(dataToUpdate)
         })
-    })
-    .then(response => response.json())
-    .then(data => console.log("Estado actualizado:", data))
-    .catch(error => console.error("Error al actualizar estado:", error));
-}
+        .then(response => response.json())
+        .then(data => {
+            console.log("Estado actualizado correctamente:", data);
+        })
+        .catch(error => {
+            console.error("Error al actualizar estado:", error);
+        });
+    }
+});

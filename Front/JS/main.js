@@ -1,11 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Definir los espacios en el DOM
     const espacioFavoritos = document.getElementById("cont-favoritos");
     const espacioRecomendados = document.getElementById("cont-recomendados");
     const espacioGeneros = document.getElementById("cont-generos");
     const espacioDemografia = document.getElementById("demografias");
 
-    // Variables globales para almacenar los datos
     let peliculas = [];
     let generos = [];
     let demografias = [];
@@ -13,7 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const profileID = localStorage.getItem('profileId');
 
-    // Cargar los datos desde la API
     getPeliculas();
     getGenero();
     getDemografias();
@@ -21,7 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     pintarPeliculasPorGenero(peliculas);
 
-    // Si el usuario está logueado, cargar sus favoritos
     if (profileID) {
         pintarFavoritos(profileID);
         pintarRecomendados(profileID);
@@ -98,10 +94,8 @@ function insertarDemografia(demografias) {
 function pintarPeliculasPorGenero(peliculas) {
     const espacioGeneros = document.getElementById("cont-generos");
 
-    // Limpiar el espacio
     espacioGeneros.innerHTML = "";
 
-    // Agrupar las películas por género
     const peliculasPorGenero = {};
 
     peliculas.forEach(pelicula => {
@@ -132,13 +126,13 @@ function pintarPeliculasPorGenero(peliculas) {
         prevButton.classList.add('carousel-button', 'prev');
         prevButton.innerHTML = '&#10094;';
         prevButton.onclick = () => moveCarousel(genero, -1);
-        prevButton.style.display = 'none';  // Iniciar ocultando la flecha izquierda
+        prevButton.style.display = 'none'; 
 
         const nextButton = document.createElement('button');
         nextButton.classList.add('carousel-button', 'next');
         nextButton.innerHTML = '&#10095;';
         nextButton.onclick = () => moveCarousel(genero, 1);
-        nextButton.style.display = 'none';  // Iniciar ocultando la flecha derecha
+        nextButton.style.display = 'none'; 
 
         carousel.appendChild(prevButton);
         carousel.appendChild(track);
@@ -146,7 +140,6 @@ function pintarPeliculasPorGenero(peliculas) {
 
         generoContainer.appendChild(carousel);
 
-        // Añadir las películas del género al carrusel
         peliculasPorGenero[genero].forEach(pelicula => {
             const peliculaDiv = document.createElement('div');
             peliculaDiv.classList.add('pelicula-item');
@@ -169,7 +162,6 @@ function pintarPeliculasPorGenero(peliculas) {
 
         espacioGeneros.appendChild(generoContainer);
 
-        // Verificar si las flechas deben mostrarse
         checkCarouselArrows(carousel);
     });
 }
@@ -199,7 +191,7 @@ function pintarFavoritos(idPerfil) {
             prevButton.classList.add('carousel-button', 'prev');
             prevButton.innerHTML = '&#10094;';
             prevButton.onclick = () => moveCarousel('favoritos', -1);
-            prevButton.style.display = 'none';  // Iniciar ocultando la flecha izquierda
+            prevButton.style.display = 'none';  
 
             const track = document.createElement('div');
             track.id = 'favoritos-track';
@@ -209,7 +201,7 @@ function pintarFavoritos(idPerfil) {
             nextButton.classList.add('carousel-button', 'next');
             nextButton.innerHTML = '&#10095;';
             nextButton.onclick = () => moveCarousel('favoritos', 1);
-            nextButton.style.display = 'none';  // Iniciar ocultando la flecha derecha
+            nextButton.style.display = 'none';  
 
             carousel.appendChild(prevButton);
             carousel.appendChild(track);
@@ -238,7 +230,6 @@ function pintarFavoritos(idPerfil) {
 
             espacioFavoritos.appendChild(favoritosContainer);
 
-            // Verificar si las flechas deben mostrarse
             checkCarouselArrows(carousel);
         })
         .catch(error => console.error("Error al obtener favoritos:", error));
@@ -251,16 +242,12 @@ function pintarRecomendados(idPerfil) {
         .then(data => {
             if (!data || data.length === 0) return;
 
-            // Generar las recomendaciones según los géneros favoritos y películas no favoritas
             const recomendaciones = peliculas.filter(pelicula => {
-                // Filtrar las películas que no están en favoritos
                 return !data.some(fav => fav.id_pelicula === pelicula.id_pelicula);
             });
 
-            // Limitar las recomendaciones a las primeras 15
             const recomendacionesLimitadas = recomendaciones.slice(0, 15);
 
-            // Si no hay recomendaciones, no hacer nada
             if (recomendacionesLimitadas.length === 0) return;
 
             const espacioRecomendados = document.getElementById("cont-recomendados");
@@ -281,7 +268,7 @@ function pintarRecomendados(idPerfil) {
             prevButton.classList.add('carousel-button', 'prev');
             prevButton.innerHTML = '&#10094;';
             prevButton.onclick = () => moveCarousel('recomendados', -1);
-            prevButton.style.display = 'none';  // Iniciar ocultando la flecha izquierda
+            prevButton.style.display = 'none'; 
 
             const track = document.createElement('div');
             track.id = 'recomendados-track';
@@ -291,14 +278,13 @@ function pintarRecomendados(idPerfil) {
             nextButton.classList.add('carousel-button', 'next');
             nextButton.innerHTML = '&#10095;';
             nextButton.onclick = () => moveCarousel('recomendados', 1);
-            nextButton.style.display = 'none';  // Iniciar ocultando la flecha derecha
+            nextButton.style.display = 'none';  
 
             carousel.appendChild(prevButton);
             carousel.appendChild(track);
             carousel.appendChild(nextButton);
             recomendadosContainer.appendChild(carousel);
 
-            // Agregar las películas recomendadas al carrusel
             recomendacionesLimitadas.forEach(pelicula => {
                 const peliculaDiv = document.createElement('div');
                 peliculaDiv.classList.add('pelicula-recomendada');
@@ -321,7 +307,6 @@ function pintarRecomendados(idPerfil) {
 
             espacioRecomendados.appendChild(recomendadosContainer);
 
-            // Verificar si las flechas deben mostrarse
             checkCarouselArrows(carousel);
         })
         .catch(error => console.error("Error al obtener favoritos:", error));

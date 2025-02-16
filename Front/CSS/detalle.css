@@ -25,6 +25,7 @@ header {
 header img {
     width: 110px;
     height: 63px;
+    cursor: pointer;
 }
 
 /* Menú de navegación */
@@ -248,14 +249,12 @@ main {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-/* DETALLE PELÍCULA */
 #detalle-pelicula {
     display: flex;
-    flex-wrap: wrap;  /* Hace que sea responsive */
+    flex-wrap: wrap; 
     gap: 20px;
 }
 
-/* IZQUIERDA - IMAGEN, BOTONES */
 #pelicula-izquierda {
     display: flex;
     flex-direction: column;
@@ -284,7 +283,6 @@ main {
     transition: background 0.3s, color 0.3s;
 }
 
-/* Regla más específica para el botón activo */
 .favorito-btn.favorito-activo {
     background: #f85a5a;
     color: #000000;
@@ -302,27 +300,26 @@ main {
     background: linear-gradient(135deg, rgb(140, 255, 74), rgb(100, 204, 56));
     color: #051828;
     font-size: 16px;
-    border: 2px solid #66bb6a; /* Borde sutil */
+    border: 2px solid #66bb6a;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); 
 }
 
 .estado-select:focus {
-    outline: none; /* Elimina el borde por defecto */
-    border-color: #388e3c; /* Cambia el color del borde al hacer foco */
-    box-shadow: 0 0 5px rgba(56, 142, 60, 0.7); /* Sombra más notoria cuando está seleccionado */
+    outline: none; 
+    border-color: #388e3c;
+    box-shadow: 0 0 5px rgba(56, 142, 60, 0.7); 
 }
 
 .estado-select option {
-    background-color: #fff; /* Fondo blanco para las opciones */
+    background-color: #fff; 
     padding: 10px;
 }
 
 .estado-select option:hover {
-    background-color: #f1f1f1; /* Color cuando pasas el ratón por encima de una opción */
+    background-color: #f1f1f1; 
 }
 
-/* DERECHA - INFORMACIÓN */
 #pelicula-derecha {
     flex: 1;
     min-width: 300px;
@@ -339,7 +336,6 @@ h1 {
     margin-bottom: 15px;
 }
 
-/* INFO + TRAILER */
 #pelicula-trailer {
     width: 100%;
     height: 400px;

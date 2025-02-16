@@ -25,6 +25,7 @@ header {
 header img {
     width: 110px;
     height: 63px;
+    cursor: pointer;
 }
 
 /* Menú de navegación */
@@ -301,6 +302,11 @@ main {
     width: 100%;
     height: 80%;
 }
+
+.peliculas_targeta:hover img {
+    filter: brightness(50%); 
+}
+
 
 .peliculas_targeta p {
     margin-left: 10px;

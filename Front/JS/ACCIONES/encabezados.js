@@ -1,5 +1,3 @@
-
-
 // FUNCION que redirecciona a otra pagina
 function asignarRedireccion(idElemento, urlDestino) {
     document.getElementById(idElemento).addEventListener('click', function() {
