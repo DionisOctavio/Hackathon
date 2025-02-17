@@ -5,73 +5,222 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Películas</title>
     <link rel="stylesheet" href="CSS/administracion.css">
-    <script src='JS/main.js' defer></script>
+    <script src='JS/administracion.js' defer></script>
 </head>
 <body>
     <header>
-        <h1>Panel de Administración de Películas</h1>
+        <button id="menu-toggle" class="hamburger-menu">☰</button>
+        <img src="IMG/disney-logo-w.png" id="logo">
+        <nav>
+            <button href="#" id="home">HOME</button>
+            <button href="peliculas.html" id="generos">PELICULAS</button>
+            <button href="#" id="buscar">BUSCAR</button>
+            <button href="#" class="nav-icon" id="home-icon"><img src="IMG/img-iconos/img-iconos-casa.png"></button>
+            <button href="#" class="nav-icon" id="peliculas-icon"><img src="IMG/img-iconos/img-iconos-peliculas.png"></button>
+            <button href="#" class="nav-icon" id="buscar-icon"><img src="IMG/img-iconos/img-iconos-lupa.png"></button>
+        </nav>
+        <div class="profile-icon" id="profile-button">
+            <img id="profile-img" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" alt="Imagen de perfil">
+            <div id="profile-name-container">
+                <span id="profile-name">Invitado</span>
+            </div>
+            <!-- Menú de perfil tipo nav -->
+            <nav id="profile-menu" class="profile-menu">
+                <a href="cuenta.html" id="account-button" onclick="verCuenta()">Mi cuenta</a>
+                <a href="perfiles.html" id="perfil-button">Cambiar Perfil</a>
+                <a href="#" id="login-button" onclick="login()">Iniciar sesión</a>
+                <a href="#" id="panel-peliculas-button" onclick="irAlPanelPeliculas()" style="display: none;">Panel de Películas</a>
+                <a href="#" id="logout-button" onclick="logout()">Cerrar sesión</a>
+            </nav>
+        </div>
+        <div id="mobile-menu" class="mobile-menu">
+            <button class="close-menu" onclick="toggleMenu()">×</button>
+            <a href="index.html" id="home">HOME</a>
+            <a href="peliculas.html" id="generos">PELICULAS</a>
+            <a href="buscar.html" id="buscar">BUSCAR</a>
+        </div>
+        <script src="JS/ACCIONES/encabezados.js"></script>
     </header>
-    
     <main>
-        <form id="form-agregar-pelicula" class="form-container">
+        <div class="action-panel">
+            <button id="btn-agregar" class="action-btn" onclick="showForm('agregar')">Agregar Película</button>
+            <button id="btn-eliminar" class="action-btn" onclick="showForm('eliminar')">Eliminar Película</button>
+            <button id="btn-actualizar" class="action-btn" onclick="showForm('actualizar')">Actualizar Película</button>
+        </div>
+    
+        <!-- Formulario para agregar una película -->
+        <div id="form-agregar-pelicula" class="form-container form-section">
+            <h3>Agregar Película</h3>
+            <form>
+                <div class="form-group">
+                    <label for="titulo">Título:</label>
+                    <input type="text" id="titulo" required placeholder="Introduce el título de la película">
+                </div>
+    
+                <div class="form-group">
+                    <label for="sinopsis">Sinopsis:</label>
+                    <textarea id="sinopsis" placeholder="Escribe una breve descripción de la película"></textarea>
+                </div>
+    
+                <div class="form-group">
+                    <label for="anio">Año:</label>
+                    <input type="number" id="anio" required placeholder="Introduce el año de estreno">
+                </div>
+    
+                <div class="form-group">
+                    <label for="genero">Género:</label>
+                    <select id="genero" required>
+                        <option value="">Seleccionar género</option>
+                        <!-- Aquí se agregan dinámicamente los géneros disponibles -->
+                    </select>
+                </div>
+    
+                <div class="form-group">
+                    <label for="url_cartel">URL del Cartel:</label>
+                    <input type="text" id="url_cartel" placeholder="Introduce la URL del cartel">
+                </div>
+    
+                <div class="form-group">
+                    <label for="url_trailer">URL del Trailer:</label>
+                    <input type="text" id="url_trailer" placeholder="Introduce la URL del trailer (opcional)">
+                </div>
+    
+                <div class="form-group">
+                    <label for="url_carrusel">URL del Carrusel:</label>
+                    <input type="text" id="url_carrusel" placeholder="Introduce la URL del carrusel (opcional)">
+                </div>
+    
+                <div class="form-group">
+                    <label for="demografia">Demografía:</label>
+                    <select id="demografia" required>
+                        <option value="">Seleccionar demografía</option>
+                        <!-- Agregar más demografías si es necesario -->
+                    </select>
+                </div>
+    
+                <div class="form-group">
+                    <label for="pegi">PEGI:</label>
+                    <select id="pegi" required>
+                        <option value="">Seleccionar PEGI</option>
+                        <!-- Agregar más PEGI si es necesario -->
+                    </select>
+                </div>
+    
+                <button type="submit" class="submit-btn">Agregar Película</button>
+            </form>
+        </div>
+    
+        <!-- Formulario para eliminar una película -->
+        <div id="form-eliminar-pelicula" class="form-container form-section" style="display:none;">
+            <h3>Eliminar Película</h3>
             <div class="form-group">
-                <label for="titulo">Título:</label>
-                <input type="text" id="titulo" required placeholder="Introduce el título de la película">
+                <label for="peliculas">Selecciona una película:</label>
+                <select id="peliculas-eliminar-select" required>
+                    <option value="">Seleccionar película</option>
+                    <!-- Aquí se agregarán las opciones de películas disponibles -->
+                </select>
             </div>
-
+            <button type="button" class="submit-btn" onclick="eliminarPelicula()">Eliminar Película</button>
+        </div>
+    
+        <!-- Formulario para actualizar una película -->
+        <div id="form-actualizar-pelicula" class="form-container form-section" style="display:none;">
+            <h3>Actualizar Película</h3>
             <div class="form-group">
-                <label for="sinopsis">Sinopsis:</label>
-                <textarea id="sinopsis" placeholder="Escribe una breve descripción de la película"></textarea>
-            </div>
-
-            <div class="form-group">
-                <label for="anio">Año:</label>
-                <input type="number" id="anio" required placeholder="Introduce el año de estreno">
-            </div>
-
-            <div class="form-group">
-                <label for="genero">Género:</label>
-                <select id="genero" required>
-                    <option value="">Seleccionar género</option>
-                    <!-- Agregar más géneros según sea necesario -->
+                <label for="peliculas-select">Selecciona una película:</label>
+                <select id="peliculas-select" required onchange="cargarDetallesPelicula()">
+                    <option value="">Selecciona una película</option>
+                    <!-- Opciones de películas dinámicas se agregarán aquí -->
                 </select>
             </div>
 
-            <div class="form-group">
-                <label for="url_cartel">URL del Cartel:</label>
-                <input type="text" id="url_cartel" placeholder="Introduce la URL del cartel">
-            </div>
+            <div id="detalles-pelicula" style="display:none;">
+                <div class="form-group">
+                    <label for="titulo">Título:</label>
+                    <input type="text" id="titulo" required placeholder="Introduce el título de la película" disabled>
+                </div>
 
-            <div class="form-group">
-                <label for="url_trailer">URL del Trailer:</label>
-                <input type="text" id="url_trailer" placeholder="Introduce la URL del trailer (opcional)">
-            </div>
+                <div class="form-group">
+                    <label for="sinopsis">Sinopsis:</label>
+                    <textarea id="sinopsis" placeholder="Escribe una breve descripción de la película" disabled></textarea>
+                </div>
 
-            <div class="form-group">
-                <label for="url_carrusel">URL del Carrusel:</label>
-                <input type="text" id="url_carrusel" placeholder="Introduce la URL del carrusel (opcional)">
-            </div>
+                <div class="form-group">
+                    <label for="anio">Año:</label>
+                    <input type="number" id="anio" required placeholder="Introduce el año de estreno" disabled>
+                </div>
 
-            <div class="form-group">
-                <label for="demografia">Demografía:</label>
-                <select id="demografia" required>
-                    <option value="">Seleccionar demografía</option>
-                    <!-- Agregar más demografías según lo necesario -->
-                </select>
-            </div>
+                <div class="form-group">
+                    <label for="genero">Género:</label>
+                    <select id="genero" required disabled>
+                        <option value="">Seleccionar género</option>
+                        <!-- Aquí se agregarán dinámicamente los géneros disponibles -->
+                    </select>
+                </div>
 
-            <div class="form-group">
-                <label for="pegi">PEGI:</label>
-                <select id="pegi" required>
-                    <option value="">Seleccionar PEGI</option>
-                    <!-- Agregar más PEGI conforme sea necesario -->
-                </select>
-            </div>
+                <div class="form-group">
+                    <label for="url_cartel">URL del Cartel:</label>
+                    <input type="text" id="url_cartel" placeholder="Introduce la URL del cartel" disabled>
+                </div>
 
-            <button type="submit" class="submit-btn">Agregar Película</button>
-        </form>
+                <div class="form-group">
+                    <label for="url_trailer">URL del Trailer:</label>
+                    <input type="text" id="url_trailer" placeholder="Introduce la URL del trailer (opcional)" disabled>
+                </div>
+
+                <div class="form-group">
+                    <label for="url_carrusel">URL del Carrusel:</label>
+                    <input type="text" id="url_carrusel" placeholder="Introduce la URL del carrusel (opcional)" disabled>
+                </div>
+
+                <div class="form-group">
+                    <label for="demografia">Demografía:</label>
+                    <select id="demografia" required disabled>
+                        <option value="">Seleccionar demografía</option>
+                        <!-- Agregar más demografías si es necesario -->
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="pegi">PEGI:</label>
+                    <select id="pegi" required disabled>
+                        <option value="">Seleccionar PEGI</option>
+                        <!-- Agregar más PEGI si es necesario -->
+                    </select>
+                </div>
+
+                <button type="button" class="submit-btn" onclick="actualizarPelicula()">Actualizar Película</button>
+            </div>
+        </div>
     </main>
-
+    
+    <!-- Modal para agregar un nuevo género -->
+    <div id="modal-genero" class="modal">
+        <div class="modal-content">
+            <label for="nuevo-genero">Nuevo Género:</label>
+            <input type="text" id="nuevo-genero" placeholder="Introduce el nuevo género">
+            <button id="guardar-genero">Guardar Género</button>
+            <button id="cerrar-modal">Cerrar</button>
+        </div>
+    </div>
+      
     <script src="JS/administracion.js"></script>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-logo">
+                <img src="IMG/disney-logo-w.png" alt="Logo">
+            </div>
+            <div class="footer-links">
+                <a href="#">Cuenta</a>
+                <a href="#">Política de Cookies</a>
+                <a href="#">Términos y Condiciones</a>
+                <a href="#">Aviso Legal</a>
+                <a href="#">Contacto</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2024 Tenkai, Lab. Todos los derechos reservados.
+        </div>
+    </footer>
 </body>
 </html>

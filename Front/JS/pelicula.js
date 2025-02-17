@@ -2,99 +2,95 @@
 const API_URL = "http://localhost:3000";
 const GET_PELICULAS = API_URL + "/peliculas";
 const GET_GENEROS = API_URL + "/genero"; 
-const GET_PELICULAS_BY_GENERO = API_URL + "/peliculas/genero"; 
 
 const espaciosPeliculas = document.getElementById("peliculas");
-const perfilImg = document.getElementById("profile-img");
-const generosSelect = document.getElementById('generos-select');
-const ordenarAnoButton = document.getElementById('ordenar-ano');
+const generosSelect = document.getElementById("generos-select");
+const ordenarAnoButton = document.getElementById("ordenar-ano");
+const indicadorOrden = document.getElementById("orden-indicador");
+const btnPaginaAnterior = document.getElementById("pagina-anterior");
+const btnPaginaSiguiente = document.getElementById("pagina-siguiente");
 
-
-let peliculasGuardadas = []; 
+let peliculasGuardadas = [];
+let peliculasMostradas = [];
 let paginaActual = 1;
 const peliculasPorPagina = 15;
+let ordenAscendente = true;
 
+// Cargar datos al iniciar
+document.addEventListener("DOMContentLoaded", () => {
+    cargarGeneros();
+    cargarPeliculas();
 
-// Cargar datos de perfil desde localStorage
-document.addEventListener('DOMContentLoaded', () => {
-    const profileImgUrl = localStorage.getItem('profileImg');
-    const profileName = localStorage.getItem('profileName');
-    
-    // Mostrar imagen y nombre del perfil
-    if (profileImgUrl) {
-        perfilImg.src = profileImgUrl;
-        document.getElementById('login-button').style.display = 'none';
-        document.getElementById('logout-button').style.display = 'block';
-    } else {
-        perfilImg.src = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png';
-        document.getElementById('login-button').style.display = 'block';
-        document.getElementById('logout-button').style.display = 'none';
-    }
+    cargarGeneros().then(() => {
+        generosSelect.value = "Todos"; 
+        cargarPeliculas(); 
+    });
 
-    document.getElementById('profile-name').textContent = profileName || 'Invitado';
-
-    // Obtener los géneros disponibles
-    fetch(GET_GENEROS)
-        .then(response => response.json())
-        .then(generos => {
-            llenarGenerosSelect(generos);
-        })
-        .catch(error => console.error('Error al obtener los géneros', error));
 });
 
-// Función para llenar el select con los géneros
-function llenarGenerosSelect(generos) {
-    // Agregar un <option> por cada género
-    generos.forEach(genero => {
-        const option = document.createElement("option");
-        option.value = genero.nombre_genero; // Usamos el nombre_genero como valor
-        option.textContent = genero.nombre_genero; // Usamos el nombre_genero como texto visible
-
-        // Añadir la opción al <select>
-        generosSelect.appendChild(option);
-    });
-}
-
-// FUNCION QUE FILTRA LAS PELICULAS POR GENERO
-function filtrarPeliculasPorGenero(genero) {
-    const url = `${GET_PELICULAS_BY_GENERO}/${genero}`; // Asegúrate de que la URL esté bien construida
-    console.log(`Filtrando películas por género: ${url}`); // Mensaje de depuración
-    fetch(url)
+function cargarGeneros() {
+    return fetch(GET_GENEROS) 
         .then(response => response.json())
-        .then(peliculas => {
-            console.log(peliculas); // Verifica la respuesta
-            pintarPeliculas(peliculas);
+        .then(generos => {
+            generosSelect.innerHTML = `<option value="Todos">Todos</option>`;
+            generos.forEach(genero => {
+                const option = document.createElement("option");
+                option.value = genero.nombre_genero;
+                option.textContent = genero.nombre_genero;
+                generosSelect.appendChild(option);
+            });
         })
-        .catch(error => console.error('Error al obtener las películas por género:', error));
+        .catch(error => console.error("Error al obtener los géneros:", error));
 }
 
-// FUNCION PARA OBTENER TODAS LAS PELICULAS
-function getPeliculas() {
+// Obtener todas las películas
+function cargarPeliculas() {
     fetch(GET_PELICULAS)
         .then(response => response.json())
         .then(peliculas => {
-            peliculasGuardadas = peliculas; // Guardar todas las películas
-            paginaActual = 1; // Reiniciar a la primera página
-            mostrarPeliculasPaginadas();
+            peliculasGuardadas = peliculas;
+            aplicarFiltros();
         })
-        .catch(error => console.error('Error al obtener las películas:', error));
+        .catch(error => console.error("Error al obtener las películas:", error));
 }
 
+function aplicarFiltros() {
+    let generoSeleccionado = generosSelect.value;
+    
+    peliculasMostradas = (generoSeleccionado === "Todos") 
+        ? [...peliculasGuardadas] 
+        : peliculasGuardadas.filter(p => p.nombre_genero?.trim().toLowerCase() === generoSeleccionado.trim().toLowerCase());
+
+    ordenarPeliculas();
+    mostrarPeliculasPaginadas();
+
+}
+
+
+
+
+// Ordenar películas por año
+function ordenarPeliculas() {
+    peliculasMostradas.sort((a, b) => ordenAscendente ? a.anyo - b.anyo : b.anyo - a.anyo);
+    
+    indicadorOrden.textContent = ordenAscendente ? "⬆⮀" : "⬇⮂";
+
+    mostrarPeliculasPaginadas();
+}
+
+// Mostrar películas con paginación
 function mostrarPeliculasPaginadas() {
     const inicio = (paginaActual - 1) * peliculasPorPagina;
     const fin = inicio + peliculasPorPagina;
-    const peliculasPaginadas = peliculasGuardadas.slice(inicio, fin);
-    
+    const peliculasPaginadas = peliculasMostradas.slice(inicio, fin);
+
     pintarPeliculas(peliculasPaginadas);
     actualizarBotones();
 }
 
-
-// FUNCION PARA PINTAR LAS PELICULAS EN EL DOM
+// Renderizar películas en el DOM
 function pintarPeliculas(peliculas) {
-    if (!espaciosPeliculas) return;
-
-    espaciosPeliculas.innerHTML = ""; // Limpiar el contenedor
+    espaciosPeliculas.innerHTML = ""; 
 
     peliculas.forEach(pelicula => {
         const div = document.createElement("div");
@@ -124,57 +120,28 @@ function pintarPeliculas(peliculas) {
     });
 }
 
-// Filtrar películas por género
-generosSelect.addEventListener('change', () => {
-    const generoSeleccionado = generosSelect.value;
-    // Si se ha seleccionado un género, filtramos las películas por ese género, de lo contrario mostramos todas las películas
-    if (generoSeleccionado) {
-        filtrarPeliculasPorGenero(generoSeleccionado);
-    } else {
-        getPeliculas(); // Si no se selecciona ningún género, mostramos todas las películas
-    }
+generosSelect.addEventListener("change", aplicarFiltros);
+
+ordenarAnoButton.addEventListener("click", () => {
+    ordenAscendente = !ordenAscendente;
+    ordenarPeliculas();
 });
 
-// Ordenar películas por año
-let ordenAscendente = true;
-function ordenarPeliculas() {
-    const peliculas = Array.from(espaciosPeliculas.children);
-    peliculas.sort((a, b) => {
-        const anioA = parseInt(a.querySelector('p:nth-child(3)').textContent);
-        const anioB = parseInt(b.querySelector('p:nth-child(3)').textContent);
-        return ordenAscendente ? anioA - anioB : anioB - anioA;
-    });
-
-    peliculas.forEach(pelicula => espaciosPeliculas.appendChild(pelicula));
-    ordenAscendente = !ordenAscendente;
-    document.getElementById('orden-indicador').textContent = ordenAscendente ? '⬆⮀' : '⬇⮂';
-}
-
-// Event Listeners
-ordenarAnoButton.addEventListener('click', ordenarPeliculas);
-
-// Actualizar estado de botones de paginación
 function actualizarBotones() {
-    document.getElementById("pagina-anterior").disabled = paginaActual === 1;
-    document.getElementById("pagina-siguiente").disabled = 
-        paginaActual * peliculasPorPagina >= peliculasGuardadas.length;
+    btnPaginaAnterior.disabled = paginaActual === 1;
+    btnPaginaSiguiente.disabled = paginaActual * peliculasPorPagina >= peliculasMostradas.length;
 }
 
-document.getElementById("pagina-anterior").addEventListener("click", () => {
+btnPaginaAnterior.addEventListener("click", () => {
     if (paginaActual > 1) {
         paginaActual--;
         mostrarPeliculasPaginadas();
-        window.scrollTo(0, 0); // Mover al inicio de la página
     }
 });
 
-document.getElementById("pagina-siguiente").addEventListener("click", () => {
-    if (paginaActual * peliculasPorPagina < peliculasGuardadas.length) {
+btnPaginaSiguiente.addEventListener("click", () => {
+    if (paginaActual * peliculasPorPagina < peliculasMostradas.length) {
         paginaActual++;
         mostrarPeliculasPaginadas();
-        window.scrollTo(0, 0); // Mover al inicio de la página
     }
 });
-
-// Iniciar con todas las películas
-getPeliculas();

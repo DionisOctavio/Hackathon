@@ -1,25 +1,245 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
+/* STYLOS HTML ====================================================================*/
+
+html, body {
+    height: 100%;
     margin: 0;
     padding: 0;
-}
-
-header {
-    background-color: #333;
+    background-color: #063257;
     color: white;
-    padding: 20px;
-    text-align: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    display: flex;
+    flex-direction: column;
 }
 
-h1 {
-    margin: 0;
+/* HEADER ==================================================================== */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(to bottom, #000000 10%, #063257 100%);
+    padding: 10px 20px;
+    position: relative;
 }
 
+/* Logo */
+header img {
+    width: 110px;
+    height: 63px;
+    cursor: pointer;
+}
+
+/* Menú de navegación */
+header nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+header nav .nav-icon {
+    display: none;
+}
+
+header nav button {
+    display: inline-block;
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+header nav button::after {
+    content: '';
+    width: 0%;
+    height: 3px;
+    background: #ffffff;
+    display: block;
+    transition: 0.5s;
+}
+
+header nav button:hover::after {
+    width: 100%;
+}
+
+/* Perfil */
+header .profile-icon {
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    gap: 5px;
+    position: relative;
+    padding: 5px;
+    padding-left: 20px;
+    cursor: pointer;
+}
+
+header .profile-icon img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+header .profile-icon:hover img {
+    transform: scale(1.1);
+}
+
+header #profile-name {
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center; 
+}
+
+
+/* Menú desplegable del perfil */
+header #profile-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 2px solid #007bff3b;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    z-index: 100;
+    padding: 15px;
+    width: 200px;
+    transform: translateY(10px);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+header .profile-icon:hover #profile-menu {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+header #profile-menu a {
+    display: block;
+    padding: 12px 20px;
+    text-decoration: none;
+    color: #000000;
+    margin-bottom: 8px;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+header #profile-menu a:hover {
+    background-color: #007bffc0;
+    color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* ======== MENÚ RESPONSIVO ======== */
+header .hamburger-menu {
+    display: none;
+    font-size: 30px;
+    color: white;
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+header .mobile-menu {
+    z-index: 20;
+    position: fixed;
+    top: 0;
+    left: -250px;
+    width: 250px;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+    transition: left 0.3s ease;
+}
+
+header .mobile-menu.open {
+    left: 0;
+}
+
+header .mobile-menu a {
+    color: white;
+    text-decoration: none;
+    padding: 15px;
+    display: block;
+}
+
+header .close-menu {
+    align-self: flex-end;
+    font-size: 30px;
+    background: none;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+
+/* ======== RESPONSIVE ======== */
+
+@media (max-width: 1000px) and (min-width: 575px) {
+    header nav button {
+        display: none;
+    }
+
+    header nav .nav-icon {
+        display: inline-block;
+        width: 40px; 
+        height: 40px;
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+
+    header nav .nav-icon img {
+        width: 24px; 
+        height: 24px;
+        filter: invert(1); 
+    }
+}
+
+
+@media (max-width: 575px) {
+    header nav {
+        display: none;
+    }
+    header .hamburger-menu {
+        display: block;
+    }
+}
+
+
+/* MAIN ==================================================================== */
 main {
-    padding: 20px;
+    flex: 1;
+    margin-left: 40px;
+    margin-right: 40px;
+    padding: 40px;
 }
 
+@media (max-width: 575px){
+    main {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+}
+
+/* CUERPO ==================================================================== */
+
+/* Estilos generales */
 .form-container {
     max-width: 600px;
     margin: 0 auto;
@@ -65,4 +285,143 @@ button.submit-btn {
 
 button.submit-btn:hover {
     background-color: #4cae4c;
+}
+
+/* Panel de opciones */
+.action-panel {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.action-btn {
+    margin: 0 10px;
+    padding: 10px 20px;
+    background-color: #5bc0de;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.action-btn:hover {
+    background-color: #31b0d5;
+}
+
+.action-btn.active {
+    background-color: #d9534f; /* Rojo cuando está activo */
+}
+
+/* Sección activa */
+.form-section {
+    display: none;
+}
+
+/* Modal para agregar género */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+}
+
+button#guardar-genero, button#cerrar-modal {
+    padding: 10px 20px;
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button#cerrar-modal {
+    background-color: #d9534f;
+}
+
+button#guardar-genero:hover, button#cerrar-modal:hover {
+    background-color: #4cae4c;
+}
+
+
+/* FOOTER ==================================================================== */
+footer {
+    margin-top: auto;
+    background: #000;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding-right: 6vw;
+    padding-left: 6vw;
+}
+
+.footer-logo img {
+    width: 120px; 
+}
+
+.footer-links {
+    display: flex;
+    gap: 15px;
+}
+
+.footer-links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: #f39c12; 
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 13px;
+    border-top: 1px solid #444;
+    padding-top: 10px;
+}
+
+@media (max-width: 600px) {
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+
+    .footer-logo img {
+        width: 100px;
+        margin-bottom: 10px;
+    }
+
+    .footer-links {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .footer-links a {
+        font-size: 16px;
+    }
 }

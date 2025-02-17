@@ -46,7 +46,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (!idPerfil || !idPelicula) {
         console.error("Faltan datos de perfil o película.");
-        alert("Faltan datos de perfil o película.");
         return;
     }
 

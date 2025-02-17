@@ -1,5 +1,7 @@
 let peliculasCache = null;
 let demografiasCache = null;
+let userCache = null;
+let generoCache = null;
 let lastCacheTime = 0;
 const CACHE_DURATION = 600000; // 10 min
 
@@ -64,10 +66,10 @@ app.post("/login", async (req, res) => {
                 profile: profile || {} 
             });
         } else {
-            res.json({ success: false, message: "Invalid username or password" });
+            res.json({ success: false, message: "Usuario o Contraseña incorrecta" });
         }
     } catch (error) {
-        console.error("Error during login:", error);
+        console.error("Error durante el login:", error);
         res.status(500).json({ success: false, message: "Internal server error" });
     }
 });
@@ -120,25 +122,33 @@ app.get("/cuentas", async (req, res)=>{
 });
 
 app.get("/perfiles/:userId", async (req, res) => {
-    const { userId } = req.params;
-    try {
-        const { rows } = await pool.query(
-            `SELECT PERFIL.* 
-             FROM PERFIL 
-             JOIN CUENTA ON PERFIL.id_cuenta = CUENTA.id_cuenta 
-             WHERE CUENTA.id_cuenta = $1`,
-            [userId]
-        );
-        res.json(rows);
-    } catch (error) {
-        console.error("Error fetching profiles:", error);
-        res.status(500).json({ success: false, message: "Internal server error" });
+    const now = Date.now();
+
+    if (userCache && now - lastCacheTime < CACHE_DURATION) {
+        console.log("🔵 Datos obtenidos de memoria");
+        return res.json(userCache);
     }
+
+    const { userId } = req.params;
+    const { rows } = await pool.query(
+        `SELECT PERFIL.* 
+         FROM PERFIL 
+         JOIN CUENTA ON PERFIL.id_cuenta = CUENTA.id_cuenta 
+         WHERE CUENTA.id_cuenta = $1`,
+        [userId]
+    );
+
+    userCache = rows;
+    lastCacheTime = now;
+    console.log("🟢 Users guardados en memoria");
+
+    res.json(rows);
 });
 
 
 
 
+// PELICULAS ==============================================================
 
 app.get("/peliculas", async (req, res) => {
     const now = Date.now();
@@ -167,13 +177,93 @@ app.get("/peliculas", async (req, res) => {
     res.json(rows);
 });
 
+app.post("/peliculas", async (req, res) => {
+    const { titulo, sinopsis, anio, genero, url_cartel, url_trailer, url_carrusel, demografia, pegi } = req.body;
+    
+    try {
+        // Inserta la película en la base de datos
+        const { rows } = await pool.query(
+            `INSERT INTO pelicula (titulo, sinopsis, anyo, id_genero, url_portada, url_trailer, url_carrusel, id_demografia, id_pegi)
+             VALUES ($1, $2, $3, (SELECT id_genero FROM genero WHERE nombre_genero = $4), $5, $6, $7, (SELECT id_demografia FROM demografia WHERE nombre_demografia = $8), (SELECT id_pegi FROM pegi WHERE edad = $9)) 
+             RETURNING *`,
+            [titulo, sinopsis, anio, genero, url_cartel, url_trailer, url_carrusel, demografia, pegi]
+        );
+
+        res.status(201).json(rows[0]);  // Responder con la película añadida
+    } catch (error) {
+        console.error("Error al agregar la película:", error);
+        res.status(500).json({ message: "Error al agregar la película" });
+    }
+});
+
+app.delete("/peliculas/:id", async (req, res) => {
+    const { id } = req.params;
+    
+    try {
+        // Elimina la película de la base de datos
+        const result = await pool.query(
+            `DELETE FROM pelicula WHERE id_pelicula = $1 RETURNING *`,
+            [id]
+        );
+
+        if (result.rowCount > 0) {
+            res.json({ message: "Película eliminada correctamente", pelicula: result.rows[0] });
+        } else {
+            res.status(404).json({ message: "Película no encontrada" });
+        }
+    } catch (error) {
+        console.error("Error al eliminar la película:", error);
+        res.status(500).json({ message: "Error al eliminar la película" });
+    }
+});
+
+app.put("/peliculas/:id", async (req, res) => {
+    const { id } = req.params;
+    const { titulo, sinopsis, anio, genero, url_cartel, url_trailer, url_carrusel, demografia, pegi } = req.body;
+
+    try {
+        // Actualiza los detalles de la película
+        const { rows } = await pool.query(
+            `UPDATE pelicula
+             SET titulo = $1, sinopsis = $2, anyo = $3, id_genero = (SELECT id_genero FROM genero WHERE nombre_genero = $4),
+                 url_portada = $5, url_trailer = $6, url_carrusel = $7, id_demografia = (SELECT id_demografia FROM demografia WHERE nombre_demografia = $8),
+                 id_pegi = (SELECT id_pegi FROM pegi WHERE edad = $9)
+             WHERE id_pelicula = $10
+             RETURNING *`,
+            [titulo, sinopsis, anio, genero, url_cartel, url_trailer, url_carrusel, demografia, pegi, id]
+        );
+
+        if (rows.length > 0) {
+            res.json({ message: "Película actualizada correctamente", pelicula: rows[0] });
+        } else {
+            res.status(404).json({ message: "Película no encontrada" });
+        }
+    } catch (error) {
+        console.error("Error al actualizar la película:", error);
+        res.status(500).json({ message: "Error al actualizar la película" });
+    }
+});
+
+
+
+
 
 // DEVUELVE TODOS LOS GENEROS
 app.get("/genero", async (req, res) => {
+    const now = Date.now();
+
+    if (generoCache && now - lastCacheTime < CACHE_DURATION) {
+        console.log("🔵 Datos obtenidos de memoria");
+        return res.json(generoCache);
+    }
+
     const {rows} = await pool.query(
         "SELECT * FROM GENERO;"
     );
-    console.log(rows);
+    generoCache = rows;
+    lastCacheTime = now;
+    console.log("🟢 Datos guardados en memoria");
+
     res.json(rows);
 });
 

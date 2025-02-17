@@ -417,7 +417,6 @@ h5 {
     cursor: pointer;
     font-size: 24px;
     position: absolute;
-    top: 50%;
     z-index: 10;
     transform: translateY(-50%);
     margin: 10px;
