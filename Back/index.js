@@ -37,7 +37,7 @@ app.listen(port, () => {
 // CACHE DE DATOS
 let peliculasCache = null;
 let demografiasCache = null;
-let userCache = null;
+const userProfilesCache = {};
 let generoCache = null;
 
 
@@ -99,7 +99,7 @@ app.get("/cuentas", async (req, res)=>{
 app.get("/cuenta/:userId", async (req, res) => {
     const { userId } = req.params;
     const { rows } = await pool.query(
-        `SELECT * FROM CUENTA WHERE id_cuenta = $1`, 
+        `SELECT id_cuenta, usuario, email, nombre_usuario, apellido_usuario, rol_cuenta, fecha_creacion FROM CUENTA WHERE id_cuenta = $1`, 
         [userId]
     );
 
@@ -117,7 +117,8 @@ app.get("/cuenta/:userId", async (req, res) => {
             nombre_usuario: user.nombre_usuario,
             apellido_usuario: user.apellido_usuario,
             rol_cuenta: user.rol_cuenta,
-            perfil: profile || {} 
+            fecha_creacion: user.fecha_creacion,
+            perfil: profile || {}
         });
     } else {
         res.status(404).json({ success: false, message: "Usuario no encontrado" });
@@ -126,14 +127,14 @@ app.get("/cuenta/:userId", async (req, res) => {
 
 
 
+
 // OBTENER DATOS DEL PERFIL DE UNA CUENTA
 app.get("/perfiles/:userId", async (req, res) => {
-    const now = Date.now();
-    if (userCache && now - lastCacheTime < CACHE_DURATION) {
-        console.log("Perfiles obtenidos de memoria");
-        return res.json(userCache);
-    }
     const { userId } = req.params;
+    if (userProfilesCache[userId]) {
+        console.log("Perfiles obtenidos de caché para el usuario:", userId);
+        return res.json(userProfilesCache[userId]);
+    }
     const { rows } = await pool.query(
         `SELECT PERFIL.* 
          FROM PERFIL 
@@ -141,11 +142,77 @@ app.get("/perfiles/:userId", async (req, res) => {
          WHERE CUENTA.id_cuenta = $1`,
         [userId]
     );
-    userCache = rows;
-    lastCacheTime = now;
-    console.log("Perfiles guardados en memoria");
+    if (rows.length === 0) {
+        return res.status(404).json({ message: 'Perfil no encontrado' });
+    }
+    userProfilesCache[userId] = rows;
     res.json(rows);
 });
+
+
+
+
+app.put('/cuenta/:id', async (req, res) => {
+    const { id } = req.params; // ID del usuario
+    const { usuario, email, nombre_usuario, apellido_usuario, rol_cuenta } = req.body;
+
+    // Creamos un objeto para las actualizaciones
+    const updates = {};
+
+    // Añadir solo los campos que se reciban en el cuerpo de la solicitud
+    if (usuario) updates.usuario = usuario;
+    if (email) updates.email = email;
+    if (nombre_usuario) updates.nombre_usuario = nombre_usuario;
+    if (apellido_usuario) updates.apellido_usuario = apellido_usuario;
+    if (rol_cuenta) updates.rol_cuenta = rol_cuenta;
+
+    // Si no hay actualizaciones, respondemos con un mensaje de error
+    if (Object.keys(updates).length === 0) {
+        return res.status(400).json({ error: 'No se proporcionaron datos para actualizar' });
+    }
+
+    try {
+        // Verificar si el usuario existe en la base de datos
+        const userCheckQuery = 'SELECT 1 FROM cuenta WHERE id_cuenta = $1';
+        const userCheckResult = await pool.query(userCheckQuery, [id]);
+
+        if (userCheckResult.rowCount === 0) {
+            return res.status(404).json({ error: 'Usuario no encontrado' });
+        }
+
+        // Creamos una lista de parámetros dinámicos para la actualización
+        const fields = Object.keys(updates);
+        const values = Object.values(updates);
+
+        // Construimos la consulta de actualización dinámica
+        let query = 'UPDATE cuenta SET ';
+        fields.forEach((field, index) => {
+            query += `${field} = $${index + 1}`;
+            if (index < fields.length - 1) {
+                query += ', ';
+            }
+        });
+        query += ` WHERE id_cuenta = $${fields.length + 1}`;
+
+        // Añadimos el ID al final de los valores
+        values.push(id);
+
+        // Ejecutamos la consulta de actualización
+        const result = await pool.query(query, values);
+
+        // Verificamos si se actualizó algún registro
+        if (result.rowCount === 0) {
+            return res.status(404).json({ error: 'No se pudo actualizar el perfil' });
+        }
+
+        res.status(200).json({ message: 'Perfil actualizado correctamente' });
+    } catch (error) {
+        console.error('Error al actualizar los datos:', error);
+        res.status(500).json({ error: 'Hubo un error al actualizar los datos del perfil' });
+    }
+});
+
+
 
 
 // MANIPULACION DE PELICULAS ==============================================================

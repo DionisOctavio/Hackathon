@@ -3,21 +3,23 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Disney</title>
+    <title>Mi Cuenta</title>
+    <link rel="icon" type="image/png" href="https://tenkai-bucket-imagenes-2025.s3.us-east-1.amazonaws.com/favicon-disney.png">
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='CSS/cuenta.css'>
-    <script src='JS/main.js' defer></script>
+    <script src='JS/cuenta.js' defer></script>
 </head>
 <body>
     <header>
-        <img src="IMG/disney-logo-w.png">
+        <button id="menu-toggle" class="hamburger-menu">☰</button>
+        <img src="IMG/disney-logo-w.png" id="logo">
         <nav>
-            <button href="#" id="home">HOME</button>
+            <button href="index.html" id="home">HOME</button>
             <button href="peliculas.html" id="generos">PELICULAS</button>
-            <button href="#" id="buscar">BUSCAR</button>
-            <button href="#" class="nav-icon" id="home-icon"><img src="IMG/img-iconos/img-iconos-casa.png"></button>
-            <button href="#" class="nav-icon" id="peliculas-icon"><img src="IMG/img-iconos/img-iconos-peliculas.png"></button>
-            <button href="#" class="nav-icon" id="buscar-icon"><img src="IMG/img-iconos/img-iconos-lupa.png"></button>
+            <button href="buscar.html" id="buscar">BUSCAR</button>
+            <button href="index.html" class="nav-icon" id="home-icon"><img src="IMG/img-iconos/img-iconos-casa.png"></button>
+            <button href="peliculas.html" class="nav-icon" id="peliculas-icon"><img src="IMG/img-iconos/img-iconos-peliculas.png"></button>
+            <button href="buscar.html" class="nav-icon" id="buscar-icon"><img src="IMG/img-iconos/img-iconos-lupa.png"></button>
         </nav>
         <div class="profile-icon" id="profile-button">
             <img id="profile-img" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" alt="Imagen de perfil">
@@ -26,47 +28,118 @@
             </div>
             <!-- Menú de perfil tipo nav -->
             <nav id="profile-menu" class="profile-menu">
-                <a href="#" id="account-button" onclick="verCuenta()">Mi cuenta</a>
+                <a href="cuenta.html" id="account-button" onclick="verCuenta()">Mi cuenta</a>
                 <a href="perfiles.html" id="perfil-button">Cambiar Perfil</a>
-                <a href="#" id="login-button" onclick="login()">Iniciar sesión</a>
-                <a href="#" id="panel-peliculas-button" onclick="irAlPanelPeliculas()" style="display: none;">Panel de Películas</a>
+                <a href="login.html" id="login-button" onclick="login()">Iniciar sesión</a>
+                <a href="administracion.html" id="panel-peliculas-button" onclick="irAlPanelPeliculas()" style="display: none;">Administracion</a>
                 <a href="#" id="logout-button" onclick="logout()">Cerrar sesión</a>
             </nav>
         </div>
-                             
-        
+        <div id="mobile-menu" class="mobile-menu">
+            <button class="close-menu" onclick="toggleMenu()">×</button>
+            <a href="index.html" id="home">HOME</a>
+            <a href="peliculas.html" id="generos">PELICULAS</a>
+            <a href="buscar.html" id="buscar">BUSCAR</a>
+        </div>
+        <script src="JS/ACCIONES/encabezados.js"></script>
     </header>
     <main>
         <form id="form-ver-cuenta" class="form-container">
             <div id="datos-cuenta"></div>
+            
+            <!-- Mensajes de Error -->
+            <div id="error-message">
+                No se puede obtener los datos sin el ID de usuario.
+            </div>
+            
+            <!-- Contenedor de mensaje de error -->
+            <div id="error-message">
+                Hubo un error al cargar los datos de la cuenta.
+            </div>
+
+            <!-- Sección de Información Personal -->
             <div class="form-group">
                 <label for="usuario">Nombre de Usuario:</label>
-                <input type="text" id="usuario" name="usuario" disabled value="JuanPerez">
+                <input type="text" id="usuario" name="usuario" disabled value="Usuario">
             </div>
     
             <div class="form-group">
                 <label for="email">Correo Electrónico:</label>
-                <input type="email" id="email" name="email" disabled value="juan.perez@email.com">
+                <input type="email" id="email" name="email" disabled value="usuario@gmail.com">
             </div>
+      </div>
     
             <div class="form-group">
                 <label for="nombre_usuario">Nombre:</label>
-                <input type="text" id="nombre_usuario" name="nombre_usuario" disabled value="Juan">
-            </div>
-    
+                <input type="text" id="nombre_usuario" name="nombre_usuario" disabled value="Nombre">
+          
             <div class="form-group">
                 <label for="apellido_usuario">Apellido:</label>
-                <input type="text" id="apellido_usuario" name="apellido_usuario" disabled value="Pérez">
+                <input type="text" id="apellido_usuario" name="apellido_usuario" disabled value="Apellido">
             </div>
     
             <div class="form-group">
                 <label for="rol_cuenta">Rol de la Cuenta:</label>
-                <input type="text" id="rol_cuenta" name="rol_cuenta" disabled value="Usuario">
+                <input type="text" id="rol_cuenta" name="rol_cuenta" disabled value="USER">
             </div>
+    
+            <div class="form-group">
+                <label for="fecha_creacion">Fecha de Creación:</label>
+                <input type="text" id="fecha_creacion" name="fecha_creacion" disabled value="01 de Enero del 2025">
+            </div>
+    
+            <!-- Sección de Seguridad de la Cuenta (Contraseña) -->
+            <div class="form-group">
+                <label for="contrasenia">Contraseña:</label>
+                <input type="password" id="contrasenia" name="contrasenia" disabled value="********">
+            </div>
+    
+            <!-- Botón para cambiar la contraseña (si se desea) -->
+            <button type="button" id="btn-cambiar-contrasenia" class="btn-cambiar">Cambiar Contraseña</button>
+    
+            <!-- Modal para cambiar la contraseña -->
+            <div id="modal-cambiar-contrasenia" class="modal">
+                <div class="modal-content">
+                    <h2>Cambiar Contraseña</h2>
+                    
+                    <form id="form-cambiar-contrasenia" class="form-container">
+                        <div class="form-group">
+                            <label for="contrasenia-actual">Contraseña Actual:</label>
+                            <input type="password" id="contrasenia-actual" name="contrasenia-actual" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="nueva-contrasenia">Nueva Contraseña:</label>
+                            <input type="password" id="nueva-contrasenia" name="nueva-contrasenia" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirmar-contrasenia">Confirmar Nueva Contraseña:</label>
+                            <input type="password" id="confirmar-contrasenia" name="confirmar-contrasenia" required>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn-guardar">Guardar</button>
+                            <button type="button" id="btn-cancelar-contra" class="btn-cancelar-contra">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+            <!-- Acciones de la Cuenta -->
+            <div class="form-actions">
+                <button type="button" id="btn-editar" class="btn-editar">Editar Perfil</button>
+                <button type="button" id="btn-cancelar" class="btn-cancelar" style="display: none;">Cancelar</button>
+                <button type="submit" id="btn-guardar" class="btn-guardar" style="display: none;">Guardar</button>
+            </div>
+
+            <!-- Botón para cerrar sesión -->
+            <button type="button" id="btn-cerrar-sesion" class="btn-cerrar">Cerrar Sesión</button>
         </form>
+    
         <script src="JS/cuenta.js"></script>
     </main>
-    
     <footer>
         <div class="footer-container">
             <div class="footer-logo">

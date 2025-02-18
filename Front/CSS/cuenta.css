@@ -1,23 +1,34 @@
-body{
-    background-color: #051828;
-    margin: 0px;
+/* STYLOS HTML ====================================================================*/
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #063257;
+    color: white;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    display: flex;
+    flex-direction: column;
 }
 
+/* HEADER ==================================================================== */
 header {
     display: flex;
-    flex-direction: row;
+    align-items: center;
     justify-content: space-between;
-    background: linear-gradient(to bottom, #000000 10%, #051828 100%);
-    padding: 10px;
+    background: linear-gradient(to bottom, #000000 10%, #063257 100%);
+    padding: 10px 20px;
+    position: relative;
 }
 
+/* Logo */
 header img {
-    margin-left: 50px;
     width: 110px;
     height: 63px;
+    cursor: pointer;
 }
 
+/* Menú de navegación */
 header nav {
     display: flex;
     flex-direction: row;
@@ -26,27 +37,21 @@ header nav {
     gap: 20px;
 }
 
-nav .nav-icon {
+header nav .nav-icon {
     display: none;
 }
 
-nav button {
+header nav button {
     display: inline-block;
-}
-
-header nav button#home, header nav button#generos, header nav button#buscar, header nav button#home-icon, header nav button#peliculas-icon, header nav button#buscar-icon {
     color: white;
     text-decoration: none;
     font-size: 18px;
     border: none;
     background: none;
+    cursor: pointer;
 }
 
-header nav button#home::before, header nav button#generos::before, header nav button#buscar::before, header nav button#home-icon::before, header nav button#peliculas-icon::before, header nav button#buscar-icon::before {
-    margin-left: auto;
-}
-
-header nav button#home::after, header nav button#generos::after, header nav button#buscar::after, header nav button#home-icon::after, header nav button#peliculas-icon::after, header nav button#buscar-icon::after {
+header nav button::after {
     content: '';
     width: 0%;
     height: 3px;
@@ -55,73 +60,50 @@ header nav button#home::after, header nav button#generos::after, header nav butt
     transition: 0.5s;
 }
 
-header nav button#home:hover::after, header nav button#generos:hover::after, header nav button#buscar:hover::after, header nav button#home-icon:hover:after, header nav button#peliculas-icon:hover::after, header nav button#buscar-icon:hover::after {
+header nav button:hover::after {
     width: 100%;
 }
 
+/* Perfil */
 header .profile-icon {
-    margin: 0;
-    background: none;
-    border: none;
-    cursor: pointer;
     display: flex;
-    flex-direction: column;
+    flex-direction: column; 
     align-items: center; 
-    justify-content: center; 
+    gap: 5px;
     position: relative;
     padding: 5px;
     padding-left: 20px;
-    margin-left: 90px;
-}
-
-#profile-name {
-    color: white;
-}
-
-header .profile-icon:hover {
-    border-radius: 10px 10px 0px 0px;
+    cursor: pointer;
 }
 
 header .profile-icon img {
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    display: block; 
-    margin: 0 auto; 
-}
-
-.profile-icon {
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
-}
-
-#profile-img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
     transition: transform 0.3s ease;
 }
 
-.profile-icon:hover #profile-img {
+header .profile-icon:hover img {
     transform: scale(1.1);
 }
 
-#profile-name-container {
-    display: inline-block;
+header #profile-name {
+    color: white;
     font-size: 16px;
-    color: #333;
     font-weight: 600;
+    text-align: center; 
 }
 
-#profile-menu {
-    display: none; 
+
+/* Menú desplegable del perfil */
+header #profile-menu {
+    display: none;
     position: absolute;
     top: 100%;
     right: 0;
-    background-color: rgba(255, 255, 255, 0.1); 
-    backdrop-filter: blur(10px); 
-    border: 2px solid #007bff3b; 
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 2px solid #007bff3b;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     z-index: 100;
@@ -133,18 +115,18 @@ header .profile-icon img {
     transition: all 0.3s ease;
 }
 
-.profile-icon:hover #profile-menu {
+header .profile-icon:hover #profile-menu {
     display: block;
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
 }
 
-#profile-menu a {
+header #profile-menu a {
     display: block;
     padding: 12px 20px;
     text-decoration: none;
-    color: #000000; 
+    color: #ffffff;
     margin-bottom: 8px;
     border-radius: 5px;
     font-size: 18px;
@@ -152,48 +134,112 @@ header .profile-icon img {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-#profile-menu a:hover {
+header #profile-menu a:hover {
     background-color: #007bffc0;
     color: #ffffff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-@media (max-width: 1000px) {
-    nav {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    }
+/* ======== MENÚ RESPONSIVO ======== */
+header .hamburger-menu {
+    display: none;
+    font-size: 30px;
+    color: white;
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 20px;
+    margin-right: 20px;
+}
 
-    nav button {
+header .mobile-menu {
+    z-index: 20;
+    position: fixed;
+    top: 0;
+    left: -250px;
+    width: 250px;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+    transition: left 0.3s ease;
+}
+
+header .mobile-menu.open {
+    left: 0;
+}
+
+header .mobile-menu a {
+    color: white;
+    text-decoration: none;
+    padding: 15px;
+    display: block;
+}
+
+header .close-menu {
+    align-self: flex-end;
+    font-size: 30px;
+    background: none;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+
+/* ======== RESPONSIVE ======== */
+
+@media (max-width: 1000px) and (min-width: 575px) {
+    header nav button {
         display: none;
     }
 
-    nav .nav-icon {
+    header nav .nav-icon {
         display: inline-block;
-        width: 40px;
-        height: 30px;
-        margin: 0 10px;
+        width: 40px; 
+        height: 40px;
+        background: none;
+        border: none;
+        cursor: pointer;
     }
 
-    nav .nav-icon img {
-        width: 100%;
-        height: 100%;
-        filter: invert(1);
-        margin-left: 0;
+    header nav .nav-icon img {
+        width: 24px; 
+        height: 24px;
+        filter: invert(1); 
     }
 }
 
 
-/* ------------------------------------------------------------ */
-/* -------------------- STYLOS PARA EL MAIN ------------------- */
-/* ------------------------------------------------------------ */
+@media (max-width: 575px) {
+    header nav {
+        display: none;
+    }
+    header .hamburger-menu {
+        display: block;
+    }
+}
 
+
+/* MAIN ==================================================================== */
 main {
-    padding: 50px;
-    padding-bottom: 100px;
+    flex: 1;
+    margin-left: 40px;
+    margin-right: 40px;
 }
 
+@media (max-width: 575px){
+    main {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+}
+
+
+/* CUERPO ==================================================================== */
+/* CUERPO ==================================================================== */
+/* Estilo general del contenedor del formulario */
 .form-container {
     max-width: 600px;
     margin: 0 auto;
@@ -201,76 +247,217 @@ main {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.form-group {
+    font-family: 'Arial', sans-serif;
     margin-bottom: 20px;
 }
 
-label {
+/* Espaciado entre los grupos de formulario */
+.form-container .form-group {
+    margin-bottom: 20px;
+}
+
+/* Estilo de las etiquetas */
+.form-container label {
     display: block;
     margin-bottom: 8px;
     font-weight: bold;
     font-size: 18px;
-}
-
-input[type="text"], input[type="email"], input[type="password"], select {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-
-input[disabled] {
-    background-color: #f0f0f0;
-    cursor: not-allowed;
     color: #333;
 }
 
-button.submit-btn {
+/* Estilo de los inputs */
+.form-container input[type="text"], input[type="email"], input[type="password"], select {
     width: 100%;
     padding: 10px;
-    background-color: #5cb85c;
-    color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+    color: #333;
+}
+
+/* Estilo para los inputs deshabilitados */
+.form-container input[disabled] {
+    background-color: #f0f0f0;
+    cursor: not-allowed;
+    color: #666;
+}
+
+/* Estilo de los botones */
+.form-container button {
+    width: 100%;
+    padding: 12px 20px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
+    transition: background-color 0.3s ease;
 }
 
-button.submit-btn:hover {
+/* Botón de acción (verde) */
+.form-container button.submit-btn {
+    background-color: #5cb85c;
+    color: white;
+}
+
+.form-container button.submit-btn:hover {
     background-color: #4cae4c;
 }
 
-#datos-cuenta {
+/* Botón de cambiar contraseña (azul) */
+.form-container .btn-cambiar {
+    background-color: #2196F3;
+    color: white;
+}
+
+.form-container .btn-cambiar:hover {
+    background-color: #1976D2;
+}
+
+/* Botón de editar perfil (naranja) */
+.form-container .btn-editar {
+    width: 100%;
+    background-color: #ffa500;
+    color: white;
+}
+
+.form-container .btn-editar:hover {
+    background-color: #ff8c00;
+}
+
+/* Botón de guardar perfil (verde) */
+.form-container .btn-guardar {
+    background-color: #5cb85c;
+    color: white;
+}
+
+.form-container .btn-guardar:hover {
+    background-color: #4cae4c;
+}
+
+/* Botón de cancelar (gris) */
+.form-container .btn-cancelar {
+    background-color: #ff5100;
+    color: rgb(255, 255, 255);
+}
+
+.form-container .btn-cancelar:hover {
+    background-color: #ff6a25;
+}
+
+/* Botón de cerrar sesión (rojo) */
+.form-container .btn-cerrar {
+    margin-top: 20px;
+    width: 100%;
+    background-color: #d32f2f;
+    color: white;
+}
+
+.form-container .btn-cerrar:hover {
+    background-color: #c62828;
+}
+
+/* Sección de bienvenida con el nombre de usuario */
+.form-container #datos-cuenta {
     font-size: 28px;
-    margin-bottom: 80px;
+    margin-bottom: 40px;
     text-align: center;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Estilo para los botones de acción (editar y cerrar sesión) */
+.form-container .form-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    gap: 10px;
+}
+
+.form-container button {
+    width: 48%; /* Establecer el ancho de los botones para que no se apilen */
+}
+
+/* Espaciado general para el formulario */
+.form-container {
+    padding-bottom: 30px;
+}
+
+.error-message {
+    display:none; 
+    background-color: #f8d7da; 
+    color: #721c24; 
+    padding: 10px; 
+    margin-top: 10px; 
+    border: 1px solid #f5c6cb; 
+    border-radius: 5px;
+}
+/* Estilo del modal */
+.modal {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 400px;
+}
+
+/* Estilo general de los formularios */
+.form-group {
+    margin-bottom: 15px;
+}
+
+input[type="password"] {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.form-actions {
+    text-align: right;
+}
+
+.btn-guardar, .btn-cancelar-contra {
+    padding: 8px 15px;
+    margin: 5px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+}
+
+.btn-guardar {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.btn-cancelar-contra {
+    background-color: #f44336;
+    color: white;
 }
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-/* -------------------------------------------------------------- */
-/* -------------------- STYLOS PARA EL FOOTER ------------------- */
-/* -------------------------------------------------------------- */
-
+/* FOOTER ==================================================================== */
 footer {
-    background-color: #1A1D29;
+    margin-top: auto;
+    background: #000;
     color: #fff;
-    padding: 20px 10%;
+    padding: 10px;
+    text-align: center;
 }
 
 .footer-container {
@@ -278,6 +465,8 @@ footer {
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
+    padding-right: 6vw;
+    padding-left: 6vw;
 }
 
 .footer-logo img {
