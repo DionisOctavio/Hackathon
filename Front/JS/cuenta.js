@@ -152,19 +152,6 @@ document.getElementById('btn-cancelar-contra').addEventListener('click', functio
 });
 
 
-// Función para mostrar/ocultar la contraseña
-function togglePasswordVisibility(inputId, eyeId) {
-    const input = document.getElementById(inputId);
-    const eye = document.getElementById(eyeId);
-    if (input.type === 'password') {
-        input.type = 'text';
-        eye.innerHTML = '&#128064;'; // Cambia el icono a un "ojo abierto"
-    } else {
-        input.type = 'password';
-        eye.innerHTML = '&#128065;'; // Cambia el icono a un "ojo cerrado"
-    }
-}
-
 // Asignar la función de cambiar visibilidad a los iconos de ojo
 document.getElementById('eye-actual').addEventListener('click', function() {
     togglePasswordVisibility('contrasenia-actual', 'eye-actual');

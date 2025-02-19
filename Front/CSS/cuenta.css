@@ -101,13 +101,11 @@ header #profile-menu {
     position: absolute;
     top: 100%;
     right: 0;
-    background-color: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border: 2px solid #007bff3b;
-    border-radius: 8px;
+    background-color: #23252b;
+    border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     z-index: 100;
-    padding: 15px;
+    padding: 20px;
     width: 200px;
     transform: translateY(10px);
     opacity: 0;
@@ -126,7 +124,7 @@ header #profile-menu a {
     display: block;
     padding: 12px 20px;
     text-decoration: none;
-    color: #ffffff;
+    color: #efefef;
     margin-bottom: 8px;
     border-radius: 5px;
     font-size: 18px;
@@ -238,7 +236,7 @@ main {
 
 
 /* CUERPO ==================================================================== */
-/* CUERPO ==================================================================== */
+
 /* Estilo general del contenedor del formulario */
 .form-container {
     max-width: 600px;
@@ -311,38 +309,38 @@ main {
 }
 
 .form-container .btn-cambiar:hover {
-    background-color: #1976D2;
+    background-color: #599adb;
 }
 
 /* Botón de editar perfil (naranja) */
 .form-container .btn-editar {
     width: 100%;
-    background-color: #ffa500;
+    background-color: #04529f;
     color: white;
 }
 
 .form-container .btn-editar:hover {
-    background-color: #ff8c00;
+    background-color: #2b73ba;
 }
 
 /* Botón de guardar perfil (verde) */
 .form-container .btn-guardar {
-    background-color: #5cb85c;
+    background-color: #1a1e7b;
     color: white;
 }
 
 .form-container .btn-guardar:hover {
-    background-color: #4cae4c;
+    background-color: #3135a8;
 }
 
 /* Botón de cancelar (gris) */
 .form-container .btn-cancelar {
-    background-color: #ff5100;
+    background-color: #85b4ff;
     color: rgb(255, 255, 255);
 }
 
 .form-container .btn-cancelar:hover {
-    background-color: #ff6a25;
+    background-color: #b1cfff;
 }
 
 /* Botón de cerrar sesión (rojo) */
@@ -406,7 +404,7 @@ main {
     z-index: 9999;
 }
 
-.modal-content {
+#modal-cambiar-contrasenia .modal-content {
     background-color: white;
     padding: 20px;
     border-radius: 8px;
@@ -415,11 +413,11 @@ main {
 }
 
 /* Estilo general de los formularios */
-.form-group {
+#modal-cambiar-contrasenia .form-group {
     margin-bottom: 15px;
 }
 
-input[type="password"] {
+#modal-cambiar-contrasenia input[type="password"] {
     width: 100%;
     padding: 8px;
     margin-top: 5px;
@@ -427,11 +425,11 @@ input[type="password"] {
     border: 1px solid #ccc;
 }
 
-.form-actions {
+#modal-cambiar-contrasenia .form-actions {
     text-align: right;
 }
 
-.btn-guardar, .btn-cancelar-contra {
+#modal-cambiar-contrasenia .btn-guardar, .btn-cancelar-contra {
     padding: 8px 15px;
     margin: 5px;
     cursor: pointer;
@@ -439,12 +437,12 @@ input[type="password"] {
     border-radius: 4px;
 }
 
-.btn-guardar {
+#modal-cambiar-contrasenia .btn-guardar {
     background-color: #4CAF50;
     color: white;
 }
 
-.btn-cancelar-contra {
+#modal-cambiar-contrasenia .btn-cancelar-contra {
     background-color: #f44336;
     color: white;
 }

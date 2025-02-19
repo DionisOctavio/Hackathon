@@ -101,13 +101,11 @@ header #profile-menu {
     position: absolute;
     top: 100%;
     right: 0;
-    background-color: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border: 2px solid #007bff3b;
-    border-radius: 8px;
+    background-color: #23252b;
+    border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     z-index: 100;
-    padding: 15px;
+    padding: 20px;
     width: 200px;
     transform: translateY(10px);
     opacity: 0;
@@ -126,7 +124,7 @@ header #profile-menu a {
     display: block;
     padding: 12px 20px;
     text-decoration: none;
-    color: #000000;
+    color: #efefef;
     margin-bottom: 8px;
     border-radius: 5px;
     font-size: 18px;
@@ -239,6 +237,10 @@ main {
 
 /* CUERPO ==================================================================== */
 
+main h3 {
+    color: rgb(0, 0, 0);
+}
+
 /* Estilos generales */
 .form-container {
     max-width: 600px;
@@ -257,6 +259,7 @@ label {
     display: block;
     margin-bottom: 8px;
     font-weight: bold;
+    color: #444444;
 }
 
 input[type="text"], input[type="number"], select, textarea {
@@ -275,7 +278,7 @@ textarea {
 button.submit-btn {
     width: 100%;
     padding: 10px;
-    background-color: #5cb85c;
+    background-color: #04529f;
     color: white;
     border: none;
     border-radius: 4px;
@@ -284,7 +287,7 @@ button.submit-btn {
 }
 
 button.submit-btn:hover {
-    background-color: #4cae4c;
+    background-color: #1a6cbe;
 }
 
 /* Panel de opciones */

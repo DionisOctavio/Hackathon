@@ -39,22 +39,124 @@ function getPeliculas() {
         });
 }
 
+document.addEventListener('DOMContentLoaded', function () {
+    const tituloInput = document.getElementById("titulo");
+    const sinopsisInput = document.getElementById("sinopsis");
+    const anyoInput = document.getElementById("anio");
+    const portadaInput = document.getElementById("url_portada");
+    const cartelInput = document.getElementById("url_cartel");
+    const trailerInput = document.getElementById("url_trailer");
+    const carruselInput = document.getElementById("url_carrusel");
+    const demografiaInput = document.getElementById("demografia");
+    const generoInput = document.getElementById("genero");
+    const pegiInput = document.getElementById("pegi");
+
+    console.log("tituloInput:", tituloInput);
+    console.log("sinopsisInput:", sinopsisInput);
+    // El resto de los console.logs...
+});
+
+
 // Función para agregar una película
-function agregarPelicula(pelicula) {
-    return fetch(API_URL + '/peliculas', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(pelicula)
+function agregarPelicula() {
+    console.log("Ejecutando agregarPelicula...");
+
+    const tituloInput = document.getElementById("titulo");
+    const sinopsisInput = document.getElementById("sinopsis");
+    const anyoInput = document.getElementById("anyo");
+    const portadaInput = document.getElementById("url_portada");
+    const cartelInput = document.getElementById("url_cartel");
+    const trailerInput = document.getElementById("url_trailer");
+    const carruselInput = document.getElementById("url_carrusel");
+    const demografiaInput = document.getElementById("demografia");
+    const generoInput = document.getElementById("genero");
+    const pegiInput = document.getElementById("pegi");
+
+    // Validar que los elementos existen
+    if (!tituloInput || !sinopsisInput || !anyoInput || !portadaInput || 
+        !cartelInput || !trailerInput || !carruselInput || 
+        !demografiaInput || !generoInput || !pegiInput) {
+        console.error("Error: No se encontraron algunos elementos en el DOM.");
+        alert("Error: No se encontraron algunos campos del formulario.");
+        return;
+    }
+
+    console.log("Elementos encontrados en el DOM correctamente.");
+
+    // Continuar con la lógica si los elementos existen
+    const titulo = tituloInput.value.trim();
+    const sinopsis = sinopsisInput.value.trim();
+    const anyo = parseInt(anyoInput.value);
+    const url_portada = portadaInput.value.trim();
+    const url_cartel = cartelInput.value.trim();
+    const url_trailer = trailerInput.value.trim();
+    const url_carrusel = carruselInput.value.trim();
+    const demografia = demografiaInput.value;
+    const genero = generoInput.value;
+    const pegi = parseInt(pegiInput.value);
+
+    console.log("Datos del formulario:", {
+        titulo,
+        sinopsis,
+        anyo,
+        url_portada,
+        url_cartel,
+        url_trailer,
+        url_carrusel,
+        demografia,
+        genero,
+        pegi
+    });
+
+    // Validaciones
+    if (!titulo || !sinopsis || isNaN(anyo) || !demografia || !genero || isNaN(pegi)) {
+        console.log("Validación fallida: Algunos campos están vacíos o incorrectos.");
+        alert("Por favor, completa todos los campos obligatorios.");
+        return;
+    }
+
+    console.log("Validación pasada, preparando los datos para enviar.");
+
+    // Crear objeto de película
+    const nuevaPelicula = {
+        titulo,
+        sinopsis,
+        anio: anyo,
+        genero,
+        url_cartel,
+        url_trailer,
+        url_carrusel,
+        demografia,
+        pegi
+    };
+
+    console.log("Objeto nuevaPelicula listo para enviar:", nuevaPelicula);
+
+    // Enviar la película a la API
+    fetch(API_URL + "/peliculas", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(nuevaPelicula)
     })
     .then(response => {
-        // Verifica el contenido de la respuesta antes de parsear a JSON
-        console.log(response);
+        console.log("Respuesta recibida del servidor:", response);
+        if (!response.ok) {
+            throw new Error("Error al agregar la película.");
+        }
         return response.json();
     })
-    .catch(error => console.error('Error al agregar la película:', error));
+    .then(data => {
+        console.log("Película agregada con éxito:", data);
+        alert(`Película "${data.titulo}" añadida correctamente.`);
+        cargarPeliculas(); // Recargar la lista de películas
+    })
+    .catch(error => {
+        console.error("Error al agregar la película:", error);
+        alert("Hubo un error al agregar la película.");
+    });
 }
+
+
 
 
 // Función para eliminar una película
@@ -260,7 +362,7 @@ document.addEventListener('DOMContentLoaded', () => {
     cargarSelects();
 
     // Mostrar el formulario de actualización de películas por defecto
-    showForm('actualizar');
+    showForm('agregar');
 
     // Agregar película
     document.getElementById('form-agregar-pelicula').addEventListener('submit', function(event) {

@@ -223,7 +223,7 @@ app.put('/cuenta/:id', async (req, res) => {
 app.get("/peliculas", async (req, res) => {
     const now = Date.now();
     if (peliculasCache && now - lastCacheTime < CACHE_DURATION) {
-        console.log("🔵 Datos obtenidos de memoria");
+        console.log("Peliculas obtenidas de memoria");
         return res.json(peliculasCache);
     }
     const { rows } = await pool.query(
@@ -236,7 +236,7 @@ app.get("/peliculas", async (req, res) => {
     );
     peliculasCache = rows;
     lastCacheTime = now;
-    console.log("🟢 Datos guardados en memoria");
+    console.log("Peliculas guardadas en memoria");
     res.json(rows);
 });
 
@@ -246,10 +246,10 @@ app.get("/peliculas", async (req, res) => {
 app.post("/peliculas", async (req, res) => {
     const { titulo, sinopsis, anio, genero, url_cartel, url_trailer, url_carrusel, demografia, pegi } = req.body;
     const { rows } = await pool.query(
-        `INSERT INTO pelicula (titulo, sinopsis, anyo, id_genero, url_portada, url_trailer, url_carrusel, id_demografia, id_pegi)
-         VALUES ($1, $2, $3, (SELECT id_genero FROM genero WHERE nombre_genero = $4), $5, $6, $7, (SELECT id_demografia FROM demografia WHERE nombre_demografia = $8), (SELECT id_pegi FROM pegi WHERE edad = $9)) 
-         RETURNING *`,
-        [titulo, sinopsis, anio, genero, url_cartel, url_trailer, url_carrusel, demografia, pegi]
+        `INSERT INTO pelicula (id_pelicula, titulo, sinopsis, anyo, id_genero, url_portada, url_trailer, url_carrusel, id_demografia, id_pegi)
+        VALUES ($1, $2, $3, $4, (SELECT id_genero FROM genero WHERE nombre_genero = $5), $6, $7, $8, (SELECT id_demografia FROM demografia WHERE nombre_demografia = $9), (SELECT id_pegi FROM pegi WHERE edad = $10)) 
+        RETURNING *`,
+        [id_pelicula, titulo, sinopsis, anio, genero, url_cartel, url_trailer, url_carrusel, demografia, pegi]
     );
     res.status(201).json(rows[0]);
 });
