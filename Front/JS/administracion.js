@@ -39,7 +39,12 @@ function getPeliculas() {
         });
 }
 
-document.addEventListener('DOMContentLoaded', function () {
+
+// Función para agregar una película
+function agregarPelicula() {
+    console.log("Ejecutando agregarPelicula...");
+
+    // Obtener los elementos del formulario
     const tituloInput = document.getElementById("titulo");
     const sinopsisInput = document.getElementById("sinopsis");
     const anyoInput = document.getElementById("anio");
@@ -51,78 +56,50 @@ document.addEventListener('DOMContentLoaded', function () {
     const generoInput = document.getElementById("genero");
     const pegiInput = document.getElementById("pegi");
 
-    console.log("tituloInput:", tituloInput);
-    console.log("sinopsisInput:", sinopsisInput);
-    // El resto de los console.logs...
-});
-
-
-// Función para agregar una película
-function agregarPelicula() {
-    console.log("Ejecutando agregarPelicula...");
-
-    const tituloInput = document.getElementById("titulo");
-    const sinopsisInput = document.getElementById("sinopsis");
-    const anyoInput = document.getElementById("anyo");
-    const portadaInput = document.getElementById("url_portada");
-    const cartelInput = document.getElementById("url_cartel");
-    const trailerInput = document.getElementById("url_trailer");
-    const carruselInput = document.getElementById("url_carrusel");
-    const demografiaInput = document.getElementById("demografia");
-    const generoInput = document.getElementById("genero");
-    const pegiInput = document.getElementById("pegi");
-
-    // Validar que los elementos existen
+    // Validar que todos los elementos del formulario existen
     if (!tituloInput || !sinopsisInput || !anyoInput || !portadaInput || 
         !cartelInput || !trailerInput || !carruselInput || 
         !demografiaInput || !generoInput || !pegiInput) {
-        console.error("Error: No se encontraron algunos elementos en el DOM.");
-        alert("Error: No se encontraron algunos campos del formulario.");
+        console.error("Error: Algunos elementos del formulario no fueron encontrados.");
         return;
     }
 
-    console.log("Elementos encontrados en el DOM correctamente.");
-
-    // Continuar con la lógica si los elementos existen
+    // Obtener los valores de los campos del formulario
     const titulo = tituloInput.value.trim();
     const sinopsis = sinopsisInput.value.trim();
-    const anyo = parseInt(anyoInput.value);
-    const url_portada = portadaInput.value.trim();
-    const url_cartel = cartelInput.value.trim();
-    const url_trailer = trailerInput.value.trim();
-    const url_carrusel = carruselInput.value.trim();
-    const demografia = demografiaInput.value;
-    const genero = generoInput.value;
-    const pegi = parseInt(pegiInput.value);
+    const anyo = anyoInput.value.trim() ? parseInt(anyoInput.value.trim(), 10) : null;
+    const url_portada = portadaInput.value.trim() || null;
+    const url_cartel = cartelInput.value.trim() || null;
+    const url_trailer = trailerInput.value.trim() || null;
+    const url_carrusel = carruselInput.value.trim() || null;
+    const genero = parseInt(generoInput.value, 10);
+    const demografia = parseInt(demografiaInput.value, 10);
+    const pegi = parseInt(pegiInput.value, 10);
 
-    console.log("Datos del formulario:", {
-        titulo,
-        sinopsis,
-        anyo,
-        url_portada,
-        url_cartel,
-        url_trailer,
-        url_carrusel,
-        demografia,
-        genero,
-        pegi
-    });
-
-    // Validaciones
+    // Validar que los campos obligatorios estén completos
     if (!titulo || !sinopsis || isNaN(anyo) || !demografia || !genero || isNaN(pegi)) {
         console.log("Validación fallida: Algunos campos están vacíos o incorrectos.");
-        alert("Por favor, completa todos los campos obligatorios.");
         return;
     }
 
-    console.log("Validación pasada, preparando los datos para enviar.");
+    // Validación del campo 'anyo' para asegurarse que es un año válido
+    if (anyo < 1900 || anyo > new Date().getFullYear()) {
+        console.log("Validación fallida: El año ingresado no es válido.");
+        return;
+    }
 
-    // Crear objeto de película
+    if (!anyo) {
+        console.log("Validación fallida: El año no puede estar vacío.");
+        return;
+    }    
+
+    // Crear objeto de película con los valores obtenidos
     const nuevaPelicula = {
         titulo,
         sinopsis,
-        anio: anyo,
+        anyo: anyo,
         genero,
+        url_portada,
         url_cartel,
         url_trailer,
         url_carrusel,
@@ -130,31 +107,47 @@ function agregarPelicula() {
         pegi
     };
 
+    // Verificar los datos antes de enviarlos
     console.log("Objeto nuevaPelicula listo para enviar:", nuevaPelicula);
 
     // Enviar la película a la API
     fetch(API_URL + "/peliculas", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(nuevaPelicula)
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(nuevaPelicula) // Convertir el objeto a formato JSON
     })
     .then(response => {
-        console.log("Respuesta recibida del servidor:", response);
         if (!response.ok) {
-            throw new Error("Error al agregar la película.");
+            // Si la respuesta del servidor no es exitosa, lanzar error con mensaje
+            return response.text().then(errorMessage => {
+                throw new Error(`Error del servidor: ${errorMessage}`);
+            });
         }
-        return response.json();
+        return response.json(); // Convertir la respuesta a JSON
     })
     .then(data => {
         console.log("Película agregada con éxito:", data);
-        alert(`Película "${data.titulo}" añadida correctamente.`);
         cargarPeliculas(); // Recargar la lista de películas
+
+        // Limpiar los campos del formulario después de agregar exitosamente
+        tituloInput.value = "";
+        sinopsisInput.value = "";
+        anyoInput.value = "";
+        portadaInput.value = "";
+        cartelInput.value = "";
+        trailerInput.value = "";
+        carruselInput.value = "";
+        demografiaInput.value = "";
+        generoInput.value = "";
+        pegiInput.value = "";
     })
     .catch(error => {
         console.error("Error al agregar la película:", error);
-        alert("Hubo un error al agregar la película.");
     });
 }
+
 
 
 
@@ -182,9 +175,11 @@ function cargarSelects() {
             option.textContent = genero.nombre_genero;
             generoSelect.appendChild(option);
         });
+        console.log('Géneros cargados:', generos);
     });
 
     getDemografias().then(demografias => {
+        console.log('Respuesta de API para demografías:', demografias); // Verifica la estructura de los datos
         const demografiaSelect = document.getElementById('demografia');
         demografias.forEach(demografia => {
             const option = document.createElement('option');
@@ -192,7 +187,11 @@ function cargarSelects() {
             option.textContent = demografia.nombre_demografia;
             demografiaSelect.appendChild(option);
         });
+        console.log('Demografías cargadas:', demografias);
+    }).catch(error => {
+        console.error('Error al cargar las demografías:', error); // Asegúrate de capturar errores
     });
+    
 
     getPegi().then(pegis => {
         const pegiSelect = document.getElementById('pegi');
@@ -202,6 +201,7 @@ function cargarSelects() {
             option.textContent = pegi.edad;
             pegiSelect.appendChild(option);
         });
+        console.log('PEGI cargado:', pegis);
     });
 }
 

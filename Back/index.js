@@ -6,7 +6,7 @@ const cors = require("cors");
 const app = express();
 const port = 3000;
 let lastCacheTime = 0;
-const CACHE_DURATION = 600000; // 10 min
+const CACHE_DURATION = 60000; // 10 min
 
 app.use(cors());
 app.use(express.json());
@@ -244,15 +244,34 @@ app.get("/peliculas", async (req, res) => {
 
 // INSERTAR UNA NUEVA PELICULA EN LA BASE DE DATOS
 app.post("/peliculas", async (req, res) => {
-    const { titulo, sinopsis, anio, genero, url_cartel, url_trailer, url_carrusel, demografia, pegi } = req.body;
-    const { rows } = await pool.query(
-        `INSERT INTO pelicula (id_pelicula, titulo, sinopsis, anyo, id_genero, url_portada, url_trailer, url_carrusel, id_demografia, id_pegi)
-        VALUES ($1, $2, $3, $4, (SELECT id_genero FROM genero WHERE nombre_genero = $5), $6, $7, $8, (SELECT id_demografia FROM demografia WHERE nombre_demografia = $9), (SELECT id_pegi FROM pegi WHERE edad = $10)) 
-        RETURNING *`,
-        [id_pelicula, titulo, sinopsis, anio, genero, url_cartel, url_trailer, url_carrusel, demografia, pegi]
-    );
-    res.status(201).json(rows[0]);
+    const { titulo, sinopsis, anyo, genero, url_portada, url_cartel, url_trailer, url_carrusel, demografia, pegi } = req.body;
+
+    try {
+        const { rows } = await pool.query(
+            `INSERT INTO pelicula (titulo, sinopsis, anyo, id_genero, url_portada, url_cartel, url_trailer, url_carrusel, id_demografia, id_pegi)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+            RETURNING *`, // Devolvemos todos los datos de la nueva película
+            [titulo, sinopsis, anyo, genero, url_portada, url_cartel, url_trailer, url_carrusel, demografia, pegi]
+        );
+
+        const nuevaPelicula = rows[0];
+
+        // Actualizar el caché inmediatamente
+        if (peliculasCache) {
+            peliculasCache.push(nuevaPelicula);
+        } else {
+            peliculasCache = [nuevaPelicula];
+        }
+
+        lastCacheTime = Date.now(); // Refrescar el tiempo del caché
+
+        res.status(201).json(nuevaPelicula);
+    } catch (error) {
+        console.error("Error al insertar la película:", error);
+        res.status(500).json({ error: "Error al insertar la película", details: error.message });
+    }
 });
+
 
 
 
@@ -367,20 +386,9 @@ app.get("/genero", async (req, res) => {
 
 // DEVUELVE TODAS LAS DEMOGRAFIAS
 app.get("/demografia", async (req, res) => {
-    const now = Date.now();
-
-    if (peliculasCache && now - lastCacheTime < CACHE_DURATION) {
-        console.log("🔵 Datos obtenidos de memoria");
-        return res.json(demografiasCache);
-    }
-
     const {rows} = await pool.query(
         "SELECT * FROM DEMOGRAFIA;"
     );
-
-    demografiasCache = rows;
-    lastCacheTime = now;
-    console.log("🟢 Datos guardados en memoria");
     res.json(rows);
 });
 
