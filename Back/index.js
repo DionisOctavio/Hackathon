@@ -330,6 +330,9 @@ app.get("/peliculas/genero/:genero", async (req, res) => {
 
 // DEVUELVE TODAS LAS PELICULAS DE UNA DEMOGRAFIA CONCRETA
 app.get("/peliculas/demografia/:demografia", async (req, res) => {
+
+
+
     const { demografia } = req.params;
     const { rows } = await pool.query(
         `SELECT *
@@ -386,9 +389,20 @@ app.get("/genero", async (req, res) => {
 
 // DEVUELVE TODAS LAS DEMOGRAFIAS
 app.get("/demografia", async (req, res) => {
+
+    const now = Date.now();
+    if (demografiasCache && now - lastCacheTime < CACHE_DURATION) {
+        console.log("Peliculas obtenidas de memoria");
+        return res.json(demografiasCache);
+    }
+
     const {rows} = await pool.query(
         "SELECT * FROM DEMOGRAFIA;"
     );
+
+    demografiasCache = rows;
+    lastCacheTime = now;
+
     res.json(rows);
 });
 

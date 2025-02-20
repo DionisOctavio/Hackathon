@@ -7,6 +7,8 @@ const GET_PEGI = API_URL + "/pegi";
 const GET_PELICULAS = API_URL + "/peliculas";
 const DELETE_PELICULA = API_URL + "/peliculas";
 
+
+
 // Funciones para obtener datos de la API
 function getGeneros() {
     return fetch(GET_GENEROS)
@@ -40,11 +42,10 @@ function getPeliculas() {
 }
 
 
-// Función para agregar una película
+// FUNCION QUE RECOGE LOS DATOS DE BASE DE DATOS Y LOS GUARDA EN BASE DE DATOS
 function agregarPelicula() {
-    console.log("Ejecutando agregarPelicula...");
 
-    // Obtener los elementos del formulario
+    // Obtenemos los ID del HTML y les creamos variable
     const tituloInput = document.getElementById("titulo");
     const sinopsisInput = document.getElementById("sinopsis");
     const anyoInput = document.getElementById("anio");
@@ -56,11 +57,10 @@ function agregarPelicula() {
     const generoInput = document.getElementById("genero");
     const pegiInput = document.getElementById("pegi");
 
-    // Validar que todos los elementos del formulario existen
+    // Comprobamos que existen
     if (!tituloInput || !sinopsisInput || !anyoInput || !portadaInput || 
         !cartelInput || !trailerInput || !carruselInput || 
         !demografiaInput || !generoInput || !pegiInput) {
-        console.error("Error: Algunos elementos del formulario no fueron encontrados.");
         return;
     }
 
@@ -76,24 +76,14 @@ function agregarPelicula() {
     const demografia = parseInt(demografiaInput.value, 10);
     const pegi = parseInt(pegiInput.value, 10);
 
-    // Validar que los campos obligatorios estén completos
     if (!titulo || !sinopsis || isNaN(anyo) || !demografia || !genero || isNaN(pegi)) {
-        console.log("Validación fallida: Algunos campos están vacíos o incorrectos.");
         return;
     }
 
-    // Validación del campo 'anyo' para asegurarse que es un año válido
     if (anyo < 1900 || anyo > new Date().getFullYear()) {
-        console.log("Validación fallida: El año ingresado no es válido.");
         return;
     }
 
-    if (!anyo) {
-        console.log("Validación fallida: El año no puede estar vacío.");
-        return;
-    }    
-
-    // Crear objeto de película con los valores obtenidos
     const nuevaPelicula = {
         titulo,
         sinopsis,
@@ -107,31 +97,25 @@ function agregarPelicula() {
         pegi
     };
 
-    // Verificar los datos antes de enviarlos
-    console.log("Objeto nuevaPelicula listo para enviar:", nuevaPelicula);
-
     // Enviar la película a la API
     fetch(API_URL + "/peliculas", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify(nuevaPelicula) // Convertir el objeto a formato JSON
+        body: JSON.stringify(nuevaPelicula) 
     })
     .then(response => {
         if (!response.ok) {
-            // Si la respuesta del servidor no es exitosa, lanzar error con mensaje
             return response.text().then(errorMessage => {
                 throw new Error(`Error del servidor: ${errorMessage}`);
             });
         }
-        return response.json(); // Convertir la respuesta a JSON
+        return response.json(); 
     })
     .then(data => {
-        console.log("Película agregada con éxito:", data);
-        cargarPeliculas(); // Recargar la lista de películas
+        cargarPeliculas(); 
 
-        // Limpiar los campos del formulario después de agregar exitosamente
         tituloInput.value = "";
         sinopsisInput.value = "";
         anyoInput.value = "";
@@ -153,17 +137,44 @@ function agregarPelicula() {
 
 
 // Función para eliminar una película
-function eliminarPelicula(id) {
-    return fetch(DELETE_PELICULA + '/' + id, {
-        method: 'DELETE',
+function eliminarPelicula() {
+    const selectElement = document.getElementById("peliculas-eliminar-select");
+    const peliculaId = selectElement.value; // Obtener el ID de la película seleccionada
+
+    if (!peliculaId) {
+        alert("Por favor, selecciona una película para eliminar.");
+        return;
+    }
+
+    const confirmacion = confirm("¿Estás seguro de que deseas eliminar esta película?");
+    if (!confirmacion) return;
+
+    fetch(`${DELETE_PELICULA}/${peliculaId}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json"
+        }
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            return response.text().then(errorMessage => {
+                throw new Error(`Error del servidor: ${errorMessage}`);
+            });
+        }
+        return response.json();
+    })
     .then(data => {
-        alert(`Película eliminada: ${data.titulo}`);
-        cargarPeliculas(); // Recargar la lista de películas después de eliminar
+        alert("Película eliminada correctamente.");
+        cargarPeliculas(); // Recargar la lista de películas disponibles
+        cargarPeliculasEliminar(); // Recargar el select de eliminación
     })
-    .catch(error => console.error('Error al eliminar la película:', error));
+    .catch(error => {
+        console.error("Error al eliminar la película:", error);
+        alert("No se pudo eliminar la película. Inténtalo de nuevo.");
+    });
 }
+
+
 
 // Cargar las opciones del select al cargar la página
 function cargarSelects() {
@@ -206,33 +217,23 @@ function cargarSelects() {
 }
 
 // Función para cargar las películas en el select de eliminación
-function cargarSelectEliminarPeliculas() {
+// Función para cargar las películas en el <select> de eliminación
+function cargarPeliculasEliminar() {
     getPeliculas().then(peliculas => {
-        const selectEliminar = document.getElementById('peliculas-eliminar-select'); // Asegúrate de que este sea el id correcto
-        selectEliminar.innerHTML = ''; // Limpiar el select antes de llenarlo
-        
-        // Crear una opción predeterminada
-        const defaultOption = document.createElement('option');
-        defaultOption.value = '';
-        defaultOption.textContent = 'Selecciona una película para eliminar';
-        selectEliminar.appendChild(defaultOption);
+        const selectEliminar = document.getElementById("peliculas-eliminar-select");
+        selectEliminar.innerHTML = '<option value="">Seleccionar película</option>'; // Resetear opciones
 
-        if (peliculas.length === 0) {
-            console.log('No hay películas para eliminar');
-            return;
-        }
-
-        // Recorrer el array de películas y agregar cada una como opción
         peliculas.forEach(pelicula => {
-            const option = document.createElement('option');
-            option.value = pelicula.id_pelicula;
-            option.textContent = pelicula.titulo;
+            const option = document.createElement("option");
+            option.value = pelicula.id; // ID de la película
+            option.textContent = pelicula.titulo; // Nombre de la película
             selectEliminar.appendChild(option);
         });
-    }).catch(error => {
-        console.error('Error al cargar las películas:', error);
     });
 }
+
+// Llamar a esta función al cargar la página
+document.addEventListener("DOMContentLoaded", cargarPeliculasEliminar);
 
 
 // Cargar las películas disponibles en el select de actualización
