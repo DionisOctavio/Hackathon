@@ -147,7 +147,7 @@ function pintarPeliculasPorGenero(peliculas) {
 
             peliculaDiv.innerHTML = `
                 <div class="peliculas_targeta">
-                    <img src="${pelicula.url_cartel}" alt="${pelicula.titulo}" class="cartel">
+                    <img src="${pelicula.url_portada}" alt="${pelicula.titulo}" class="cartel">
                     <p>${pelicula.titulo}</p>
                 </div>
             `;
@@ -215,7 +215,7 @@ function pintarFavoritos(idPerfil) {
 
                 peliculaDiv.innerHTML = `
                     <div class="peliculas_targeta">
-                        <img src="${pelicula.url_cartel}" alt="${pelicula.titulo}" class="cartel">
+                        <img src="${pelicula.url_portada}" alt="${pelicula.titulo}" class="cartel">
                         <p>${pelicula.titulo}</p>
                     </div>
                 `;
@@ -292,8 +292,7 @@ function pintarRecomendados(idPerfil) {
 
                 peliculaDiv.innerHTML = `
                     <div class="peliculas_targeta">
-                        <img src="${pelicula.url_cartel}" alt="${pelicula.titulo}" class="cartel">
-                        <p>${pelicula.titulo}</p>
+                        <img src="${pelicula.url_portada}" alt="${pelicula.titulo}" class="cartel">
                     </div>
                 `;
 
