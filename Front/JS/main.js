@@ -242,14 +242,28 @@ function pintarRecomendados(idPerfil) {
         .then(data => {
             if (!data || data.length === 0) return;
 
-            const recomendaciones = peliculas.filter(pelicula => {
-                return !data.some(fav => fav.id_pelicula === pelicula.id_pelicula);
+            // Paso 1: Encontrar la demografía más popular en los favoritos
+            const demografiasFavoritos = data.map(fav => fav.nombre_demografia);
+            const demografiaCounts = {};
+
+            demografiasFavoritos.forEach(demografia => {
+                demografiaCounts[demografia] = (demografiaCounts[demografia] || 0) + 1;
             });
 
-            const recomendacionesLimitadas = recomendaciones.slice(0, 15);
+            // Paso 2: Identificar la demografía más popular
+            const demografiaMasPopular = Object.keys(demografiaCounts).reduce((a, b) => demografiaCounts[a] > demografiaCounts[b] ? a : b);
+
+            // Paso 3: Filtrar las películas recomendadas según la demografía más popular
+            const recomendaciones = peliculas.filter(pelicula => {
+                // Verificamos que la película no esté en los favoritos y que coincida con la demografía más popular
+                return !data.some(fav => fav.id_pelicula === pelicula.id_pelicula) && pelicula.nombre_demografia === demografiaMasPopular;
+            });
+
+            const recomendacionesLimitadas = recomendaciones.slice(0, 15); // Limitamos a 15 recomendaciones
 
             if (recomendacionesLimitadas.length === 0) return;
 
+            // Paso 4: Mostrar las recomendaciones en el DOM
             const espacioRecomendados = document.getElementById("cont-recomendados");
             if (!espacioRecomendados) return;
 
@@ -258,7 +272,7 @@ function pintarRecomendados(idPerfil) {
             recomendadosContainer.classList.add('genero-container');
 
             const h5 = document.createElement('h5');
-            h5.innerText = 'Nuestras Recomendaciones';
+            h5.innerText = `Nuestras Recomendaciones: ${demografiaMasPopular}`;
             recomendadosContainer.appendChild(h5);
 
             const carousel = document.createElement('div');
@@ -268,7 +282,7 @@ function pintarRecomendados(idPerfil) {
             prevButton.classList.add('carousel-button', 'prev');
             prevButton.innerHTML = '&#10094;';
             prevButton.onclick = () => moveCarousel('recomendados', -1);
-            prevButton.style.display = 'none'; 
+            prevButton.style.display = 'none';
 
             const track = document.createElement('div');
             track.id = 'recomendados-track';
@@ -278,21 +292,23 @@ function pintarRecomendados(idPerfil) {
             nextButton.classList.add('carousel-button', 'next');
             nextButton.innerHTML = '&#10095;';
             nextButton.onclick = () => moveCarousel('recomendados', 1);
-            nextButton.style.display = 'none';  
+            nextButton.style.display = 'none';
 
             carousel.appendChild(prevButton);
             carousel.appendChild(track);
             carousel.appendChild(nextButton);
             recomendadosContainer.appendChild(carousel);
 
-            recomendacionesLimitadas.forEach(pelicula => {
+            // Crear los elementos de las recomendaciones con el índice
+            recomendacionesLimitadas.forEach((pelicula, index) => {
                 const peliculaDiv = document.createElement('div');
                 peliculaDiv.classList.add('pelicula-recomendada');
                 peliculaDiv.setAttribute("data-id", pelicula.id_pelicula);
 
                 peliculaDiv.innerHTML = `
                     <div class="peliculas_targeta">
-                        <img src="${pelicula.url_portada}" alt="${pelicula.titulo}" class="cartel">
+                        <img src="${pelicula.url_cartel}" alt="${pelicula.titulo}" class="cartel">
+                        <p>${index + 1}</p> <!-- El número se incrementa con cada película -->
                     </div>
                 `;
 
@@ -310,3 +326,4 @@ function pintarRecomendados(idPerfil) {
         })
         .catch(error => console.error("Error al obtener favoritos:", error));
 }
+

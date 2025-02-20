@@ -1,3 +1,5 @@
+console.log(localStorage);
+
 document.addEventListener("DOMContentLoaded", function () {
     const params = new URLSearchParams(window.location.search);
     const idPelicula = params.get("id_pelicula");
@@ -76,6 +78,7 @@ favoritoBtn.classList.remove("favorito-activo");
 
     // Función para obtener el estado de favorito y pendiente
     function getEstadoFavorito(idPerfil, idPelicula) {
+        console.log(idPerfil, idPelicula);
         fetch(`http://localhost:3000/visto?id_perfil=${idPerfil}&id_pelicula=${idPelicula}`)
             .then(response => response.json())
             .then(data => {
@@ -108,20 +111,19 @@ favoritoBtn.classList.remove("favorito-activo");
             favorito: favorito,
             estado: estado
         };
-
-        console.log("Actualizando estado favorito en la base de datos:", dataToUpdate);
-
+    
+        console.log("Enviando datos al backend:", dataToUpdate);
+    
         fetch("http://localhost:3000/visto/actualizar", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+                "Content-Type": "application/json"
+            },
             body: JSON.stringify(dataToUpdate)
         })
         .then(response => response.json())
-        .then(data => {
-            console.log("Estado actualizado correctamente:", data);
-        })
-        .catch(error => {
-            console.error("Error al actualizar estado:", error);
-        });
+        .then(data => console.log("Respuesta del backend:", data))
+        .catch(error => console.error("Error actualizando el estado:", error));
     }
+    
 });

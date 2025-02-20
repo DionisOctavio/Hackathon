@@ -441,6 +441,9 @@ app.get("/visto", async (req, res) => {
 // INSERTAR UNA NUEVO ESTADO PARA UNA PELICULA
 app.post("/visto/actualizar", async (req, res) => {
     const { id_perfil, id_pelicula, favorito, estado } = req.body;
+
+    console.log(id_perfil, id_pelicula, favorito, estado);
+
     if (id_perfil === undefined || id_pelicula === undefined || favorito === undefined || estado === undefined) {
         return res.status(400).json({ error: 'Faltan parámetros en la solicitud.' });
     }
