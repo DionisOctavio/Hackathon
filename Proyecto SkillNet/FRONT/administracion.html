@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>SKILLNET</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='CSS/administracion.css'>
+    <script src='JS/administracion.js' defer></script>
+</head>
+<body>
+    <header>
+        <button id="menu-toggle" class="hamburger-menu">☰</button>
+        <img src="IMG/SkillNet.png" id="logo">
+        <nav>
+            <button href="" id="empresa">EMPRESAS</button>
+            <button href="" id="curso">CURSOS</button>
+            <input type="text" id="buscador" placeholder="Buscar...">
+            <button href="" class="nav-icon" id="empresa-icon"><img src="IMG/img-iconos/img-iconos-peliculas.png"></button>
+            <button href="" class="nav-icon" id="curso-icon"><img src="IMG/img-iconos/img-iconos-lupa.png"></button>
+        </nav>
+        <div class="profile-icon" id="profile-button">
+            <img id="profile-img" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" alt="Imagen de perfil">
+            <div id="profile-name-container">
+                <span id="profile-name">Invitado</span>
+            </div>
+            <!-- Menú de perfil tipo nav -->
+            <nav id="profile-menu" class="profile-menu">
+                <a href="cuenta.html" id="account-button" onclick="verCuenta()">Mi cuenta</a>
+                <a href="perfiles.html" id="perfil-button">Mis Cursos</a>
+                <a href="login.html" id="login-button" onclick="login()">Iniciar sesión</a>
+                <a href="administracion.html" id="panel-peliculas-button" onclick="irAlPanelPeliculas()" style="display: none;">Administracion</a>
+                <a href="#" id="logout-button" onclick="logout()">Cerrar sesión</a>
+            </nav>
+        </div>
+        <div id="mobile-menu" class="mobile-menu">
+            <button class="close-menu" onclick="toggleMenu()">×</button>
+            <a href="" id="generos">CURSOS</a>
+            <a href="" id="generos">CURSOS</a>
+            <input type="text" id="buscador-hm" placeholder="Buscar...">
+        </div>
+        <script src="JS/ACCIONES/encabezado.js"></script>
+    </header>
+
+    <main>
+
+        
+    <h2>Panel de Administración de Cursos</h2>
+    <div class="form-container">
+        <label for="empresa">Empresa</label>
+        <input type="text" id="empresa" name="empresa" placeholder="Nombre de la empresa" required>
+        
+        <label for="dificultad">Dificultad</label>
+        <select id="dificultad" name="dificultad" required>
+            <option value="">Seleccionar dificultad</option>
+            <option value="Baja">Baja</option>
+            <option value="Media">Media</option>
+            <option value="Alta">Alta</option>
+        </select>
+
+        <label for="genero">Género</label>
+        <select id="genero" name="genero" required>
+            <option value="">Seleccionar género</option>
+            <option value="Tecnología">Tecnología</option>
+            <option value="Negocios">Negocios</option>
+            <option value="Arte">Arte</option>
+        </select>
+
+        <label for="titulo">Título del Curso</label>
+        <input type="text" id="titulo" name="titulo" placeholder="Título del curso" required>
+
+        <label for="url">Imagen URL del Curso</label>
+        <input type="url" id="url" name="url" placeholder="Imagen URL del Curso" required>
+    </div>
+
+    <div class="video-inputs">
+        <h3>Agregar Videos</h3>
+        <div class="video-input">
+            <label for="video-url-1">URL del Video</label>
+            <input type="url" id="video-url-1" name="video-url-1" placeholder="URL del video">
+        </div>
+        <button type="button" class="add-video-btn" onclick="addVideoInput()">Añadir otro video</button>
+    </div>
+
+    <div class="video-list" id="video-list">
+        <!-- Aquí se mostrarán los videos añadidos -->
+    </div>
+
+    <button type="submit" class="add-course-btn">Añadir Curso</button>
+
+
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-logo">
+                <img src="IMG/SkillNet.png" alt="Logo">
+            </div>
+            <div class="footer-links">
+                <a href="#">Cuenta</a>
+                <a href="#">Política de Cookies</a>
+                <a href="#">Términos y Condiciones</a>
+                <a href="#">Aviso Legal</a>
+                <a href="#">Contacto</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2024 Tenkai, Lab. Todos los derechos reservados.
+        </div>
+    </footer>
+</body>
+</html>

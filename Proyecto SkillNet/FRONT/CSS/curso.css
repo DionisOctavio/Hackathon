@@ -1,0 +1,504 @@
+/* STYLOS HTML ====================================================================*/
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+    color: white;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+
+/* HEADER ==================================================================== */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    position: relative;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Sombra suave debajo */
+}
+
+header #menu-toggle {
+    color: rgb(0, 0, 0); 
+    border: none; 
+    padding: 10px 15px; 
+    font-size: 20px; 
+    cursor: pointer;
+}
+
+
+/* Logo */
+header img {
+    width: 130px;
+    height: 63px;
+    cursor: pointer;
+}
+
+/* Menú de navegación */
+header nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+header nav input {
+    width: 300px;
+    padding: 10px 15px;
+    border: 2px solid rgba(0, 0, 0, 0.3);
+    border-radius: 25px;
+    font-size: 16px;
+    outline: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    transition: all 0.3s ease-in-out;
+    box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.2);
+}
+
+header nav input::placeholder {
+    color: rgb(0, 0, 0);
+}
+
+header nav input:focus {
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.4);
+    border-color: rgba(255, 255, 255, 0.6);
+    border: 2px solid rgba(98, 255, 51, 0.6);
+    transform: scale(1.05);
+}
+
+
+header nav .nav-icon {
+    display: none;
+}
+
+header nav button {
+    display: inline-block;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    font-size: 18px;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+header nav button::after {
+    content: '';
+    width: 0%;
+    height: 3px;
+    background: #8cf74a;
+    display: block;
+    transition: 0.5s;
+}
+
+header nav button:hover::after {
+    width: 100%;
+}
+
+/* Perfil */
+header .profile-icon {
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    gap: 5px;
+    position: relative;
+    padding: 5px;
+    padding-left: 20px;
+    cursor: pointer;
+}
+
+header .profile-icon img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+header .profile-icon:hover img {
+    transform: scale(1.1);
+}
+
+header #profile-name {
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center; 
+}
+
+
+/* Menú desplegable del perfil */
+header #profile-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #23252b;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    z-index: 100;
+    padding: 20px;
+    width: 200px;
+    transform: translateY(10px);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+header .profile-icon:hover #profile-menu {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+header #profile-menu a {
+    display: block;
+    padding: 12px 20px;
+    text-decoration: none;
+    color: #efefef;
+    margin-bottom: 8px;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+header #profile-menu a:hover {
+    background-color: #007bffc0;
+    color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* ======== MENÚ RESPONSIVO ======== */
+header .hamburger-menu {
+    display: none;
+    font-size: 30px;
+    color: white;
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+header .mobile-menu {
+    z-index: 20;
+    position: fixed;
+    top: 0;
+    left: -250px;
+    width: 250px;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+    transition: left 0.3s ease;
+}
+
+header .mobile-menu.open {
+    left: 0;
+}
+
+header .mobile-menu a {
+    color: white;
+    text-decoration: none;
+    padding: 15px;
+    display: block;
+}
+
+header .close-menu {
+    align-self: flex-end;
+    font-size: 30px;
+    background: none;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+
+/* ======== RESPONSIVE ======== */
+
+@media (max-width: 1000px) and (min-width: 575px) {
+    header nav button {
+        display: none;
+    }
+
+    header nav input {
+        display: none;
+    }
+
+    header nav .nav-icon {
+        display: inline-block;
+        width: 40px; 
+        height: 40px;
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+
+    header nav .nav-icon img {
+        width: 24px; 
+        height: 24px;
+        filter: invert(1); 
+    }
+}
+
+
+@media (max-width: 575px) {
+    header nav {
+        display: none;
+    }
+    header .hamburger-menu {
+        display: block;
+    }
+}
+
+
+/* MAIN ==================================================================== */
+main {
+    flex: 1;
+    padding-top: 20px;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+@media (max-width: 575px){
+    main {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+}
+
+
+/* CUERPO ==================================================================== */
+
+/* Contenedor principal para el curso */
+#contenedor-curso {
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 1200px;
+}
+
+/* Estilo para los encabezados */
+#contenedor-curso h2 {
+    font-size: 2.5em;
+    margin-bottom: 15px;
+    color: #333;
+    font-weight: bold;
+}
+
+#contenedor-curso h3 {
+    font-size: 1.75em;
+    margin-top: 25px;
+    margin-bottom: 15px;
+    color: #444;
+    font-weight: 500;
+}
+
+/* Estilo para los párrafos */
+#contenedor-curso p {
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+/* Estilo para el enlace del curso */
+#contenedor-curso a {
+    color: #007BFF;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+#contenedor-curso a:hover {
+    text-decoration: underline;
+}
+
+/* Lista de videos */
+#contenedor-curso ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#contenedor-curso li {
+    margin-bottom: 15px;
+    font-size: 1.1em;
+    color: #333;
+    line-height: 1.5;
+}
+
+#contenedor-curso li a {
+    color: #007BFF;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+#contenedor-curso li a:hover {
+    text-decoration: underline;
+}
+
+/* Sección de Películas Recomendadas */
+#contenedor-curso .peliculas {
+    margin-top: 30px;
+}
+
+#contenedor-curso .peliculas div {
+    display: inline-block;
+    margin: 15px;
+    text-align: center;
+    max-width: 160px;
+}
+
+#contenedor-curso .peliculas img {
+    width: 150px;
+    height: 200px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    object-fit: cover;
+}
+
+#contenedor-curso .peliculas p {
+    font-size: 1em;
+    margin-top: 10px;
+    color: #444;
+}
+
+/* Mensaje de error o vacío */
+#contenedor-curso p.error {
+    font-size: 1.2em;
+    color: #FF0000;
+    text-align: center;
+    margin-top: 20px;
+}
+
+#contenedor-videos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    margin-top: 20px;
+}
+
+#contenedor-videos div {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#contenedor-videos div:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+#contenedor-videos iframe {
+    width: 100%;
+    height: 180px;
+    border: none;
+}
+
+#contenedor-videos p {
+    font-size: 1.1em;
+    margin: 10px;
+    color: #333;
+    font-weight: 600;
+    text-align: center;
+}
+
+#contenedor-videos h3 {
+    font-size: 1.8em;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+
+
+
+
+
+
+
+
+
+/* FOOTER ==================================================================== */
+footer {
+    margin-top: auto;
+    background: #ffffff;
+    color: #000000;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.2); /* Sombra suave en la parte superior */
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding-right: 6vw;
+    padding-left: 6vw;
+}
+
+.footer-logo img {
+    width: 120px; 
+}
+
+.footer-links {
+    display: flex;
+    gap: 15px;
+}
+
+.footer-links a {
+    color: #000000;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: #94fa45; 
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 13px;
+    border-top: 1px solid #c4c4c4;
+    padding-top: 10px;
+}
+
+@media (max-width: 600px) {
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+
+    .footer-logo img {
+        width: 100px;
+        margin-bottom: 10px;
+    }
+
+    .footer-links {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .footer-links a {
+        font-size: 16px;
+    }
+}

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>SKILLNET</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='CSS/main.css'>
+    <script src='JS/main.js' defer></script>
+</head>
+<body>
+    <header>
+        <button id="menu-toggle" class="hamburger-menu">☰</button>
+        <img src="IMG/SkillNet.png" id="logo">
+        <nav>
+            <button href="" id="empresa">EMPRESAS</button>
+            <button href="" id="curso">CURSOS</button>
+            <input type="text" id="buscador" placeholder="Buscar...">
+            <button href="" class="nav-icon" id="empresa-icon"><img src="IMG/img-iconos/img-iconos-peliculas.png"></button>
+            <button href="" class="nav-icon" id="curso-icon"><img src="IMG/img-iconos/img-iconos-lupa.png"></button>
+        </nav>
+        <div class="profile-icon" id="profile-button">
+            <img id="profile-img" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" alt="Imagen de perfil">
+            <div id="profile-name-container">
+                <span id="profile-name">Invitado</span>
+            </div>
+            <!-- Menú de perfil tipo nav -->
+            <nav id="profile-menu" class="profile-menu">
+                <a href="cuenta.html" id="account-button" onclick="verCuenta()">Mi cuenta</a>
+                <a href="perfiles.html" id="perfil-button">Mis Cursos</a>
+                <a href="login.html" id="login-button" onclick="login()">Iniciar sesión</a>
+                <a href="administracion.html" id="panel-peliculas-button" onclick="irAlPanelPeliculas()" style="display: none;">Administracion</a>
+                <a href="#" id="logout-button" onclick="logout()">Cerrar sesión</a>
+            </nav>
+        </div>
+        <div id="mobile-menu" class="mobile-menu">
+            <button class="close-menu" onclick="toggleMenu()">×</button>
+            <a href="" id="generos">CURSOS</a>
+            <a href="" id="generos">CURSOS</a>
+            <input type="text" id="buscador-hm" placeholder="Buscar...">
+        </div>
+        <script src="JS/ACCIONES/encabezado.js"></script>
+    </header>
+
+    <main>
+
+        <div class="carousel" id="carousel">
+            <div class="carousel-track">
+                <div class="carousel-item">
+                    <img src="IMG/aws-cours.png">
+                </div>
+            </div>
+            <div class="carousel-controls">
+                <button class="carousel-button prev">&#10094;</button>
+                <button class="carousel-button next">&#10095;</button>
+            </div>
+        </div>
+
+
+        <div id="cont-cursos">
+
+        </div>
+
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-logo">
+                <img src="IMG/SkillNet.png" alt="Logo">
+            </div>
+            <div class="footer-links">
+                <a href="#">Cuenta</a>
+                <a href="#">Política de Cookies</a>
+                <a href="#">Términos y Condiciones</a>
+                <a href="#">Aviso Legal</a>
+                <a href="#">Contacto</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2024 Tenkai, Lab. Todos los derechos reservados.
+        </div>
+    </footer>
+</body>
+</html>

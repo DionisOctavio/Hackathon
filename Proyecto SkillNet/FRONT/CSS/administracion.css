@@ -1,0 +1,500 @@
+/* STYLOS HTML ====================================================================*/
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+    color: white;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+
+/* HEADER ==================================================================== */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    position: relative;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Sombra suave debajo */
+}
+
+header #menu-toggle {
+    color: rgb(0, 0, 0); 
+    border: none; 
+    padding: 10px 15px; 
+    font-size: 20px; 
+    cursor: pointer;
+}
+
+
+/* Logo */
+header img {
+    width: 130px;
+    height: 63px;
+    cursor: pointer;
+}
+
+/* Menú de navegación */
+header nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+header nav input {
+    width: 300px;
+    padding: 10px 15px;
+    border: 2px solid rgba(0, 0, 0, 0.3);
+    border-radius: 25px;
+    font-size: 16px;
+    outline: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    transition: all 0.3s ease-in-out;
+    box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.2);
+}
+
+header nav input::placeholder {
+    color: rgb(0, 0, 0);
+}
+
+header nav input:focus {
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.4);
+    border-color: rgba(255, 255, 255, 0.6);
+    border: 2px solid rgba(98, 255, 51, 0.6);
+    transform: scale(1.05);
+}
+
+
+header nav .nav-icon {
+    display: none;
+}
+
+header nav button {
+    display: inline-block;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    font-size: 18px;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+header nav button::after {
+    content: '';
+    width: 0%;
+    height: 3px;
+    background: #8cf74a;
+    display: block;
+    transition: 0.5s;
+}
+
+header nav button:hover::after {
+    width: 100%;
+}
+
+/* Perfil */
+header .profile-icon {
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    gap: 5px;
+    position: relative;
+    padding: 5px;
+    padding-left: 20px;
+    cursor: pointer;
+}
+
+header .profile-icon img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+header .profile-icon:hover img {
+    transform: scale(1.1);
+}
+
+header #profile-name {
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center; 
+}
+
+
+/* Menú desplegable del perfil */
+header #profile-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #23252b;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    z-index: 100;
+    padding: 20px;
+    width: 200px;
+    transform: translateY(10px);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+header .profile-icon:hover #profile-menu {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+header #profile-menu a {
+    display: block;
+    padding: 12px 20px;
+    text-decoration: none;
+    color: #efefef;
+    margin-bottom: 8px;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+header #profile-menu a:hover {
+    background-color: #007bffc0;
+    color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* ======== MENÚ RESPONSIVO ======== */
+header .hamburger-menu {
+    display: none;
+    font-size: 30px;
+    color: white;
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+header .mobile-menu {
+    z-index: 20;
+    position: fixed;
+    top: 0;
+    left: -250px;
+    width: 250px;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+    transition: left 0.3s ease;
+}
+
+header .mobile-menu.open {
+    left: 0;
+}
+
+header .mobile-menu a {
+    color: white;
+    text-decoration: none;
+    padding: 15px;
+    display: block;
+}
+
+header .close-menu {
+    align-self: flex-end;
+    font-size: 30px;
+    background: none;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+
+/* ======== RESPONSIVE ======== */
+
+@media (max-width: 1000px) and (min-width: 575px) {
+    header nav button {
+        display: none;
+    }
+
+    header nav input {
+        display: none;
+    }
+
+    header nav .nav-icon {
+        display: inline-block;
+        width: 40px; 
+        height: 40px;
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+
+    header nav .nav-icon img {
+        width: 24px; 
+        height: 24px;
+        filter: invert(1); 
+    }
+}
+
+
+@media (max-width: 575px) {
+    header nav {
+        display: none;
+    }
+    header .hamburger-menu {
+        display: block;
+    }
+}
+
+
+/* MAIN ==================================================================== */
+main {
+    flex: 1;
+    padding: 20px;
+    margin-left: 40px;
+    margin-right: 40px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 575px){
+    main {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+}
+
+
+/* CUERPO ==================================================================== */
+
+
+h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Estilos para el contenedor de formulario */
+.form-container {
+    margin-bottom: 30px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #444;
+}
+
+input[type="text"],
+input[type="url"],
+select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type="text"]:focus,
+input[type="url"]:focus,
+select:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+/* Estilos para la sección de videos */
+.video-inputs {
+    margin-top: 30px;
+}
+
+.video-inputs h3 {
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #444;
+}
+
+.video-input {
+    margin-bottom: 20px;
+}
+
+.video-input input {
+    width: 90%;
+    margin-right: 10px;
+}
+
+.add-video-btn {
+    padding: 10px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 4px;
+}
+
+.add-video-btn:hover {
+    background-color: #45a049;
+}
+
+/* Estilos para la lista de videos añadidos */
+.video-list {
+    margin-top: 20px;
+}
+
+.video-list div {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #555;
+}
+
+/* Estilos para el botón de añadir curso */
+.add-course-btn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    font-size: 16px;
+    border-radius: 4px;
+    margin-top: 30px;
+    cursor: pointer;
+}
+
+.add-course-btn:hover {
+    background-color: #005f73;
+}
+
+/* Estilos responsivos para pantallas pequeñas */
+@media (max-width: 768px) {
+    main {
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+
+    .form-container,
+    .video-inputs {
+        padding: 0;
+    }
+
+    .video-input input {
+        width: 80%;
+    }
+
+    .add-video-btn {
+        width: 100%;
+    }
+
+    .add-course-btn {
+        padding: 15px;
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 575px) {
+    main {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .form-container input,
+    .form-container select {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    .add-video-btn,
+    .add-course-btn {
+        padding: 10px;
+        font-size: 14px;
+    }
+}
+
+
+
+/* FOOTER ==================================================================== */
+footer {
+    margin-top: auto;
+    background: #ffffff;
+    color: #000000;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.2); /* Sombra suave en la parte superior */
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding-right: 6vw;
+    padding-left: 6vw;
+}
+
+.footer-logo img {
+    width: 120px; 
+}
+
+.footer-links {
+    display: flex;
+    gap: 15px;
+}
+
+.footer-links a {
+    color: #000000;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: #94fa45; 
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 13px;
+    border-top: 1px solid #c4c4c4;
+    padding-top: 10px;
+}
+
+@media (max-width: 600px) {
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+
+    .footer-logo img {
+        width: 100px;
+        margin-bottom: 10px;
+    }
+
+    .footer-links {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .footer-links a {
+        font-size: 16px;
+    }
+}
+
+
