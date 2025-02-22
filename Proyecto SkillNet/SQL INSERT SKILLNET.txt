@@ -1,0 +1,11 @@
+INSERT INTO CUENTA (email, contrasenia, nombre_cuenta, apellido_cuenta, imagen_cuenta)  
+VALUES ('octavio@gmail.com', '1234', 'Octavio', 'Alvarez', 'https://somosita.org/wp-content/uploads/ProgramacionEnCodigoYAplicacionParaWebEnNivelSecundario-cuadrada.jpg');
+
+INSERT INTO CUENTA (email, contrasenia, nombre_cuenta, apellido_cuenta, imagen_cuenta)  
+VALUES ('yeray@gmail.com', '1234', 'Yeray', 'Espinosa', 'https://previews.123rf.com/images/helenfield/helenfield2012/helenfield201200396/160461643-retrato-de-chimpanc%C3%A9-vectorial-gorra-acad%C3%A9mica-cuadrada-gorra-de-posgrado-gorra-birrete-cabeza.jpg');
+
+INSERT INTO CUENTA (email, contrasenia, nombre_cuenta, apellido_cuenta, imagen_cuenta)  
+VALUES ('andrew@gmail.com', '1234', 'Andrew', 'Jimenez', 'https://previews.123rf.com/images/helenfield/helenfield2012/helenfield201200396/160461643-retrato-de-chimpanc%C3%A9-vectorial-gorra-acad%C3%A9mica-cuadrada-gorra-de-posgrado-gorra-birrete-cabeza.jpg');
+
+
+
