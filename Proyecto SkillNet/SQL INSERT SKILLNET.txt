@@ -1,3 +1,5 @@
+************************[ CUENTA ]*************************
+
 INSERT INTO CUENTA (email, contrasenia, nombre_cuenta, apellido_cuenta, imagen_cuenta)  
 VALUES ('octavio@gmail.com', '1234', 'Octavio', 'Alvarez', 'https://somosita.org/wp-content/uploads/ProgramacionEnCodigoYAplicacionParaWebEnNivelSecundario-cuadrada.jpg');
 
@@ -9,3 +11,295 @@ VALUES ('andrew@gmail.com', '1234', 'Andrew', 'Jimenez', 'https://previews.123rf
 
 
 
+************************[ EMPRESA ]*************************
+
+
+INSERT INTO EMPRESA (nombre_empresa) VALUES ('Amazon Web Services');
+INSERT INTO EMPRESA (nombre_empresa) VALUES ('Google Cloud');
+INSERT INTO EMPRESA (nombre_empresa) VALUES ('Microsoft Azure');
+INSERT INTO EMPRESA (nombre_empresa) VALUES ('IBM Cloud');
+INSERT INTO EMPRESA (nombre_empresa) VALUES ('Udemy');
+INSERT INTO EMPRESA (nombre_empresa) VALUES ('Coursera');
+INSERT INTO EMPRESA (nombre_empresa) VALUES ('Pluralsight');
+INSERT INTO EMPRESA (nombre_empresa) VALUES ('Oracle Academy');
+INSERT INTO EMPRESA (nombre_empresa) VALUES ('Cisco Networking Academy');
+INSERT INTO EMPRESA (nombre_empresa) VALUES ('Harvard Online Courses');
+
+
+************************[ DIFICULTAD ]*************************
+
+
+INSERT INTO DIFICULTAD (nivel_dificultad) VALUES ('BASICO');
+INSERT INTO DIFICULTAD (nivel_dificultad) VALUES ('INTERMEDIO');
+INSERT INTO DIFICULTAD (nivel_dificultad) VALUES ('AVANZADO');
+INSERT INTO DIFICULTAD (nivel_dificultad) VALUES ('EXPERTO');
+
+
+
+
+************************[ GENERO ]*************************
+
+
+INSERT INTO GENERO (nombre_genero) VALUES ('Cloud Computing');
+INSERT INTO GENERO (nombre_genero) VALUES ('Desarrollo Web');
+INSERT INTO GENERO (nombre_genero) VALUES ('Programación en Java');
+INSERT INTO GENERO (nombre_genero) VALUES ('Bases de Datos y SQL');
+INSERT INTO GENERO (nombre_genero) VALUES ('Ciberseguridad');
+INSERT INTO GENERO (nombre_genero) VALUES ('Inteligencia Artificial');
+INSERT INTO GENERO (nombre_genero) VALUES ('Blockchain');
+INSERT INTO GENERO (nombre_genero) VALUES ('DevOps');
+INSERT INTO GENERO (nombre_genero) VALUES ('Big Data');
+INSERT INTO GENERO (nombre_genero) VALUES ('Diseño UX/UI');
+INSERT INTO GENERO (nombre_genero) VALUES ('Marketing Digital');
+INSERT INTO GENERO (nombre_genero) VALUES ('Gestión de Proyectos');
+INSERT INTO GENERO (nombre_genero) VALUES ('Idiomas');
+INSERT INTO GENERO (nombre_genero) VALUES ('Redes y Telecomunicaciones');
+
+
+************************[ CURSO ]*************************
+
+-- Cloud Computing
+INSERT INTO CURSO (titulo_curso, resumen_curso, descripcion_curso, instructor, imagen_portada, requisito, id_empresa, id_dificultad, id_genero) 
+VALUES ('Introducción a AWS', 'Curso básico de AWS', 'Aprende los fundamentos de AWS.', 'Carlos Pérez', 'aws_basico.jpg', 'Ninguno', 1, 1, 1);
+
+INSERT INTO CURSO (titulo_curso, resumen_curso, descripcion_curso, instructor, imagen_portada, requisito, id_empresa, id_dificultad, id_genero) 
+VALUES ('AWS Intermedio', 'Servicios clave de AWS', 'Explora S3, EC2 y Lambda.', 'Ana López', 'aws_intermedio.jpg', 'Conocimientos básicos de AWS', 1, 2, 1);
+
+INSERT INTO CURSO (titulo_curso, resumen_curso, descripcion_curso, instructor, imagen_portada, requisito, id_empresa, id_dificultad, id_genero) 
+VALUES ('Arquitectura Avanzada en AWS', 'Diseña soluciones escalables', 'Mejoras en seguridad y rendimiento.', 'David Gómez', 'aws_avanzado.jpg', 'Experiencia en AWS', 1, 3, 1);
+
+INSERT INTO CURSO (titulo_curso, resumen_curso, descripcion_curso, instructor, imagen_portada, requisito, id_empresa, id_dificultad, id_genero) 
+VALUES ('AWS para Expertos', 'Domina AWS a nivel experto', 'Alta disponibilidad, redes avanzadas.', 'Elena Martínez', 'aws_experto.jpg', 'Certificación AWS Solutions Architect', 1, 4, 1);
+
+
+
+
+
+-- Desarrollo Web
+INSERT INTO CURSO (titulo_curso, resumen_curso, descripcion_curso, instructor, imagen_portada, requisito, id_empresa, id_dificultad, id_genero) 
+VALUES ('HTML y CSS desde Cero', 'Aprende a diseñar páginas web', 'Curso práctico de HTML y CSS.', 'Pedro Fernández', 'html_basico.jpg', 'Ninguno', 5, 1, 2);
+
+INSERT INTO CURSO (titulo_curso, resumen_curso, descripcion_curso, instructor, imagen_portada, requisito, id_empresa, id_dificultad, id_genero) 
+VALUES ('JavaScript para Web', 'Mejora la interactividad web', 'Uso de JS, eventos y manipulación DOM.', 'Laura Sánchez', 'js_intermedio.jpg', 'Conocimientos de HTML y CSS', 5, 2, 2);
+
+INSERT INTO CURSO (titulo_curso, resumen_curso, descripcion_curso, instructor, imagen_portada, requisito, id_empresa, id_dificultad, id_genero) 
+VALUES ('Frameworks JS Avanzados', 'React, Vue y Angular', 'Desarrollo con frameworks modernos.', 'Marcos Ríos', 'js_avanzado.jpg', 'Conocimientos de JavaScript', 6, 3, 2);
+
+INSERT INTO CURSO (titulo_curso, resumen_curso, descripcion_curso, instructor, imagen_portada, requisito, id_empresa, id_dificultad, id_genero) 
+VALUES ('Full Stack Development', 'Dominio de front y backend', 'Node.js, Express y bases de datos.', 'Lucía Castro', 'fullstack_experto.jpg', 'Experiencia en desarrollo web', 6, 4, 2);
+
+
+
+
+
+-- Programación en Java
+INSERT INTO CURSO (titulo_curso, resumen_curso, descripcion_curso, instructor, imagen_portada, requisito, id_empresa, id_dificultad, id_genero) 
+VALUES ('Java desde Cero', 'Introducción a Java', 'Sintaxis, variables y estructuras de control.', 'Juan Rodríguez', 'java_basico.jpg', 'Ninguno', 7, 1, 3);
+
+INSERT INTO CURSO (titulo_curso, resumen_curso, descripcion_curso, instructor, imagen_portada, requisito, id_empresa, id_dificultad, id_genero) 
+VALUES ('POO en Java', 'Programación Orientada a Objetos', 'Herencia, polimorfismo y encapsulamiento.', 'Sofía Méndez', 'java_intermedio.jpg', 'Conocimientos básicos de Java', 7, 2, 3);
+
+INSERT INTO CURSO (titulo_curso, resumen_curso, descripcion_curso, instructor, imagen_portada, requisito, id_empresa, id_dificultad, id_genero) 
+VALUES ('Spring Boot y Microservicios', 'Arquitectura moderna en Java', 'Creación de microservicios con Spring.', 'Fernando Ruiz', 'java_avanzado.jpg', 'Experiencia en Java y bases de datos', 8, 3, 3);
+
+INSERT INTO CURSO (titulo_curso, resumen_curso, descripcion_curso, instructor, imagen_portada, requisito, id_empresa, id_dificultad, id_genero) 
+VALUES ('Java para Expertos', 'Optimización y rendimiento', 'Patrones de diseño y alta escalabilidad.', 'Marta López', 'java_experto.jpg', 'Experiencia en Java y desarrollo web', 8, 4, 3);
+
+
+
+
+
+-- Bases de Datos
+INSERT INTO CURSO (titulo_curso, resumen_curso, descripcion_curso, instructor, imagen_portada, requisito, id_empresa, id_dificultad, id_genero) 
+VALUES ('SQL para Principiantes', 'Aprende a manejar bases de datos', 'Consultas básicas en SQL.', 'Raúl Torres', 'sql_basico.jpg', 'Ninguno', 9, 1, 4);
+
+INSERT INTO CURSO (titulo_curso, resumen_curso, descripcion_curso, instructor, imagen_portada, requisito, id_empresa, id_dificultad, id_genero) 
+VALUES ('Modelado de Bases de Datos', 'Diseño eficiente de BD', 'Normalización y relaciones.', 'Andrea Vázquez', 'sql_intermedio.jpg', 'Conocimientos de SQL', 9, 2, 4);
+
+INSERT INTO CURSO (titulo_curso, resumen_curso, descripcion_curso, instructor, imagen_portada, requisito, id_empresa, id_dificultad, id_genero) 
+VALUES ('Optimización de Consultas SQL', 'Mejor rendimiento en bases de datos', 'Índices, particionamiento y tuning.', 'Eduardo Gil', 'sql_avanzado.jpg', 'Experiencia en bases de datos relacionales', 10, 3, 4);
+
+INSERT INTO CURSO (titulo_curso, resumen_curso, descripcion_curso, instructor, imagen_portada, requisito, id_empresa, id_dificultad, id_genero) 
+VALUES ('Big Data y SQL', 'Análisis avanzado de datos', 'Procesamiento de grandes volúmenes de datos.', 'Daniela Ortiz', 'sql_experto.jpg', 'Experiencia en bases de datos y análisis de datos', 10, 4, 4);
+
+
+
+************************[ TEMARIO ]*************************
+
+
+-- Insertar temas para el curso "Introducción a AWS"
+INSERT INTO TEMARIO (descripcion_temario, id_curso)
+VALUES 
+('Introducción a la nube y AWS', 1),
+('Primeros pasos con AWS: Creando tu cuenta', 1),
+('EC2: Instancias y configuraciones básicas', 1),
+('S3: Almacenamiento en la nube', 1),
+('IAM: Gestión de acceso en AWS', 1),
+('Amazon RDS: Bases de datos en la nube', 1);
+
+-- Insertar temas para el curso "AWS Intermedio"
+INSERT INTO TEMARIO (descripcion_temario, id_curso)
+VALUES 
+('EC2: Configuración avanzada', 2),
+('Amazon S3: Configuración y seguridad avanzada', 2),
+('AWS Lambda: Creación de funciones sin servidor', 2),
+('Amazon VPC: Redes virtuales en la nube', 2),
+('SQS y SNS: Servicios de mensajería en AWS', 2),
+('Amazon DynamoDB: Bases de datos NoSQL', 2);
+
+-- Insertar temas para el curso "Arquitectura Avanzada en AWS"
+INSERT INTO TEMARIO (descripcion_temario, id_curso)
+VALUES 
+('Arquitectura de alta disponibilidad en AWS', 3),
+('Optimización de rendimiento en AWS', 3),
+('Seguridad avanzada en AWS', 3),
+('AWS CloudFormation: Infraestructura como código', 3),
+('AWS Elastic Beanstalk: Despliegue de aplicaciones', 3),
+('Monitoreo y auditoría en AWS con CloudWatch', 3);
+
+-- Insertar temas para el curso "AWS para Expertos"
+INSERT INTO TEMARIO (descripcion_temario, id_curso)
+VALUES 
+('AWS Networking: Configuración avanzada de redes', 4),
+('Escalabilidad y balanceo de carga con AWS', 4),
+('AWS Auto Scaling: Escalado automático', 4),
+('Gestión avanzada de identidades con AWS IAM', 4),
+('Arquitectura multi-región en AWS', 4),
+('Optimización de costos en AWS', 4);
+
+
+
+
+
+-- Insertar temas para el curso "HTML y CSS desde Cero"
+INSERT INTO TEMARIO (descripcion_temario, id_curso)
+VALUES 
+('Introducción al desarrollo web', 5),
+('Estructura básica de un documento HTML', 5),
+('Etiquetas HTML comunes', 5),
+('Estilos básicos con CSS', 5),
+('Diseño responsivo con CSS', 5),
+('Buenas prácticas en HTML y CSS', 5);
+
+-- Insertar temas para el curso "JavaScript para Web"
+INSERT INTO TEMARIO (descripcion_temario, id_curso)
+VALUES 
+('Introducción a JavaScript y su uso en la web', 6),
+('Variables, operadores y estructuras de control', 6),
+('Funciones en JavaScript', 6),
+('Manipulación del DOM', 6),
+('Eventos y manejo de interactividad', 6),
+('Trabajo con APIs en JavaScript', 6);
+
+-- Insertar temas para el curso "Frameworks JS Avanzados"
+INSERT INTO TEMARIO (descripcion_temario, id_curso)
+VALUES 
+('Introducción a los frameworks JS', 7),
+('Desarrollo con React: Fundamentos y componentes', 7),
+('Desarrollo con Vue.js: Directivas y componentes', 7),
+('Desarrollo con Angular: Componentes y servicios', 7),
+('Gestión de estado con Redux en React', 7),
+('Desarrollo de aplicaciones SPA con frameworks JS', 7);
+
+-- Insertar temas para el curso "Full Stack Development"
+INSERT INTO TEMARIO (descripcion_temario, id_curso)
+VALUES 
+('Introducción a Full Stack Development', 8),
+('Fundamentos de Node.js', 8),
+('Uso de Express para crear servidores', 8),
+('Conexión con bases de datos SQL y NoSQL', 8),
+('Autenticación y autorización en aplicaciones web', 8),
+('Despliegue de aplicaciones Full Stack', 8);
+
+
+
+
+
+-- Insertar temas para el curso "Java desde Cero"
+INSERT INTO TEMARIO (descripcion_temario, id_curso)
+VALUES 
+('Introducción a la programación en Java', 7),
+('Sintaxis básica en Java', 7),
+('Variables y tipos de datos', 7),
+('Operadores y estructuras de control', 7),
+('Métodos y funciones en Java', 7),
+('Manejo de excepciones en Java', 7);
+
+-- Insertar temas para el curso "POO en Java"
+INSERT INTO TEMARIO (descripcion_temario, id_curso)
+VALUES 
+('Introducción a la Programación Orientada a Objetos', 8),
+('Clases y objetos en Java', 8),
+('Herencia en Java', 8),
+('Polimorfismo en Java', 8),
+('Encapsulamiento y manejo de acceso', 8),
+('Interfaces y clases abstractas', 8);
+
+-- Insertar temas para el curso "Spring Boot y Microservicios"
+INSERT INTO TEMARIO (descripcion_temario, id_curso)
+VALUES 
+('Introducción a Spring Boot y microservicios', 9),
+('Creación de aplicaciones con Spring Boot', 9),
+('Desarrollo de microservicios RESTful', 9),
+('Gestión de bases de datos con Spring Data', 9),
+('Autenticación y seguridad en microservicios', 9),
+('Despliegue de microservicios con Docker y Kubernetes', 9);
+
+-- Insertar temas para el curso "Java para Expertos"
+INSERT INTO TEMARIO (descripcion_temario, id_curso)
+VALUES 
+('Patrones de diseño en Java', 10),
+('Optimización de rendimiento en aplicaciones Java', 10),
+('Manejo avanzado de colecciones en Java', 10),
+('Concurrencia y programación multihilo en Java', 10),
+('Alta escalabilidad con Java y Spring', 10),
+('Mejores prácticas en el desarrollo con Java', 10);
+
+
+
+
+
+-- Insertar temas para el curso "SQL para Principiantes"
+INSERT INTO TEMARIO (descripcion_temario, id_curso)
+VALUES 
+('Introducción a las bases de datos', 9),
+('Estructura básica de una base de datos relacional', 9),
+('Consultas SELECT en SQL', 9),
+('Filtrar y ordenar datos con SQL', 9),
+('Funciones agregadas en SQL', 9),
+('Uniones de tablas (JOINs) en SQL', 9);
+
+-- Insertar temas para el curso "Modelado de Bases de Datos"
+INSERT INTO TEMARIO (descripcion_temario, id_curso)
+VALUES 
+('Introducción al modelado de bases de datos', 10),
+('Normalización de bases de datos', 10),
+('Relaciones entre tablas', 10),
+('Claves primarias y foráneas', 10),
+('Integridad referencial y restricciones', 10),
+('Modelado de bases de datos con diagramas ER', 10);
+
+-- Insertar temas para el curso "Optimización de Consultas SQL"
+INSERT INTO TEMARIO (descripcion_temario, id_curso)
+VALUES 
+('Introducción a la optimización de consultas', 11),
+('Índices en SQL y su impacto en el rendimiento', 11),
+('Particionamiento de tablas en SQL', 11),
+('Tuning de consultas SQL', 11),
+('Uso de EXPLAIN para optimización', 11),
+('Mejores prácticas para consultas eficientes', 11);
+
+-- Insertar temas para el curso "Big Data y SQL"
+INSERT INTO TEMARIO (descripcion_temario, id_curso)
+VALUES 
+('Introducción al Big Data y SQL', 12),
+('Procesamiento de grandes volúmenes de datos con SQL', 12),
+('Hadoop y SQL: Integración para Big Data', 12),
+('Optimización de consultas en Big Data', 12),
+('Bases de datos distribuidas en Big Data', 12),
+('Análisis avanzado de datos con SQL en Big Data', 12);
+
+
+
+
+al', 44);
