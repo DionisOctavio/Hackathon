@@ -5,4 +5,7 @@ router.get("/", (req, res) => {
     res.send("API funcionando corectamente");
 });
 
+const peliculasRouter = require('./peliculas.routes');
+router.use("/peliculas", peliculasRouter);
+
 module.exports = router;
